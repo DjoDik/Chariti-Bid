@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { ItemType } from '../../types/itemType';
+import { AppThunk } from '../hooks';
 
 export type ItemState = ItemType[];
 
@@ -11,12 +12,16 @@ export const itemSlice = createSlice({
   name: 'Item',
   initialState,
   reducers: {
-    setPosts: (state, action: PayloadAction<ItemType[]>) => action.payload,
+    itemPosts: (state, action: PayloadAction<ItemType[]>) => action.payload,
   },
 });
 
-export const getPostsThunk = (): AppThunk => (dispatch) => {
-  axios<ItemType[]>('/api/posts')
-    .then(({ data }) => dispatch(setPosts(data)))
+export const { itemPosts } = itemSlice.actions;
+
+export default itemSlice.reducer;
+
+export const getItemThunk = (): AppThunk => (dispatch) => {
+  axios<ItemType[]>('/')
+    .then(({ data }) => dispatch(itemPosts(data)))
     .catch(console.log);
 };
