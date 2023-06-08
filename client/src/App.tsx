@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import MainPage from './Components/MainPage';
 
 function App(): JSX.Element {
-  const [count, setCount] = useState(0);
 
   return (
-   <div>
-    хело
-   </div>
+    <Routes>
+      <Route path="/" element={<MainPage />} />
+    </Routes>
   );
 }
 
