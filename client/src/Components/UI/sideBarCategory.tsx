@@ -7,7 +7,7 @@ export default function SideBarCategory(): JSX.Element {
   useEffect(() => {
     dispatch(getItemThunk());
   }, []);
-  const allCategory = useAppSelector((store) => store.item);
+  const allCategory = useAppSelector((store) => store.item.allProduct);
 
   return (
     <Container>

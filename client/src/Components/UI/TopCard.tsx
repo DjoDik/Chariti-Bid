@@ -5,7 +5,8 @@ type PropType = {
     itemTop:ItemType
 }
 export default function TopCard({itemTop}:PropType):JSX.Element {
-   
+   const {Items} = itemTop
+   console.log("IMG",Items)
   return (
     <Card
   style={{

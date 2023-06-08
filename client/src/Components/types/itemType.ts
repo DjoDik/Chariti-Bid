@@ -10,5 +10,9 @@ export type ItemType = {
     lastUser_id: number,
     name:string,
     id:number
+    Items: ItemType[];
 }
 
+export type ItemStateSlice = {
+    allProduct:ItemType[]
+}
