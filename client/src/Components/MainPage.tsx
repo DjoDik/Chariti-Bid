@@ -11,7 +11,7 @@ export default function MainPage(): JSX.Element {
   }, []);
 
   const item = useAppSelector((store) => store.item);
-  console.log(item);
+  
   return (
     <>
     

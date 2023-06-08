@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../Redux/hooks';
-import { logoutThunk } from '../../redux/slices/userSlice';
+import { logoutThunk } from '../Redux/slice/userSlice';
 
 export default function Navbar(): JSX.Element {
   const dispatch = useAppDispatch();
