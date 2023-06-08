@@ -1,16 +1,19 @@
-import React from 'react';
-import { Button, Container, List } from 'reactstrap';
+import React, { useEffect } from 'react';
+import { Container, List } from 'reactstrap';
 import { useAppDispatch, useAppSelector } from '../Redux/hooks';
-export default function sideBarCategory(): JSX.Element {
-
+import { getItemThunk } from '../Redux/slice/itemSlice';
+export default function SideBarCategory(): JSX.Element {
   const dispatch = useAppDispatch();
-  const allCategory = useAppSelector((store) => store);
+  useEffect(() => {
+    dispatch(getItemThunk());
+  }, []);
+  const allCategory = useAppSelector((store) => store.item);
 
   return (
     <Container>
       {allCategory.map((category) => (
-        <List>
-          <li>{category.name}</li>
+        <List key={category.id}>
+          <li> {category.name}</li>
         </List>
       ))}
     </Container>
