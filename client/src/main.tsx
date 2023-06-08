@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import axios from 'axios';
 import App from './App';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 import { store } from './redux/store';
-import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter } from 'react-router-dom';
 
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 axios.defaults.withCredentials = true;
