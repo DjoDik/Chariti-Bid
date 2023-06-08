@@ -18,7 +18,7 @@ export default function MainPage(): JSX.Element {
   return (
     <CardGroup>
       <Row className="justify-content-center">
-          {item.map((el) => (
+          {item.allProduct.map((el) => (
             <OneItemCard oneCard={el} />
           ))}
       </Row>

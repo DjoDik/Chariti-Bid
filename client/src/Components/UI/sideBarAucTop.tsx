@@ -11,7 +11,6 @@ export default function SideBarAucTop(): JSX.Element {
     dispatch(getItemThunk());
   }, []);
   const allTop = useAppSelector((store) => store.item.allProduct);
-  console.log(allTop)
   return (
     <Container>
       {allTop.map((itemTop:ItemType) => <TopCard key = {itemTop.id} itemTop={itemTop}/>)}

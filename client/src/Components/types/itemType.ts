@@ -11,6 +11,7 @@ export type ItemType = {
     name:string,
     id:number
     Items: ItemType[];
+    img: string
 }
 
 export type ItemStateSlice = {
