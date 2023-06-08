@@ -13,10 +13,8 @@ export type UserSignUpType = {
   username?: string;
   email: string;
   password: string;
-  role: boolean;
   phone: string;
   avatar: string;
-  onlinestatus: boolean;
 };
 
 export type UserHandlersType = {
