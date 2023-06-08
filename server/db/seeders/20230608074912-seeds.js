@@ -66,7 +66,8 @@ module.exports = {
             title:"Ботинки",
             body:"Крутые боты",
             city:'Москва',
-            sellStatus:false
+            sellStatus:false,
+            img:"[https://i.dummyjson.com/data/products/18/1.jpg, https://i.dummyjson.com/data/products/18/2.jpg,https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg,https://i.dummyjson.com/data/products/18/thumbnail.jpg]"
           },
           {
             category_id:2,
@@ -75,7 +76,8 @@ module.exports = {
             title:"Стул",
             body:"Крутой Стул",
             city:'Томск',
-            sellStatus:false
+            sellStatus:false,
+            img:"[https://i.dummyjson.com/data/products/18/1.jpg, https://i.dummyjson.com/data/products/18/2.jpg,https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg,https://i.dummyjson.com/data/products/18/thumbnail.jpg]"
           },
           {
             category_id:3,
@@ -84,7 +86,8 @@ module.exports = {
             title:"Шторы",
             body:"Крутые шторы",
             city:'Санкт-Петербург',
-            sellStatus:false
+            sellStatus:false,
+            img:"[https://i.dummyjson.com/data/products/18/1.jpg, https://i.dummyjson.com/data/products/18/2.jpg,https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg,https://i.dummyjson.com/data/products/18/thumbnail.jpg]"
           },
           {
             category_id:4,
@@ -93,7 +96,8 @@ module.exports = {
             title:"Смартфон",
             body:"Крутой смартфон",
             city:'Ростов',
-            sellStatus:false
+            sellStatus:false,
+            img:"[https://i.dummyjson.com/data/products/18/1.jpg, https://i.dummyjson.com/data/products/18/2.jpg,https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg,https://i.dummyjson.com/data/products/18/thumbnail.jpg]"
           },
           {
             category_id:5,
@@ -102,7 +106,8 @@ module.exports = {
             title:"Спальник",
             body:"Крутой спальник",
             city:'Астрахань',
-            sellStatus:false
+            sellStatus:false,
+            img:"[https://i.dummyjson.com/data/products/18/1.jpg, https://i.dummyjson.com/data/products/18/2.jpg,https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg,https://i.dummyjson.com/data/products/18/thumbnail.jpg]"
           },
           {
             category_id:6,
@@ -111,7 +116,8 @@ module.exports = {
             title:"Мангал",
             body:"Крутой мангал",
             city:'Омск',
-            sellStatus:false
+            sellStatus:false,
+            img:"[https://i.dummyjson.com/data/products/18/1.jpg, https://i.dummyjson.com/data/products/18/2.jpg,https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg,https://i.dummyjson.com/data/products/18/thumbnail.jpg]"
           },
           {
             category_id:7,
@@ -120,7 +126,8 @@ module.exports = {
             title:"Другое",
             body:"Крутое другое",
             city:'Новосибирск',
-            sellStatus:false
+            sellStatus:false,
+            img:"[https://i.dummyjson.com/data/products/18/1.jpg, https://i.dummyjson.com/data/products/18/2.jpg,https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg,https://i.dummyjson.com/data/products/18/thumbnail.jpg]"
           },
         ],
         {},

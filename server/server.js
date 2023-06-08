@@ -29,4 +29,5 @@ app.use(
 );
 
 app.use('/', indexRouter);
+
 app.listen(PORT, () => console.log(`Server has started on PORT ${PORT}`));

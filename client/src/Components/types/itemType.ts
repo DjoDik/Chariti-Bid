@@ -7,5 +7,8 @@ export type ItemType = {
     uuid: string,
     city: string,
     sellStatus: boolean,
-    lastUser_id: number
+    lastUser_id: number,
+    name:string,
+    id:number
 }
+
