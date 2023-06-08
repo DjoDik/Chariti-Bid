@@ -1,32 +1,30 @@
 import React from 'react'
 import {Button, Card, CardBody, CardSubtitle, CardText, CardTitle} from 'reactstrap'
+import { ItemType } from '../types/itemType'
 
-export default function OneItemCard(): JSX.Element {
+type PropsType= {
+  oneCard: ItemType
+}
+
+export default function OneItemCard({oneCard}: PropsType): JSX.Element {
+  const {Items} = oneCard
+ 
   return (
     <Card
   style={{
-    width: '18rem'
+    width: '13rem',
+    margin: '10px'
   }}
 >
   <img
     alt="Sample"
-    src="https://picsum.photos/300/200"
-  />
+    src='asdasd'/>
   <CardBody>
     <CardTitle tag="h5">
-      Card title
+      tut text
     </CardTitle>
-    <CardSubtitle
-      className="mb-2 text-muted"
-      tag="h6"
-    >
-      Card subtitle
-    </CardSubtitle>
-    <CardText>
-      Some quick example text to build on the card title and make up the bulk of the card‘s content.
-    </CardText>
     <Button>
-      Button
+      Смотреть
     </Button>
   </CardBody>
 </Card>

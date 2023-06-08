@@ -6,11 +6,10 @@ type PropType = {
 }
 export default function TopCard({itemTop}:PropType):JSX.Element {
    const {Items} = itemTop
-   console.log("IMG",Items)
   return (
     <Card
   style={{
-    width: '18rem'
+    width: '10rem'
   }}
 >
   <img
