@@ -42,7 +42,6 @@ export const checkUserThunk = (): AppThunk => (dispatch) => {
 export const signUpThunk =
   (input: UserSignUpType): AppThunk =>
   (dispatch) => {
-    console.log('signupthunk');
 
     axios
       .post<UserType>('/user/signup', input)

@@ -16,7 +16,6 @@ export default function AuthPage(): JSX.Element {
           password: '',
           phone: '+7',
           avatar: '',
-          role: false,
           onlinestatus: false,
         }
       : { email: '', password: '' },
