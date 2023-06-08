@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
+
+import Navbar from './Components/UI/NavBar';
 
 function App(): JSX.Element {
-  const [count, setCount] = useState(0);
-
   return (
-   <div>
-    хело
-   </div>
+    <>
+      <Navbar />
+    </>
   );
 }
 
