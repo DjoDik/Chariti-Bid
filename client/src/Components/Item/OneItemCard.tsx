@@ -1,7 +1,12 @@
 import React from 'react'
 import {Button, Card, CardBody, CardSubtitle, CardText, CardTitle} from 'reactstrap'
+import { ItemType } from '../types/itemType'
 
-export default function OneItemCard(): JSX.Element {
+type PropsType= {
+  oneCard: ItemType
+}
+
+export default function OneItemCard({oneCard}: PropsType): JSX.Element {
   return (
     <Card
   style={{
@@ -10,7 +15,7 @@ export default function OneItemCard(): JSX.Element {
 >
   <img
     alt="Sample"
-    src="https://picsum.photos/300/200"
+    src={oneCard.}
   />
   <CardBody>
     <CardTitle tag="h5">
