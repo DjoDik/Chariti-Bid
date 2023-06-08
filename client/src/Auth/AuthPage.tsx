@@ -14,8 +14,10 @@ export default function AuthPage(): JSX.Element {
           username: '',
           email: '',
           password: '',
-          phone: '',
+          phone: '+7',
           avatar: '',
+          role: false,
+          onlinestatus: false,
         }
       : { email: '', password: '' },
   );
@@ -34,68 +36,72 @@ export default function AuthPage(): JSX.Element {
 
   return (
     <Row>
-      <Col>
-        <Form onSubmit={submitHandler}>
+      <Col className="mt-5 d-flex justify-content-center">
+        {' '}
+        {/* Добавляем класс "mt-5" для отступа сверху */}
+        <Form onSubmit={submitHandler} className="modal-form">
           {auth === 'signup' && (
             <>
-              <FormGroup floating>
+              <FormGroup>
+                <Label for="exampleName">Name</Label>
                 <Input
                   id="exampleName"
                   name="username"
-                  placeholder="Name"
+                  placeholder="Enter your name"
                   type="text"
                   value={input.username}
                   onChange={changeHandler}
                 />
-                <Label for="exampleName">Name</Label>
               </FormGroup>
-              <FormGroup floating>
+              <FormGroup>
+                <Label for="examplePhone">Phone</Label>
                 <Input
                   id="examplePhone"
                   name="phone"
-                  placeholder="Phone"
+                  placeholder="Enter your phone number"
                   type="text"
                   value={input.phone}
                   onChange={changeHandler}
                 />
-                <Label for="examplePhone">Phone</Label>
               </FormGroup>
-              <FormGroup floating>
+              <FormGroup>
+                <Label for="exampleAvatar">Avatar</Label>
                 <Input
                   id="exampleAvatar"
                   name="avatar"
-                  placeholder="avatar"
+                  placeholder="Choose an avatar"
                   type="file"
                   value={input.avatar}
                   onChange={changeHandler}
                 />
-                <Label for="exampleAvatsr">Avatar</Label>
               </FormGroup>
             </>
           )}
-          <FormGroup floating>
+          <FormGroup>
+            <Label for="exampleEmail">Email</Label>
             <Input
               id="exampleEmail"
               name="email"
-              placeholder="Email"
+              placeholder="Enter your email"
               type="email"
               value={input.email}
               onChange={changeHandler}
             />
-            <Label for="exampleEmail">Email</Label>
           </FormGroup>
-          <FormGroup floating>
+          <FormGroup>
+            <Label for="examplePassword">Password</Label>
             <Input
               id="examplePassword"
               name="password"
-              placeholder="Password"
+              placeholder="Enter your password"
               type="password"
               value={input.password}
               onChange={changeHandler}
             />
-            <Label for="examplePassword">Password</Label>
           </FormGroup>
-          <Button type="submit">{auth === 'signup' ? 'Signup' : 'Login'}</Button>
+          <div className="text-center">
+            <Button type="submit">{auth === 'signup' ? 'Signup' : 'Login'}</Button>
+          </div>
         </Form>
       </Col>
     </Row>

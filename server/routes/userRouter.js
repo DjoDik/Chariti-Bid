@@ -1,16 +1,32 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const multer = require('multer');
+const session = require('express-session');
 const { User } = require('../db/models');
 
 const router = express.Router();
+const sessionSecret = process.env.SESSION_SECRET;
+// Конфигурация Multer для обработки загруженных файлов
+const storage = multer.memoryStorage(); // Используем memoryStorage, чтобы получить данные изображения в виде буфера
+const upload = multer({ storage });
+router.use(
+  session({
+    secret: sessionSecret,
+    resave: false,
+    saveUninitialized: false,
+  }),
+);
+router.post('/signup', upload.single('avatar'), async (req, res) => {
+  const { username, email, password, phone } = req.body;
+  const avatar = req.file; // Загруженный файл доступен через req.file
 
-router.post('/signup', async (req, res) => {
-  const { username, email, password } = req.body;
-  if (username && email && password) {
+  if (username && email && password && phone && avatar) {
     try {
+      const avatarData = avatar.buffer.toString('base64'); // Преобразуем данные изображения в base64-строку
+
       const [user, created] = await User.findOrCreate({
         where: { email },
-        defaults: { username, password: await bcrypt.hash(password, 10) },
+        defaults: { username, password: await bcrypt.hash(password, 10), avatar: avatarData }, // Сохраняем данные изображения в поле avatar базы данных
       });
       if (!created) return res.sendStatus(401);
 

@@ -23,7 +23,7 @@ export default function Navbar(): JSX.Element {
             width: '100%',
           }}
         >
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }} component={Link} to="/">
             <Button type="button" style={{ height: '40px' }}>
               <img style={{ height: '50px', borderRadius: '10px' }} src="/logo.png" alt="#" />
             </Button>
