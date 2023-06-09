@@ -6,7 +6,6 @@ import { Col, Container, Row } from 'reactstrap';
 import { CardGroup } from 'reactstrap';
 
 import OneItemCard from './Item/OneItemCard';
-import SideBarCategory from './UI/sideBarCategory';
 import { selectItems } from './Redux/slice/sortSlice';
 
 export default function MainPage(): JSX.Element {
@@ -19,19 +18,12 @@ export default function MainPage(): JSX.Element {
   const item = useAppSelector(selectItems);
 
   return (
-    <Row>
-    <Col xs="auto">
-      <SideBarCategory />
-    </Col>
-    <Col>
-      <CardGroup>
-        <Row className="justify-content-center">
-          {item.map((el) => (
-            <OneItemCard oneCard={el} />
-          ))}
-        </Row>
-      </CardGroup>
-    </Col>
-  </Row>
+    <CardGroup>
+      <Row className="justify-content-center">
+        {item.map((el) => (
+          <OneItemCard key={el.id} oneCard={el} />
+        ))}
+      </Row>
+    </CardGroup>
   );
 }

@@ -8,8 +8,6 @@ import { checkUserThunk } from '../Redux/slice/userSlice';
 export default function Navbar(): JSX.Element {
   const dispatch = useAppDispatch();
   const user = useAppSelector((store) => store.user);
-  console.log(user.id);
-  
 
   useEffect(() => {
     dispatch(checkUserThunk());
