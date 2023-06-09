@@ -17,12 +17,12 @@ export default function LkMainPage() {
         <Modal isOpen={modal} toggle={toggle}>
           <ModalHeader toggle={toggle}>Modal title</ModalHeader>
           <ModalBody>
-            <Form>
+            <form>
               <Input placeholder='Название' name='title'/>
               <Input placeholder='Описание'name='bode'/>
               <Input placeholder='Город' name='city'/>
               {/* <Input placeholder='Город' name='city'/>  мультир*/}
-            </Form>
+            </form>
           </ModalBody>
           <ModalFooter>
             <Button color="primary" onClick={toggle}>
