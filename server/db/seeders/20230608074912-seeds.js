@@ -33,6 +33,9 @@ module.exports = {
         'Categories',
         [
           {
+            name: "Все",
+          },
+          {
             name: "Одежда",
           },
           {
@@ -60,74 +63,67 @@ module.exports = {
         'Items',
         [
           {
-            category_id:1,
+            category_id:2,
             user_id: 1,
             price:0,
             title:"Ботинки",
             body:"Крутые боты",
             city:'Москва',
             sellStatus:false,
-            img:"[https://i.dummyjson.com/data/products/18/1.jpg, https://i.dummyjson.com/data/products/18/2.jpg,https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg,https://i.dummyjson.com/data/products/18/thumbnail.jpg]"
           },
           {
-            category_id:2,
+            category_id:3,
             user_id: 1,
             price:0,
             title:"Стул",
             body:"Крутой Стул",
             city:'Томск',
             sellStatus:false,
-            img:"[https://i.dummyjson.com/data/products/18/1.jpg, https://i.dummyjson.com/data/products/18/2.jpg,https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg,https://i.dummyjson.com/data/products/18/thumbnail.jpg]"
           },
           {
-            category_id:3,
+            category_id:4,
             user_id: 1,
             price:0,
             title:"Шторы",
             body:"Крутые шторы",
             city:'Санкт-Петербург',
             sellStatus:false,
-            img:"[https://i.dummyjson.com/data/products/18/1.jpg, https://i.dummyjson.com/data/products/18/2.jpg,https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg,https://i.dummyjson.com/data/products/18/thumbnail.jpg]"
           },
           {
-            category_id:4,
+            category_id:5,
             user_id: 1,
             price:0,
             title:"Смартфон",
             body:"Крутой смартфон",
             city:'Ростов',
             sellStatus:false,
-            img:"[https://i.dummyjson.com/data/products/18/1.jpg, https://i.dummyjson.com/data/products/18/2.jpg,https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg,https://i.dummyjson.com/data/products/18/thumbnail.jpg]"
           },
           {
-            category_id:5,
+            category_id:6,
             user_id: 1,
             price:0,
             title:"Спальник",
             body:"Крутой спальник",
             city:'Астрахань',
             sellStatus:false,
-            img:"[https://i.dummyjson.com/data/products/18/1.jpg, https://i.dummyjson.com/data/products/18/2.jpg,https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg,https://i.dummyjson.com/data/products/18/thumbnail.jpg]"
           },
           {
-            category_id:6,
+            category_id:7,
             user_id: 1,
             price:0,
             title:"Мангал",
             body:"Крутой мангал",
             city:'Омск',
             sellStatus:false,
-            img:"[https://i.dummyjson.com/data/products/18/1.jpg, https://i.dummyjson.com/data/products/18/2.jpg,https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg,https://i.dummyjson.com/data/products/18/thumbnail.jpg]"
           },
           {
-            category_id:7,
+            category_id:8,
             user_id: 1,
             price:0,
             title:"Другое",
             body:"Крутое другое",
             city:'Новосибирск',
             sellStatus:false,
-            img:"[https://i.dummyjson.com/data/products/18/1.jpg, https://i.dummyjson.com/data/products/18/2.jpg,https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg,https://i.dummyjson.com/data/products/18/thumbnail.jpg]"
           },
         ],
         {},
@@ -137,32 +133,36 @@ module.exports = {
         [
           {
            item_id:1,
-           img:"[https://i.dummyjson.com/data/products/18/1.jpg, https://i.dummyjson.com/data/products/18/2.jpg,https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg,https://i.dummyjson.com/data/products/18/thumbnail.jpg]"
+           img:"https://i.dummyjson.com/data/products/18/1.jpg"
           },
           {
             item_id:2,
-            img:"[https://i.dummyjson.com/data/products/18/1.jpg, https://i.dummyjson.com/data/products/18/2.jpg,https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg,https://i.dummyjson.com/data/products/18/thumbnail.jpg]"
+            img:"https://i.dummyjson.com/data/products/18/2.jpg"
            },
            {
             item_id:3,
-            img:"[https://i.dummyjson.com/data/products/18/1.jpg, https://i.dummyjson.com/data/products/18/2.jpg,https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg,https://i.dummyjson.com/data/products/18/thumbnail.jpg]"
+            img:"https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg"
            },
            {
             item_id:4,
-            img:"[https://i.dummyjson.com/data/products/18/1.jpg, https://i.dummyjson.com/data/products/18/2.jpg,https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg,https://i.dummyjson.com/data/products/18/thumbnail.jpg]"
+            img:"https://i.dummyjson.com/data/products/18/thumbnail.jpg"
            },
            {
-            item_id:5,
-            img:"[https://i.dummyjson.com/data/products/18/1.jpg, https://i.dummyjson.com/data/products/18/2.jpg,https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg,https://i.dummyjson.com/data/products/18/thumbnail.jpg]"
+            item_id:4,
+            img:"https://i.dummyjson.com/data/products/18/1.jpg"
            },
            {
-            item_id:6,
-            img:"[https://i.dummyjson.com/data/products/18/1.jpg, https://i.dummyjson.com/data/products/18/2.jpg,https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg,https://i.dummyjson.com/data/products/18/thumbnail.jpg]"
-           },
-           {
-            item_id:7,
-            img:"[https://i.dummyjson.com/data/products/18/1.jpg, https://i.dummyjson.com/data/products/18/2.jpg,https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg,https://i.dummyjson.com/data/products/18/thumbnail.jpg]"
-           },
+             item_id:3,
+             img:"https://i.dummyjson.com/data/products/18/2.jpg"
+            },
+            {
+             item_id:2,
+             img:"https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg"
+            },
+            {
+             item_id:1,
+             img:"https://i.dummyjson.com/data/products/18/thumbnail.jpg"
+            },
         ],
         {},
       );

@@ -47,9 +47,6 @@ module.exports = {
       lastUser_id: {
         type: Sequelize.INTEGER
       },
-      img: {
-        type: Sequelize.TEXT,
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
