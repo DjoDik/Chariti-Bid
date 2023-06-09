@@ -1,11 +1,11 @@
 // SideBarCategory.tsx
 
 import React, { useEffect } from 'react';
-import { Container, List } from 'reactstrap';
+import { Button, Container, List } from 'reactstrap';
 import { useAppDispatch, useAppSelector } from '../Redux/hooks';
 import { getItemThunk } from '../Redux/slice/itemSlice';
 import { SortItemThunk, selectSelectedCategory } from '../Redux/slice/sortSlice';
-
+import '/public/style.css'
 export default function SideBarCategory(): JSX.Element {
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -14,13 +14,14 @@ export default function SideBarCategory(): JSX.Element {
 
   const allCategory = useAppSelector((store) => store.item.allProduct);
   const selectedCategory = useAppSelector(selectSelectedCategory);
-
+ const usrId = useAppSelector((store) => store.user)
   const handleCategoryClick = (categoryName: string) => {
     dispatch(SortItemThunk(categoryName));
   };
-
+ console.log("===============",usrId)
   return (
     <Container>
+      <div className='box'>
       {allCategory.map((category) => (
         <List key={category.id}>
           <li
@@ -29,8 +30,11 @@ export default function SideBarCategory(): JSX.Element {
           >
             {category.name}
           </li>
+       
+
         </List>
       ))}
+      </div>
     </Container>
   );
 }

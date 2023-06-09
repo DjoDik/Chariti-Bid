@@ -6,6 +6,7 @@ const FileStore = require('session-file-store')(session);
 const indexRouter = require('./routes/indexRouter');
 const sortRouter = require('./routes/sortRouter');
 const userRouter = require('./routes/userRouter');
+const userItemRouter = require('./routes/userItemRouter');
 
 require('dotenv').config();
 
@@ -33,5 +34,5 @@ app.use(
 app.use('/', indexRouter);
 app.use('/sort', sortRouter);
 app.use('/user', userRouter);
-
+app.use('/useritem', userItemRouter)
 app.listen(PORT, () => console.log(`Server has started on PORT ${PORT}`));

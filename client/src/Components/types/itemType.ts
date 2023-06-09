@@ -16,4 +16,8 @@ export type ItemType = {
 
 export type ItemStateSlice = {
     allProduct:ItemType[]
+    
+}
+export type UserItemStateSlice = {
+    userItems:ItemType[]
 }
