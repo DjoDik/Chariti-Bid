@@ -16,17 +16,16 @@ router.use(
     saveUninitialized: false,
   }),
 );
-router.post('/signup', upload.single('avatar'), async (req, res) => {
+// Обработчик регистрации пользователя без загрузки аватара
+router.post('/signup', async (req, res) => {
   const { username, email, password, phone } = req.body;
-  const avatar = req.file; // Загруженный файл доступен через req.file
+  console.log(req.body);
 
-  if (username && email && password && phone && avatar) {
+  if (username && email && password && phone) {
     try {
-      const avatarData = avatar.buffer.toString('base64'); // Преобразуем данные изображения в base64-строку
-
       const [user, created] = await User.findOrCreate({
         where: { email },
-        defaults: { username, password: await bcrypt.hash(password, 10), avatar: avatarData }, // Сохраняем данные изображения в поле avatar базы данных
+        defaults: { username, password: await bcrypt.hash(password, 10) },
       });
       if (!created) return res.sendStatus(401);
 
@@ -34,6 +33,28 @@ router.post('/signup', upload.single('avatar'), async (req, res) => {
       delete sessionUser.password;
       req.session.user = sessionUser;
       return res.json(sessionUser);
+    } catch (e) {
+      console.log(e);
+      return res.sendStatus(500);
+    }
+  }
+  return res.sendStatus(500);
+});
+
+// Обработчик загрузки фото пользователя
+router.post('/upload-avatar', upload.single('avatar'), async (req, res) => {
+  const { userId } = req.body;
+
+  const avatar = req.file; // Загруженный файл доступен через req.file
+  console.log(avatar);
+  if (avatar && userId) {
+    try {
+      const avatarData = avatar.buffer.toString('base64'); // Преобразуем данные изображения в base64-строку
+
+      // Обновляем поле avatar в таблице User для указанного пользователя (userId)
+      await User.update({ avatar: avatarData }, { where: { id: userId } });
+
+      return res.sendStatus(200);
     } catch (e) {
       console.log(e);
       return res.sendStatus(500);
