@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 import { useAppDispatch } from '..//Components/Redux/hooks';
 import { loginThunk, signUpThunk } from '../Components/Redux/slice/userSlice';
 import type { UserSignUpType } from '../Components/types/UserTypes';
+import PhotoUploader from '../Components/Item/avatarPage';
 
 export default function AuthPage(): JSX.Element {
   const { auth } = useParams();
@@ -14,6 +15,8 @@ export default function AuthPage(): JSX.Element {
       : { email: '', password: '' },
   );
 
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+
   const changeHandler: React.ChangeEventHandler<HTMLInputElement> = (e): void => {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -22,9 +25,23 @@ export default function AuthPage(): JSX.Element {
 
   const submitHandler: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    console.log(auth === 'signup');
-    return auth === 'signup' ? dispatch(signUpThunk(input)) : dispatch(loginThunk(input));
+
+    if (auth === 'signup') {
+      dispatch(signUpThunk(input));
+      if (true) {
+        setRegistrationSuccess(true);
+      }
+    } else {
+      dispatch(loginThunk(input));
+      if (true) {
+        return <Navigate to="/" />; // Перенаправление на главную страницу после входа
+      }
+    }
   };
+
+  if (registrationSuccess) {
+    return <Navigate to="/" />; // Перенаправление на главную страницу после регистрации и загрузки фото
+  }
 
   return (
     <Row>
