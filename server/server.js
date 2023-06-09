@@ -2,8 +2,8 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const session = require('express-session');
-const indexRouter = require('./routes/indexRouter');
 const FileStore = require('session-file-store')(session);
+const indexRouter = require('./routes/indexRouter');
 
 require('dotenv').config();
 
