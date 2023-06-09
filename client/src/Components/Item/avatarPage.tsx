@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Button, Input } from 'reactstrap';
-// import { useAppDispatch } from '../Components/Redux/hooks';
-// import { uploadAvatar } from '../Components/Redux/slice/userSlice';
+import { useAppDispatch } from '../Redux/hooks';
+import { addAvatarThunk } from '../Redux/slice/avatarSlice';
 
 export default function PhotoUploader(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -15,10 +15,7 @@ export default function PhotoUploader(): JSX.Element {
 
   const handleUpload = () => {
     if (selectedFile) {
-      const formData = new FormData();
-      formData.append('avatar', selectedFile);
-
-      dispatch(uploadAvatar(formData));
+      dispatch(addAvatarThunk(selectedFile));
     }
   };
 
