@@ -14,7 +14,7 @@ export default function LeftSideMenu({toggle}: Props) {
     <ListGroup>
       <ListGroupItem>Корзина</ListGroupItem>
       <ListGroupItem href='#' onClick={() => toggle()}>Добвить товар</ListGroupItem>
-      <ListGroupItem href={`/useritem/${id}`} >Мои товары</ListGroupItem>
+      <ListGroupItem  onClick={() => window.location = `/useritem/${id}`} >Мои товары</ListGroupItem>
     </ListGroup>
   );
 }

@@ -7,7 +7,7 @@ import { AppThunk } from '../hooks';
 
 
 const initialState: ItemStateSlice = {
-  allProduct: []
+  allProduct: [],
 };
 
 export const itemSlice = createSlice({
