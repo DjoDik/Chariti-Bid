@@ -147,6 +147,22 @@ module.exports = {
             item_id:4,
             img:"https://i.dummyjson.com/data/products/18/thumbnail.jpg"
            },
+           {
+            item_id:4,
+            img:"https://i.dummyjson.com/data/products/18/1.jpg"
+           },
+           {
+             item_id:3,
+             img:"https://i.dummyjson.com/data/products/18/2.jpg"
+            },
+            {
+             item_id:2,
+             img:"https://i.dummyjson.com/data/products/18/3.jpg,https://i.dummyjson.com/data/products/18/4.jpg"
+            },
+            {
+             item_id:1,
+             img:"https://i.dummyjson.com/data/products/18/thumbnail.jpg"
+            },
         ],
         {},
       );
