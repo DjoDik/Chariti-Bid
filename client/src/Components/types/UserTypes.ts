@@ -5,7 +5,7 @@ export type UserType = {
   password: string;
   role?: boolean;
   phone: string;
-  avatar?: string;
+  avatar?: Buffer;
   onlinestatus: boolean;
 };
 

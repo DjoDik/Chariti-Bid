@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../Redux/hooks';
 import { logoutThunk } from '../Redux/slice/userSlice';
+import { checkUserThunk } from '../Redux/slice/userSlice';
 
 export default function Navbar(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -10,9 +11,15 @@ export default function Navbar(): JSX.Element {
   console.log(user.id);
   
 
+  useEffect(() => {
+    dispatch(checkUserThunk());
+  }, [dispatch]);
+
   const logoutHandler = (): void => {
     dispatch(logoutThunk());
   };
+
+  const isUserLoggedIn = user.id || localStorage.getItem('user'); // Проверка наличия пользователя в Redux-стейте или localStorage
 
   return (
     <AppBar position="static" sx={{ backgroundColor: 'Gold' }}>
@@ -38,7 +45,7 @@ export default function Navbar(): JSX.Element {
             </Typography>
           </Box>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: '#B51718' }} />
-          {user.id ? (
+          {isUserLoggedIn ? ( // Проверка наличия пользователя в сессии или localStorage
             <>
               <Button onClick={logoutHandler}>Logout</Button>
             </>

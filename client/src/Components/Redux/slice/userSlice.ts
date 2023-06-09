@@ -13,6 +13,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<UserState>) => action.payload,
+   
   },
 });
 
@@ -45,7 +46,7 @@ export const loginThunk =
   };
 
 export const logoutThunk = (): AppThunk => (dispatch) => {
-  axios('/api/user/logout')
+  axios('/user/logout')
     .then(() => dispatch(setUser({ status: true })))
     .catch(() => dispatch(setUser({ status: true })));
 };
