@@ -2,10 +2,12 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const session = require('express-session');
+
+const FileStore = require('session-file-store')(session);
 const indexRouter = require('./routes/indexRouter');
+const sortRouter = require('./routes/sortRouter');
 const userRouter = require('./routes/userRouter');
 const apiRouter = require('./routes/apiRouter');
-const FileStore = require('session-file-store')(session);
 
 require('dotenv').config();
 
@@ -36,6 +38,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/', indexRouter);
+app.use('/sort', sortRouter);
 app.use('/user', userRouter);
 app.use('/api', apiRouter);
 
