@@ -12,7 +12,8 @@ export default function SideBarCategory(): JSX.Element {
   }, []);
 
   const allCategory = useAppSelector((store) => store.item.allProduct);
-  const selectedCategory = useAppSelector(selectSelectedCategory);
+  
+
   const handleCategoryClick = (categoryName: string) => {
     dispatch(SortItemThunk(categoryName));
   };
@@ -29,7 +30,7 @@ export default function SideBarCategory(): JSX.Element {
               style={{ fontSize: '25px', cursor: 'pointer' }}
             >
               {category.name}
-            </li>          
+            </li>
           </List>
         ))}
       </div>
