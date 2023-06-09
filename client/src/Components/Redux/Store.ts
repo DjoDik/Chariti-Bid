@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import itemReducer from './slice/itemSlice'
 import userReducer from '../Redux/slice/userSlice';
 import sortReducer from '../Redux/slice/sortSlice'
+import UserItemReducer from '../Redux/slice/userItemSlice'
 export const store = configureStore({
   reducer: {
     item: itemReducer,
     user: userReducer,
     sort: sortReducer,
+    userItem:UserItemReducer,
   },
 });
 
