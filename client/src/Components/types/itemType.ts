@@ -21,3 +21,6 @@ export type ItemStateSlice = {
 export type UserItemStateSlice = {
     userItems:ItemType[]
 }
+export type PostIdType = {
+    id:string
+}
