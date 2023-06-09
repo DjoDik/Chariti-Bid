@@ -1,9 +1,21 @@
-import React from 'react'
+import React from 'react';
+import { ListGroup, ListGroupItem } from 'reactstrap';
+import {  useAppSelector } from '../../Redux/hooks';
 
-export default function LeftSideMenu() {
-    const parametrs = ['Корзина', 'Добавить товар']
+type Props = {
+    toggle: void
+}
+
+export default function LeftSideMenu({toggle}: Props) {
+    const userId = useAppSelector((store) => store.user)
+    const {id} = userId
 
   return (
-    <div>LeftSideMenu</div>
-  )
+    <ListGroup>
+      <ListGroupItem>Корзина</ListGroupItem>
+      <ListGroupItem href='#' onClick={() => toggle()}>Добвить товар</ListGroupItem>
+      <ListGroupItem href={`/useritem/${id}`} >Мои товары</ListGroupItem>
+    </ListGroup>
+  );
 }
+
