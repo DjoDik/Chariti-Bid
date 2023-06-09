@@ -10,11 +10,10 @@ export default function SideBarAucTop(): JSX.Element {
   useEffect(() => {
     dispatch(getItemThunk());
   }, []);
-  const allTop = useAppSelector((store) => store.item);
-  console.log(allTop)
+  const allTop = useAppSelector((store) => store.item.allProduct);
   return (
     <Container>
-      {allTop.map((itemTop:ItemType) => <TopCard itemTop={itemTop}/>)}
+      {allTop.map((itemTop:ItemType) => <TopCard key = {itemTop.id} itemTop={itemTop}/>)}
     </Container>
   )
 }
