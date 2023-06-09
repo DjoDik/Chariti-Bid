@@ -7,6 +7,7 @@ import { Col, Container, Row } from 'reactstrap';
 import AuthPage from './Auth/AuthPage';
 import SideBarCategory from './Components/UI/sideBarCategory';
 import SideBarAucTop from './Components/UI/sideBarAucTop';
+import PhotoUploader from './Components/Item/avatarPage';
 
 function App(): JSX.Element {
   return (
@@ -24,6 +25,7 @@ function App(): JSX.Element {
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/:auth" element={<AuthPage />} />
+            <Route path="/" element={<PhotoUploader/>} />
           </Routes>
         </Col>
         <Col xs="2">
