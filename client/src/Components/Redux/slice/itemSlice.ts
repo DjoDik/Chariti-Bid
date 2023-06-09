@@ -4,10 +4,8 @@ import axios from 'axios';
 import { ItemStateSlice, ItemType } from '../../types/itemType';
 import { AppThunk } from '../hooks';
 
-
-
 const initialState: ItemStateSlice = {
-  allProduct: []
+  allProduct: [],
 };
 
 export const itemSlice = createSlice({
@@ -15,17 +13,24 @@ export const itemSlice = createSlice({
   initialState,
   reducers: {
     itemPosts: (state, action: PayloadAction<ItemType[]>) => {
-      state.allProduct = action.payload
-    }
+      state.allProduct = action.payload;
+    },
+    addPost: (state, action: PayloadAction<ItemType>) => [action.payload, ...state.allProduct],
   },
 });
 
-export const { itemPosts } = itemSlice.actions;
+export const { itemPosts, addPost } = itemSlice.actions;
 
 export default itemSlice.reducer;
 
 export const getItemThunk = (): AppThunk => (dispatch) => {
   axios<ItemType[]>('/')
+    .then(({ data }) => dispatch(itemPosts(data)))
+    .catch(console.log);
+};
+
+export const ItemThunk = (): AppThunk => (dispatch) => {
+  axios.post<ItemType>('/')
     .then(({ data }) => dispatch(itemPosts(data)))
     .catch(console.log);
 };

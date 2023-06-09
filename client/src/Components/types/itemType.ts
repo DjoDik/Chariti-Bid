@@ -17,3 +17,9 @@ export type ItemType = {
 export type ItemStateSlice = {
     allProduct:ItemType[]
 }
+
+export type itemFormType = {
+    title: string,
+    body: string,
+    city: string,
+};
