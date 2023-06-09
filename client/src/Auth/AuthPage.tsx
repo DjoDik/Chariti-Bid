@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
-import { useAppDispatch } from '../Components/Redux/hooks';
+import { useAppDispatch } from '..//Components/Redux/hooks';
 import { loginThunk, signUpThunk } from '../Components/Redux/slice/userSlice';
 import type { UserSignUpType } from '../Components/types/UserTypes';
 
@@ -10,13 +10,7 @@ export default function AuthPage(): JSX.Element {
 
   const [input, setInput] = useState<UserSignUpType>(
     auth === 'signup'
-      ? {
-          username: '',
-          email: '',
-          password: '',
-          phone: '+7',
-          avatar: '',
-        }
+      ? { username: '', email: '', password: '', phone: '+7' }
       : { email: '', password: '' },
   );
 
@@ -34,72 +28,57 @@ export default function AuthPage(): JSX.Element {
 
   return (
     <Row>
-      <Col className="mt-5 d-flex justify-content-center">
-        {' '}
-        {/* Добавляем класс "mt-5" для отступа сверху */}
-        <Form onSubmit={submitHandler} className="modal-form">
+      <Col>
+        <Form onSubmit={submitHandler}>
           {auth === 'signup' && (
             <>
-              <FormGroup>
-                <Label for="exampleName">Name</Label>
-                <Input
-                  id="exampleName"
-                  name="username"
-                  placeholder="Enter your name"
-                  type="text"
-                  value={input.username}
-                  onChange={changeHandler}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for="examplePhone">Phone</Label>
+              <FormGroup floating>
                 <Input
                   id="examplePhone"
                   name="phone"
-                  placeholder="Enter your phone number"
+                  placeholder="Phone"
                   type="text"
                   value={input.phone}
                   onChange={changeHandler}
                 />
+                <Label for="exampleName">Phone</Label>
               </FormGroup>
-              <FormGroup>
-                <Label for="exampleAvatar">Avatar</Label>
+              <FormGroup floating>
                 <Input
-                  id="exampleAvatar"
-                  name="avatar"
-                  placeholder="Choose an avatar"
-                  type="file"
-                  value={input.avatar}
+                  id="exampleName"
+                  name="username"
+                  placeholder="Name"
+                  type="text"
+                  value={input.username}
                   onChange={changeHandler}
                 />
+                <Label for="exampleName">Name</Label>
               </FormGroup>
             </>
           )}
-          <FormGroup>
-            <Label for="exampleEmail">Email</Label>
+          <FormGroup floating>
             <Input
               id="exampleEmail"
               name="email"
-              placeholder="Enter your email"
+              placeholder="Email"
               type="email"
               value={input.email}
               onChange={changeHandler}
             />
+            <Label for="exampleEmail">Email</Label>
           </FormGroup>
-          <FormGroup>
-            <Label for="examplePassword">Password</Label>
+          <FormGroup floating>
             <Input
               id="examplePassword"
               name="password"
-              placeholder="Enter your password"
+              placeholder="Password"
               type="password"
               value={input.password}
               onChange={changeHandler}
             />
+            <Label for="examplePassword">Password</Label>
           </FormGroup>
-          <div className="text-center">
-            <Button type="submit">{auth === 'signup' ? 'Signup' : 'Login'}</Button>
-          </div>
+          <Button type="submit">{auth === 'signup' ? 'Signup' : 'Login'}</Button>
         </Form>
       </Col>
     </Row>

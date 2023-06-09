@@ -5,6 +5,7 @@ import { Col, Container, Row } from 'reactstrap';
 import { CardGroup } from 'reactstrap';
 
 import OneItemCard from './Item/OneItemCard';
+import SideBarCategory from './UI/sideBarCategory';
 
 export default function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -16,12 +17,19 @@ export default function MainPage(): JSX.Element {
   const item = useAppSelector((store) => store.item);
 
   return (
-    <CardGroup>
-      <Row className="justify-content-center">
+    <Row>
+    <Col xs="auto">
+      <SideBarCategory />
+    </Col>
+    <Col>
+      <CardGroup>
+        <Row className="justify-content-center">
           {item.allProduct.map((el) => (
             <OneItemCard oneCard={el} />
           ))}
-      </Row>
-    </CardGroup>
+        </Row>
+      </CardGroup>
+    </Col>
+  </Row>
   );
 }
