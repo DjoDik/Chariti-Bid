@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './Redux/hooks';
 import { getItemThunk } from './Redux/slice/itemSlice';
@@ -5,6 +6,7 @@ import { Col, Container, Row } from 'reactstrap';
 import { CardGroup } from 'reactstrap';
 
 import OneItemCard from './Item/OneItemCard';
+import { selectItems } from './Redux/slice/sortSlice';
 
 export default function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -13,14 +15,14 @@ export default function MainPage(): JSX.Element {
     dispatch(getItemThunk());
   }, []);
 
-  const item = useAppSelector((store) => store.item);
+  const item = useAppSelector(selectItems);
 
   return (
     <CardGroup>
       <Row className="justify-content-center">
-          {item.allProduct.map((el) => (
-            <OneItemCard oneCard={el} />
-          ))}
+        {item.map((el) => (
+          <OneItemCard key={el.id} oneCard={el} />
+        ))}
       </Row>
     </CardGroup>
   );

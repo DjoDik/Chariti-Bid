@@ -21,7 +21,7 @@ export default function OneItemCard({oneCard}: PropsType): JSX.Element {
     src='asdasd'/>
   <CardBody>
     <CardTitle tag="h5">
-      tut text
+     {oneCard.title}
     </CardTitle>
     <Button>
       Смотреть
