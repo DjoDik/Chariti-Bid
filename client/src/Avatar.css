@@ -1,0 +1,23 @@
+.crop-area {
+  max-width: 400px;
+  max-height: 400px;
+  overflow: hidden;
+  position: relative;
+}
+
+.preview-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.preview-image {
+  width: 100%;
+  height: auto;
+}
+
+.image-size-info {
+  margin-top: 20px;
+}
