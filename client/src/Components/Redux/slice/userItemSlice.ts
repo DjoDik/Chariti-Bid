@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
+
 import { ItemType, PostIdType, UserItemStateSlice } from '../../types/itemType';
 import { AppThunk } from '../hooks';
 
@@ -17,7 +18,7 @@ export const UserItemSlice = createSlice({
     },
     deleteUserItem: (state, action: PayloadAction<ItemType['id']>) => {
       state.userItems = state.userItems.filter((el) => el.id !== action.payload);
-    },
+    }
   },
 });
 

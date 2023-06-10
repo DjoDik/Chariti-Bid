@@ -47,6 +47,7 @@ export default function LkMainPage() {
         <Modal isOpen={modal} toggle={toggle}>
           <ModalHeader toggle={toggle}>Добавить товар</ModalHeader>
           <ModalBody>
+
             <form onSubmit={addHandler} id="modalForm">
               <Input
                 placeholder="Название"
@@ -85,6 +86,11 @@ export default function LkMainPage() {
                 ))}
               </Input>
               {/* <Input placeholder='Фото' name='foto'/>  мультир*/}
+            <form>
+              <Input placeholder='Название' name='title'/>
+              <Input placeholder='Описание'name='bode'/>
+              <Input placeholder='Город' name='city'/>
+              {/* <Input placeholder='Город' name='city'/>  мультир*/}
             </form>
           </ModalBody>
           <ModalFooter>
