@@ -1,15 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Box,
+  Avatar,
+  List,
+  ListItem,
+  ListItemButton,
+  Divider,
+} from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../Redux/hooks';
-import { logoutThunk } from '../Redux/slice/userSlice';
-import { checkUserThunk } from '../Redux/slice/userSlice';
+import { logoutThunk, checkUserThunk } from '../Redux/slice/userSlice';
 
 export default function Navbar(): JSX.Element {
   const dispatch = useAppDispatch();
   const user = useAppSelector((store) => store.user);
-  console.log(user.id);
-  
+  const [isMenuOpen, setMenuOpen] = useState(false);
+  const isUserLoggedIn = user.id || localStorage.getItem('user'); // Проверка наличия пользователя в Redux-стейте или localStorage
 
   useEffect(() => {
     dispatch(checkUserThunk());
@@ -19,8 +29,81 @@ export default function Navbar(): JSX.Element {
     dispatch(logoutThunk());
   };
 
-  const isUserLoggedIn = user.id || localStorage.getItem('user'); // Проверка наличия пользователя в Redux-стейте или localStorage
+  const toggleMenu = (): void => {
+    setMenuOpen(!isMenuOpen);
+  };
 
+  let userContent = null;
+
+  if (user.id) {
+    userContent = (
+      <Box sx={{ position: 'relative' }}>
+        <Button onClick={toggleMenu}>
+          <Avatar
+            alt="User Avatar"
+            src="/static/images/avatar/1.jpg"
+            sx={{
+              width: 40,
+              height: 40,
+              transition: 'all 0.3s',
+              '&:hover': {
+                width: 50,
+                height: 50,
+              },
+            }}
+          />
+        </Button>
+        {isMenuOpen && isUserLoggedIn && (
+          <Box
+            sx={{
+              position: 'absolute',
+              width: '500px',
+              height: '300px',
+              top: '100%',
+              right: 0,
+              zIndex: 1,
+              backgroundColor: '#DFF0D8',
+              boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.2)',
+              mt: 1,
+            }}
+          >
+            <List component="nav">
+              <Avatar
+                alt="User Avatar"
+                src="/static/images/avatar/1.jpg"
+                sx={{
+                  width: 150,
+                  height: 150,
+                }}
+              />
+              <ListItem disablePadding>
+                <ListItemButton component={Link} to="/profile" style={{ color: 'black' }}>
+                  Личный кабинет
+                </ListItemButton>
+              </ListItem>
+              <Divider />
+              <ListItem disablePadding>
+                <ListItemButton onClick={logoutHandler} style={{ color: 'black' }}>
+                  Выход
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </Box>
+        )}
+      </Box>
+    );
+  } else {
+    userContent = (
+      <>
+        <Button component={Link} to="/signup" style={{ color: '#B51718' }}>
+          Регистрация
+        </Button>
+        <Button component={Link} to="/login" style={{ color: '#B51718' }}>
+          Вход
+        </Button>
+      </>
+    );
+  }
   return (
     <AppBar position="static" sx={{ backgroundColor: 'Gold' }}>
       <Toolbar>
@@ -45,20 +128,7 @@ export default function Navbar(): JSX.Element {
             </Typography>
           </Box>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: '#B51718' }} />
-          {isUserLoggedIn ? ( // Проверка наличия пользователя в сессии или localStorage
-            <>
-              <Button onClick={logoutHandler}>Logout</Button>
-            </>
-          ) : (
-            <>
-              <Button component={Link} to="/signup" style={{ color: '#B51718' }}>
-                Регистрация
-              </Button>
-              <Button component={Link} to="/login" style={{ color: '#B51718' }}>
-                Вход
-              </Button>
-            </>
-          )}
+          {userContent}
         </Box>
       </Toolbar>
     </AppBar>
