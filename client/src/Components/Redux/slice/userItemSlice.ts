@@ -14,6 +14,7 @@ export const UserItemSlice = createSlice({
   reducers: {
     userItemPosts: (state, action: PayloadAction<ItemType[]>) => {
       state.userItems = action.payload;
+      state.userItems = action.payload;
     },
     deleteUserItem: (state, action: PayloadAction<ItemType['id']>) => {
       state.userItems = state.userItems.filter((el) => el.id !== action.payload);

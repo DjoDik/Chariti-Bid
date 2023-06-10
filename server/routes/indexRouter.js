@@ -1,6 +1,7 @@
 const express = require('express');
 const { Category, Item } = require('../db/models');
 
+
 const indexRouter = express.Router();
 
 indexRouter.get('/', async (req, res) => {
@@ -12,5 +13,7 @@ indexRouter.get('/', async (req, res) => {
     res.sendStatus(500);
   }
 });
+
+
 
 module.exports = indexRouter;
