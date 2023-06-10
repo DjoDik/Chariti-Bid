@@ -24,3 +24,10 @@ export type UserItemStateSlice = {
 export type PostIdType = {
     id:string
 }
+
+export type itemFormType = {
+    title: string,
+    body: string,
+    city: string,
+    category_id: string
+};
