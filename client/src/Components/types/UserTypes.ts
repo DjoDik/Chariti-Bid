@@ -5,7 +5,7 @@ export type UserType = {
   password: string;
   role?: boolean;
   phone: string;
-  avatar?: Buffer;
+  avatar: string | null; // Обновлено: поле avatar не является необязательным
   onlinestatus: boolean;
 };
 
@@ -14,9 +14,8 @@ export type UserSignUpType = {
   email: string;
   password: string;
   phone: string;
-  avatar: string;
+  avatar?: string | null; // Обновлено: поле avatar может принимать значение null
 };
-
 export type UserHandlersType = {
   e: React.FormEvent<HTMLFormElement>;
   input: UserSignUpType;

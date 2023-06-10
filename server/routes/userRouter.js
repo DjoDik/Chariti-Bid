@@ -5,13 +5,14 @@ const { User } = require('../db/models');
 const router = express.Router();
 
 router.post('/signup', async (req, res) => {
-  const { username, email, password, phone } = req.body;
+  const { username, email, password, phone, avatar } = req.body; // Добавляем получение поля avatar из запроса
   console.log(req.body);
-  if ((username && email && password, phone)) {
+  if (username && email && password && phone) {
+    // Исправляем проверку условия
     try {
       const [user, created] = await User.findOrCreate({
         where: { email },
-        defaults: { username, password: await bcrypt.hash(password, 10), phone },
+        defaults: { username, password: await bcrypt.hash(password, 10), phone, avatar }, // Сохраняем поле avatar в базе данных
       });
       if (!created) return res.sendStatus(401);
 

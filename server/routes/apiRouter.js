@@ -1,11 +1,22 @@
 const express = require('express');
 const multer = require('multer');
+const path = require('path');
 const { User } = require('../db/models');
 
 const router = express.Router();
 
 // Конфигурация Multer
-const storage = multer.memoryStorage(); // Используем memory storage для хранения изображения в памяти
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads'); // Указываем папку для сохранения файлов
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+    const fileExtension = path.extname(file.originalname);
+    const filename = uniqueSuffix + fileExtension;
+    cb(null, filename); // Указываем имя файла
+  },
+});
 
 const upload = multer({ storage });
 
@@ -37,11 +48,11 @@ router.post('/avatar', upload.single('avatar'), async (req, res) => {
       return;
     }
 
-    // Получите данные изображения из req.file.buffer
-    const imageBuffer = req.file.buffer;
+    // Получите путь до сохраненного файла
+    const filePath = req.file.path;
 
-    // Сохраните данные изображения в поле avatar пользователя
-    user.avatar = imageBuffer;
+    // Обновите поле avatar пользователя с путем до файла
+    user.avatar = filePath;
 
     // Сохраните изменения в базе данных
     await user.save();
