@@ -1,5 +1,5 @@
 const express = require('express');
-const { Item, Category } = require('../db/models');
+const { Item, Category, FotoGalery } = require('../db/models');
 
 const sortRouter = express.Router();
 
@@ -11,7 +11,7 @@ sortRouter.get('/:id', async (req, res) => {
     if (category === 'Все') {
       // Если выбрана категория "Все", получаем все элементы
       data = await Item.findAll({
-        include: [Category],
+        include: [Category, FotoGalery],
       });
     } else {
       // В противном случае, получаем элементы для указанной категории
@@ -23,7 +23,7 @@ sortRouter.get('/:id', async (req, res) => {
 
       data = await Item.findAll({
         where: { category_id: categoryRecord.id },
-        include: [Category],
+        include: [Category, FotoGalery],
       });
     }
 

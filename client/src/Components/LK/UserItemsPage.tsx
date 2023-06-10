@@ -15,7 +15,6 @@ const userId = Object.values(id)
       dispatch(getUserItemThunk(userId[0]));
     }, []);
     const allUserItems = useAppSelector((store) => store.userItem.userItems)
-    console.log("===========Page",allUserItems)
   return (
     <CardGroup>
       <Row className="justify-content-center">
