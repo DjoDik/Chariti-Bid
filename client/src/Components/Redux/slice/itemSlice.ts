@@ -16,7 +16,11 @@ export const itemSlice = createSlice({
       state.allProduct = action.payload;
     },
     addPost: (state, action: PayloadAction<ItemType>) => {
-      state.allProduct = [action.payload, ...state.allProduct]
+      state.allProduct.forEach((el) => {
+        if(el.category_id === action.payload.category_id) {
+          el.Items = [action.payload, ...state.allProduct]
+        }
+      })
     }
   },
 });

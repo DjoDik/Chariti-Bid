@@ -33,13 +33,12 @@ userItemRouter.patch('/:id', async(req,res) => {
 userItemRouter.post('/', async (req, res) => {
   try {
   const { title, body, city, category_id } = req.body;
-  console.log('req.body', req.body);
   const newItem = await Item.create({
     user_id: req.session.user.id,
     title, 
     body, 
     city,
-    category_id: Number(category_id)+2,
+    category_id: Number(category_id),
     price: 0,
     sellStatus: false,
     lastUser_id: null,

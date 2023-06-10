@@ -78,8 +78,8 @@ export default function LkMainPage() {
                 <option value="" hidden>
                   Категория
                 </option>
-                {allCategory.slice(0,-1).map((category, index) => (
-                  <option value={index} key={category.name}>
+                {allCategory.slice(1).map((category) => (
+                  <option value={category.id} key={category.name}>
                     {category.name}
                   </option>
                 ))}
