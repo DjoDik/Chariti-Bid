@@ -11,7 +11,7 @@ export type ItemType = {
     name:string,
     id:number
     Items: ItemType[];
-    img: string
+    FotoGaleries: FotoType[]
 }
 
 export type ItemStateSlice = {
@@ -31,3 +31,9 @@ export type itemFormType = {
     city: string,
     category_id: string
 };
+
+export type FotoType = {
+    id: number,
+    img: string,
+    item_id: number
+}

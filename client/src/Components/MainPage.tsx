@@ -16,7 +16,7 @@ export default function MainPage(): JSX.Element {
   }, []);
 
   const item = useAppSelector(selectItems);
-
+  
   return (
     <Row>
     <Col xs="auto">
@@ -26,7 +26,7 @@ export default function MainPage(): JSX.Element {
       <CardGroup>
         <Row className="justify-content-center">
           {item.map((el) => (
-            <OneItemCard oneCard={el} />
+            <OneItemCard oneCard={el} key={el.id}/>
           ))}
         </Row>
       </CardGroup>
