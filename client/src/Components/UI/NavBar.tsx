@@ -14,6 +14,10 @@ import {
 } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../Redux/hooks';
 import { logoutThunk, checkUserThunk } from '../Redux/slice/userSlice';
+import bg1 from '/public/img/bg1.jpg';
+import bg2 from '/public/img/bg2.jpg';
+import bg3 from '/public/img/bg3.jpg';
+import bg4 from '/public/img/bg3.jpg';
 
 export default function Navbar(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -31,6 +35,13 @@ export default function Navbar(): JSX.Element {
 
   const toggleMenu = (): void => {
     setMenuOpen(!isMenuOpen);
+  };
+
+  const [bgImages] = useState([bg1, bg2, bg3, bg4]);
+  const [currentBgImageIndex, setCurrentBgImageIndex] = useState(0);
+  const currentBgImage = bgImages[currentBgImageIndex];
+  const changeBackgroundImage = () => {
+    setCurrentBgImageIndex((prevIndex) => (prevIndex + 1) % bgImages.length);
   };
 
   let userContent = null;
@@ -105,7 +116,13 @@ export default function Navbar(): JSX.Element {
     );
   }
   return (
-    <AppBar position="static" sx={{ backgroundColor: 'Gold' }}>
+    <AppBar position="static" sx={{
+      backgroundImage: `url(${currentBgImage})`,
+      width: '100%',
+      height: '400px',
+      // backgroundSize: '1000px', // Добавлено свойство backgroundSize
+    }}>
+      {' '}
       <Toolbar>
         <Box
           sx={{
@@ -113,9 +130,14 @@ export default function Navbar(): JSX.Element {
             justifyContent: 'space-between',
             alignItems: 'center',
             width: '100%',
+            height: '400px',
+            // backgroundImage: `url(${currentBgImage})`, // Использование текущей фоновой картинки
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            transition: 'background-image 0.5s ease',
           }}
         >
-          <Box sx={{ display: 'flex', alignItems: 'center' }} component={Link} to="/">
+          <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor:'white' }} component={Link} to="/">
             <Button type="button" style={{ height: '40px' }}>
               <img style={{ height: '50px', borderRadius: '10px' }} src="/logo.png" alt="#" />
             </Button>
