@@ -1,10 +1,9 @@
-// SideBarCategory.tsx
-
 import React, { useEffect } from 'react';
-import { Container, List } from 'reactstrap';
+import { Button, Container, List } from 'reactstrap';
 import { useAppDispatch, useAppSelector } from '../Redux/hooks';
 import { getItemThunk } from '../Redux/slice/itemSlice';
 import { SortItemThunk, selectSelectedCategory } from '../Redux/slice/sortSlice';
+import '/public/style.css';
 
 export default function SideBarCategory(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -13,24 +12,28 @@ export default function SideBarCategory(): JSX.Element {
   }, []);
 
   const allCategory = useAppSelector((store) => store.item.allProduct);
-  const selectedCategory = useAppSelector(selectSelectedCategory);
+  
 
   const handleCategoryClick = (categoryName: string) => {
     dispatch(SortItemThunk(categoryName));
   };
 
+ 
+
   return (
     <Container>
-      {allCategory.map((category) => (
-        <List key={category.id}>
-          <li
-            onClick={() => handleCategoryClick(category.name)}
-            style={{ fontSize: '25px', cursor: 'pointer' }}
-          >
-            {category.name}
-          </li>
-        </List>
-      ))}
+      <div className='box'>
+        {allCategory.map((category) => (
+          <List key={category.id}>
+            <li
+              onClick={() => handleCategoryClick(category.name)}
+              style={{ fontSize: '25px', cursor: 'pointer' }}
+            >
+              {category.name}
+            </li>
+          </List>
+        ))}
+      </div>
     </Container>
   );
 }
