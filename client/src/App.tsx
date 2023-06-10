@@ -9,6 +9,7 @@ import SideBarCategory from './Components/UI/sideBarCategory';
 import SideBarAucTop from './Components/UI/sideBarAucTop';
 import UserItemsPage from './Components/LK/UserItemsPage';
 import LkMainPage from './Components/LK/LkMainPage';
+import UserProfilePage from './Components/LK/UserProfilePage';
 
 function App(): JSX.Element {
  
@@ -26,6 +27,7 @@ function App(): JSX.Element {
             <Route path="/:auth" element={<AuthPage />} />
             <Route path='/useritem/:id' element={<UserItemsPage/>}/>
             <Route path="/cabinet" element={<LkMainPage />} />
+            <Route path='/userprofile' element={<UserProfilePage/>}/>
           </Routes>
         </Col>
         <Col xs="2">

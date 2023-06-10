@@ -62,4 +62,31 @@ router.get('/logout', (req, res) => {
   res.clearCookie('sid').sendStatus(200);
 });
 
+router.post('/change-password', async (req, res) => {
+  const { email, oldPassword, newPassword } = req.body;
+  console.log("Reqqqqqqqqqqqqqqqqqqqqq",req.body);
+  if (email && oldPassword && newPassword) {
+    try {
+      const user = await User.findOne({
+        where: { email },
+      });
+      if (!(await bcrypt.compare(oldPassword, user.password))) {
+        return res.sendStatus(401);
+      }
+
+      const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+      user.password = hashedNewPassword;
+      await user.save();
+
+      const sessionUser = JSON.parse(JSON.stringify(user));
+      delete sessionUser.password;
+      req.session.user = sessionUser;
+      return res.sendStatus(200);
+    } catch (err) {
+      console.log(err);
+      return res.sendStatus(500);
+    }
+  }
+  return res.sendStatus(500);
+});
 module.exports = router;

@@ -12,6 +12,7 @@ export type ItemType = {
     id:number
     Items: ItemType[];
     img: string
+    editedPost:ItemType[]
 }
 
 export type ItemStateSlice = {

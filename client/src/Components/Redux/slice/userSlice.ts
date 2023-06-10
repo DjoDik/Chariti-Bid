@@ -13,11 +13,13 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<UserState>) => action.payload,
-   
+    changePassword: (state, action: PayloadAction<{ oldPassword: string, newPassword: string, email: string }>) => {
+     state.password = action.payload.newPassword;
+    },
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser,changePassword } = userSlice.actions;
 
 export default userSlice.reducer;
 
@@ -49,4 +51,11 @@ export const logoutThunk = (): AppThunk => (dispatch) => {
   axios('/user/logout')
     .then(() => dispatch(setUser({ status: true })))
     .catch(() => dispatch(setUser({ status: true })));
+};
+export const changePasswordThunk = (newPassword: string,oldPassword:string,email:string): AppThunk => (dispatch) => {
+  axios.post<UserType>('/user/change-password', { newPassword,oldPassword,email })
+    .then(({ data }) => dispatch(changePassword(data.password)))
+    .catch((error) => {
+      console.log(error);
+    });
 };
