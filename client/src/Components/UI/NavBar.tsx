@@ -88,8 +88,13 @@ export default function Navbar(): JSX.Element {
                 }}
               />
               <ListItem disablePadding>
-                <ListItemButton component={Link} to="/profile" style={{ color: 'black' }}>
+                <ListItemButton component={Link} to="/cabinet" style={{ color: 'black' }}>
                   Личный кабинет
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton component={Link} to="/profile" style={{ color: 'black' }}>
+                  Настройки
                 </ListItemButton>
               </ListItem>
               <Divider />
@@ -115,44 +120,71 @@ export default function Navbar(): JSX.Element {
       </>
     );
   }
+
   return (
-    <AppBar position="static" sx={{
-      backgroundImage: `url(${currentBgImage})`,
-      width: '100%',
-      height: '400px',
-      // backgroundSize: '1000px', // Добавлено свойство backgroundSize
-    }}>
-      {' '}
-      <Toolbar>
+    <>
+      <Box
+        sx={{
+          backgroundColor: 'black',
+          height: '60px',
+          display: 'flex',
+          alignItems: 'center',
+          zIndex: 2,
+          position: 'relative',
+          px: 4,
+          justifyContent: 'space-between',
+        }}
+      >
         <Box
           sx={{
             display: 'flex',
-            justifyContent: 'space-between',
             alignItems: 'center',
-            width: '100%',
-            height: '400px',
-            // backgroundImage: `url(${currentBgImage})`, // Использование текущей фоновой картинки
+            backgroundColor: 'black',
+          }}
+          component={Link}
+          to="/"
+        >
+          <Button type="button" style={{ height: '40px' }}>
+            <img style={{ height: '50px', borderRadius: '10px' }} src="/logo.png" alt="#" />
+          </Button>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ marginLeft: '10px', fontWeight: 'bold', color: 'white' }}
+          >
+            CHARITY BID{' '}
+          </Typography>
+        </Box>
+        {userContent}
+      </Box>
+      <Box
+        sx={{
+          position: 'relative',
+          top: '-60px',
+          height: '400px',
+          overflow: 'hidden',
+        }}
+      >
+        <AppBar position="static" sx={{ backgroundColor: 'transparent' }}>
+          <Toolbar>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: '#B51718' }} />
+            {userContent}
+          </Toolbar>
+        </AppBar>
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundImage: `url(${currentBgImage})`,
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             transition: 'background-image 0.5s ease',
           }}
-        >
-          <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor:'white' }} component={Link} to="/">
-            <Button type="button" style={{ height: '40px' }}>
-              <img style={{ height: '50px', borderRadius: '10px' }} src="/logo.png" alt="#" />
-            </Button>
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ marginLeft: '10px', fontWeight: 'bold', color: '#B51718' }}
-            >
-              CHARITY BID{' '}
-            </Typography>
-          </Box>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: '#B51718' }} />
-          {userContent}
-        </Box>
-      </Toolbar>
-    </AppBar>
+        ></Box>
+      </Box>
+    </>
   );
 }
