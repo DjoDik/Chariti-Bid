@@ -29,4 +29,5 @@ export type itemFormType = {
     title: string,
     body: string,
     city: string,
+    category_id: string
 };

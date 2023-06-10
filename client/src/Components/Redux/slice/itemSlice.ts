@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { ItemStateSlice, ItemType } from '../../types/itemType';
+import { ItemStateSlice, ItemType, itemFormType } from '../../types/itemType';
 import { AppThunk } from '../hooks';
 
 const initialState: ItemStateSlice = {
@@ -15,7 +15,9 @@ export const itemSlice = createSlice({
     itemPosts: (state, action: PayloadAction<ItemType[]>) => {
       state.allProduct = action.payload;
     },
-    addPost: (state, action: PayloadAction<ItemType>) => [action.payload, ...state.allProduct],
+    addPost: (state, action: PayloadAction<ItemType>) => {
+      state.allProduct = [action.payload, ...state.allProduct]
+    }
   },
 });
 
@@ -29,8 +31,9 @@ export const getItemThunk = (): AppThunk => (dispatch) => {
     .catch(console.log);
 };
 
-export const ItemThunk = (): AppThunk => (dispatch) => {
-  axios.post<ItemType>('/')
-    .then(({ data }) => dispatch(itemPosts(data)))
+export const addItemThunk = (inputs: itemFormType): AppThunk => (dispatch) => {
+  axios
+    .post<ItemType>('/useritem', inputs)
+    .then(({ data }) => dispatch(addPost(data)))
     .catch(console.log);
 };
