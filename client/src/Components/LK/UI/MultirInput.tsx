@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useAppDispatch } from '../../Redux/hooks';
-import { addPhotoThunk } from '../../Redux/slice/photoSlice';
+// import { addPhotoThunk } from '../../Redux/slice/photoSlice';
 import { Button, Input } from 'reactstrap';
 
 export default function PhotoUploadForm (): JSX.Element {
