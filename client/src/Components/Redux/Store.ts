@@ -3,7 +3,6 @@ import itemReducer from './slice/itemSlice'
 import userReducer from '../Redux/slice/userSlice';
 import sortReducer from '../Redux/slice/sortSlice'
 import UserItemReducer from '../Redux/slice/userItemSlice'
-import photoReducer from './slice/photoSlice'
 import modalReducer from './slice/modalSlice'
 export const store = configureStore({
   reducer: {
@@ -11,7 +10,6 @@ export const store = configureStore({
     user: userReducer,
     sort: sortReducer,
     userItem:UserItemReducer,
-    photo: photoReducer,
     modal: modalReducer,
   },
 });

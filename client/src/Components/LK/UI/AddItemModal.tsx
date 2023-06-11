@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import LeftSideMenu from './UI/LeftSideMenu';
 import { Button, Input, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
-import { useAppDispatch, useAppSelector } from '../Redux/hooks';
-import { addItemThunk } from '../Redux/slice/itemSlice';
-import MultirInput from './UI/MultirInput';
-import { closeModal, openModal } from '../Redux/slice/modalSlice';
+import { useAppDispatch, useAppSelector } from '../../Redux/hooks';
+import { addItemThunk } from '../../Redux/slice/itemSlice';
+import MultirInput from './MultirInput';
+import { closeModal, openModal } from '../../Redux/slice/modalSlice';
 
 export default function LkMainPage() {
   const dispatch = useAppDispatch();
@@ -18,17 +17,13 @@ export default function LkMainPage() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const handleOpenModal = () => {
-    dispatch(openModal());
-  };
+
 
   const handleCloseModal = () => {
     dispatch(closeModal());
   };
 
   const allCategory = useAppSelector((store) => store.item.allProduct);
-
-
 
   const addHandler: React.FormEventHandler<HTMLFormElement> = (e): void => {
     e.preventDefault();
@@ -91,7 +86,6 @@ export default function LkMainPage() {
                   ))}
                 </Input>
                 <MultirInput />
-                {/* <Input placeholder='Фото' name='foto'/>  мультир*/}
               </form>
             </ModalBody>
             <ModalFooter>

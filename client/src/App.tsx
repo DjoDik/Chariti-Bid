@@ -7,7 +7,6 @@ import AuthPage from './Auth/AuthPage';
 import SideBarAucTop from './Components/UI/sideBarAucTop';
 import PhotoUploader from './Components/Item/avatarPage';
 import UserItemsPage from './Components/LK/UserItemsPage';
-import LkMainPage from './Components/LK/AddItemModal';
 import UserProfilePage from './Components/LK/UserProfilePage';
 import Basket from './Components/LK/Basket';
 

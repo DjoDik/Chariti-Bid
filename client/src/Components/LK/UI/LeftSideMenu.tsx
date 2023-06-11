@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../Redux/hooks';
 import { Link } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { closeModal, openModal } from '../../Redux/slice/modalSlice';
-import LkMainPage from '../AddItemModal';
+import LkMainPage from './AddItemModal';
 
 export default function LeftSideMenu({}: Props) {
   const userId = useAppSelector((store) => store.user);

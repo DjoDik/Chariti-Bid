@@ -20,7 +20,6 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Ручка для загрузки файла
-// Ручка для загрузки файла
 router.post('/avatar', upload.single('avatar'), async (req, res) => {
   try {
     // Доступ к информации о загруженном файле через req.file
@@ -64,12 +63,5 @@ router.post('/avatar', upload.single('avatar'), async (req, res) => {
   }
 });
 
-router.post('/photo', upload.array('photo', 5), async (req, res) => {
-  const arraaaaaaa = req.files
-  arraaaaaaa.forEach((el) => console.log(el.fieldname))
-
-  // Отправка ответа
-  res.json({ message: 'Файл успешно загружен' });
-});
 
 module.exports = router;
