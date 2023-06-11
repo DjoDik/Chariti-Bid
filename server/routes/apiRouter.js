@@ -5,9 +5,26 @@ const { User } = require('../db/models');
 const router = express.Router();
 
 // Конфигурация Multer
-const storage = multer.memoryStorage(); // Используем memory storage для хранения изображения в памяти
+const storage = multer.diskStorage({
+  destination(req, file, cb) {
+    cb(null, 'images/');
+  },
+  filename(req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
 
-const upload = multer({ storage });
+const types = ['image/png', 'imagejpeg', 'image/jpg'];
+
+const fileFilter = (req, file, cb) => {
+  if (types.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+const upload = multer({ storage, fileFilter });
 
 // Ручка для загрузки файла
 router.post('/avatar', upload.single('avatar'), async (req, res) => {
@@ -51,6 +68,14 @@ router.post('/avatar', upload.single('avatar'), async (req, res) => {
     console.error(err);
     res.sendStatus(500);
   }
+});
+
+router.post('/photo', upload.array('photo', 5), async (req, res) => {
+  const arraaaaaaa = req.files
+  arraaaaaaa.forEach((el) => console.log(el.fieldname))
+
+  // Отправка ответа
+  res.json({ message: 'Файл успешно загружен' });
 });
 
 module.exports = router;

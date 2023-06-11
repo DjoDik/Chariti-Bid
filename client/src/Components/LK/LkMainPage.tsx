@@ -3,6 +3,7 @@ import LeftSideMenu from './UI/LeftSideMenu';
 import { Button, Input, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
 import { useAppDispatch, useAppSelector } from '../Redux/hooks';
 import { addItemThunk } from '../Redux/slice/itemSlice';
+import MultirInput from './UI/MultirInput';
 
 export default function LkMainPage() {
   const dispatch = useAppDispatch();
@@ -72,6 +73,7 @@ export default function LkMainPage() {
               <Input
                 name="category_id"
                 type="select"
+                style={{ marginBottom: 10 }}
                 value={formData.category_id}
                 onChange={handleChange}
               >
@@ -84,6 +86,7 @@ export default function LkMainPage() {
                   </option>
                 ))}
               </Input>
+              <MultirInput />
               {/* <Input placeholder='Фото' name='foto'/>  мультир*/}
             </form>
           </ModalBody>

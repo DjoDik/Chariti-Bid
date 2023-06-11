@@ -10,7 +10,6 @@ export default function PhotoUploader(): JSX.Element {
   const [modalOpen, setModalOpen] = useState(false);
   const [cropArea, setCropArea] = useState<DOMRect | null>(null);
 
-
   const toggleModal = () => {
     setModalOpen(!modalOpen);
   };
@@ -21,7 +20,6 @@ export default function PhotoUploader(): JSX.Element {
       setCropArea(null); // Сбросить область обрезки
     }
   };
-  
 
   const handleUpload = () => {
     if (selectedFile) {
