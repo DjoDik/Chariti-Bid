@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
-import { Button, Card, CardBody, CardTitle, Row, Modal, ModalHeader, ModalBody, Input, CardText } from 'reactstrap';
+import {
+  Button,
+  Card,
+  CardBody,
+  CardTitle,
+  Row,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Input,
+  CardText,
+} from 'reactstrap';
 import { ItemType } from '../types/itemType';
 import { deleteThunk, editThunk } from '../Redux/slice/userItemSlice';
 import { useAppDispatch } from '../Redux/hooks';
@@ -46,7 +57,7 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
       style={{
         width: '13rem',
         margin: '10px',
-        border: '0px solid white'
+        border: '0px solid white',
       }}
     >
       <img alt="Sample" src={oneCard.img} />
@@ -54,8 +65,12 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
         <CardTitle tag="h5">{oneCard.title}</CardTitle>
         <CardText>{oneCard.body}</CardText>
         <Row>
-          <Button color="danger" onClick={() => deleteHandler(oneCard.id)}>Удалить</Button>
-          <Button color="primary" onClick={toggleModal}>Редактировать</Button>
+          <Button color="danger" onClick={() => deleteHandler(oneCard.id)}>
+            Удалить
+          </Button>
+          <Button color="primary" onClick={toggleModal}>
+            Редактировать
+          </Button>
         </Row>
       </CardBody>
 
