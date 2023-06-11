@@ -29,10 +29,17 @@ export default function Navbar(): JSX.Element {
   const [isLeftMenuOpen, setLeftMenuOpen] = useState(false);
   const isUserLoggedIn = user.id || localStorage.getItem('user');
   const menuRef = useRef<HTMLDivElement>(null);
+  const [avatar, setAvatar] = useState('');
 
   useEffect(() => {
     dispatch(checkUserThunk());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (user.id) {
+      setAvatar(`http://localhost:3001/${user.avatar}`);
+    }
+  }, [user]);
 
   const logoutHandler = (): void => {
     dispatch(logoutThunk());
@@ -74,7 +81,7 @@ export default function Navbar(): JSX.Element {
       clearInterval(intervalId); // Очищаем интервал при размонтировании компонента
     };
   }, []);
-  console.log(user);
+
   let userContent = null;
 
   if (user.id) {
@@ -83,7 +90,7 @@ export default function Navbar(): JSX.Element {
         <Button onClick={toggleMenu}>
           <Avatar
             alt="User Avatar"
-            src={`http://localhost:3001/${user.avatar}`}
+            src={avatar}
             sx={{
               width: 40,
               height: 40,
@@ -114,7 +121,7 @@ export default function Navbar(): JSX.Element {
               <List component="nav">
                 <Avatar
                   alt="User Avatar"
-                  src={`http://localhost:3001/${user.avatar}`}
+                  src={avatar}
                   sx={{
                     width: 150,
                     height: 150,
@@ -155,8 +162,6 @@ export default function Navbar(): JSX.Element {
       </>
     );
   }
-
-  // Rest of the code...
 
   return (
     <>
@@ -200,20 +205,16 @@ export default function Navbar(): JSX.Element {
       <Box
         className={`background-container ${isImageLoaded ? 'image-loaded' : ''}`}
         sx={{
-          // backgroundImage: `url(${currentBgImage})`,
-          animation: `${isImageLoaded ? 'fade-in 0.5s ease' : 'fade-out 0.5s ease'} forwards`, // Анимация появления/исчезания
           height: '400px',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
-          // minHeight: 'calc(100vh - 60px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          opacity: isImageLoaded ? 1 : 0, // Прозрачность фоновой картинки
-          transition: 'opacity 0.5s ease', // Плавная анимация перехода
+          opacity: isImageLoaded ? 1 : 0,
+          transition: 'opacity 0.5s ease',
         }}
       >
-        {' '}
         <img
           className="background-image"
           src={currentBgImage}
