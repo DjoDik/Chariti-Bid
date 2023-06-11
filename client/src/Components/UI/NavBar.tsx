@@ -23,7 +23,7 @@ export default function Navbar(): JSX.Element {
   const dispatch = useAppDispatch();
   const user = useAppSelector((store) => store.user);
   const [isMenuOpen, setMenuOpen] = useState(false);
-  const isUserLoggedIn = user.id || localStorage.getItem('user'); // Проверка наличия пользователя в Redux-стейте или localStorage
+  const isUserLoggedIn = user.id || localStorage.getItem('user');
 
   useEffect(() => {
     dispatch(checkUserThunk());
