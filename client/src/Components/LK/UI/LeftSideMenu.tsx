@@ -48,7 +48,9 @@ export default function LeftSideMenu({}: Props) {
           Добавить товар
         </ListGroupItem>
         <ListGroupItem
-          onClick={() => (window.location = `/useritem/${id}`)}
+          tag={Link}
+          to={`/useritem/${id}`}
+          action
           style={{ backgroundColor: 'transparent' }}
         >
           Мои товары
