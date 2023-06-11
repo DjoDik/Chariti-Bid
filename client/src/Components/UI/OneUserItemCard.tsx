@@ -23,15 +23,14 @@ type PropsType = {
 export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
   const dispatch = useAppDispatch();
   const [modalOpen, setModalOpen] = useState(false);
-  const [editedPost, setEditedPost] = useState<ItemType[]>({
+  const [editedPost, setEditedPost] = useState<ItemType>({
     id: oneCard.id,
     title: oneCard.title,
     body: oneCard.body,
     city: oneCard.city,
-    price: oneCard.price,
   });
 
-  const deleteHandler = (id: string) => {
+  const deleteHandler = (id:number) => {
     dispatch(deleteThunk(id));
   };
 
@@ -97,13 +96,6 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
               placeholder="Город"
               name="city"
               value={editedPost.city}
-              onChange={handleInputChange}
-            />
-            <Input
-              className="mt-4"
-              placeholder="Стоимость"
-              name="price"
-              value={editedPost.price}
               onChange={handleInputChange}
             />
             <Button className="w-100 mt-4" color="primary" onClick={saveChanges}>

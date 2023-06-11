@@ -101,7 +101,7 @@ module.exports = {
           {
             category_id:6,
             user_id: 1,
-            price:0,
+            price:100,
             title:"Спальник",
             body:"Крутой спальник",
             city:'Астрахань',
@@ -110,7 +110,7 @@ module.exports = {
           {
             category_id:7,
             user_id: 1,
-            price:0,
+            price:500,
             title:"Мангал",
             body:"Крутой мангал",
             city:'Омск',
@@ -119,7 +119,7 @@ module.exports = {
           {
             category_id:8,
             user_id: 1,
-            price:0,
+            price:1000,
             title:"Другое",
             body:"Крутое другое",
             city:'Новосибирск',

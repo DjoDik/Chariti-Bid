@@ -5,7 +5,8 @@ type PropType = {
     itemTop:ItemType
 }
 export default function TopCard({itemTop}:PropType):JSX.Element {
-const item = itemTop.Items.map((el) => el.price)
+const {Items} = itemTop
+
   return (
     <Card
   style={{
@@ -18,19 +19,19 @@ const item = itemTop.Items.map((el) => el.price)
   />
   <CardBody>
     <CardTitle tag="h5">
-     
+    {Items[0].title}
     </CardTitle>
     <CardSubtitle
       className="mb-2 text-muted"
       tag="h6"
     >
-      Card subtitle
+      {Items[0].body}
     </CardSubtitle>
     <CardText>
-      Some quick example text to build on the card title and make up the bulk of the card‘s content.
+    {Items[0].city}
     </CardText>
-    <Button onClick={() => console.log(item)}>
-     Bid:{itemTop.price}
+    <Button color='danger'>
+     Bid:{Items[0].price}
     </Button>
   </CardBody>
 </Card>

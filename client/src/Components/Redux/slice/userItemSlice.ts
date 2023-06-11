@@ -14,7 +14,6 @@ export const UserItemSlice = createSlice({
   reducers: {
     userItemPosts: (state, action: PayloadAction<ItemType[]>) => {
       state.userItems = action.payload;
-      state.userItems = action.payload;
     },
     deleteUserItem: (state, action: PayloadAction<ItemType['id']>) => {
       state.userItems = state.userItems.filter((el) => el.id !== action.payload);
@@ -34,7 +33,7 @@ export const getUserItemThunk = (id: string): AppThunk => (dispatch) => {
     .catch(console.log);
 };
 
-export const deleteThunk = (id: string): AppThunk => (dispatch) => {
+export const deleteThunk = (id: number): AppThunk => (dispatch) => {
   axios
     .delete(`/useritem/${id}`)
     .then(() => dispatch(deleteUserItem(id)))
