@@ -6,7 +6,6 @@ const { User } = require('../db/models');
 const router = express.Router();
 
 // Конфигурация Multer
-// Конфигурация Multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'uploads'); // Указываем папку для сохранения файлов
@@ -20,7 +19,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// Ручка для загрузки файла
 // Ручка для загрузки файла
 router.post('/avatar', upload.single('avatar'), async (req, res) => {
   try {
@@ -64,5 +62,6 @@ router.post('/avatar', upload.single('avatar'), async (req, res) => {
     res.sendStatus(500);
   }
 });
+
 
 module.exports = router;
