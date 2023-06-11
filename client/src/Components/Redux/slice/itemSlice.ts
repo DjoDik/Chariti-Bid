@@ -3,6 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { ItemStateSlice, ItemType, itemFormType } from '../../types/itemType';
 import { AppThunk } from '../hooks';
+import {addUserItemPosts}  from './userItemSlice'
 
 const initialState: ItemStateSlice = {
   allProduct: [],
@@ -38,6 +39,10 @@ export const getItemThunk = (): AppThunk => (dispatch) => {
 export const addItemThunk = (inputs: itemFormType): AppThunk => (dispatch) => {
   axios
     .post<ItemType>('/useritem', inputs)
-    .then(({ data }) => dispatch(addPost(data)))
+    .then(({ data }) => {
+      dispatch(addPost(data));
+      dispatch(addUserItemPosts(data));
+    })
     .catch(console.log);
 };
+
