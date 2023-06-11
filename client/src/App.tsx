@@ -1,11 +1,9 @@
 import React from 'react';
-import { Route, Routes, useParams } from 'react-router-dom';
-
+import { Route, Routes } from 'react-router-dom';
 import Navbar from './Components/UI/NavBar';
 import MainPage from './Components/MainPage';
 import { Col, Container, Row } from 'reactstrap';
 import AuthPage from './Auth/AuthPage';
-import SideBarCategory from './Components/UI/sideBarCategory';
 import SideBarAucTop from './Components/UI/sideBarAucTop';
 import UserItemsPage from './Components/LK/UserItemsPage';
 import LkMainPage from './Components/LK/LkMainPage';
