@@ -7,9 +7,11 @@ import { Col, Container, Row } from 'reactstrap';
 import AuthPage from './Auth/AuthPage';
 import SideBarCategory from './Components/UI/sideBarCategory';
 import SideBarAucTop from './Components/UI/sideBarAucTop';
+import PhotoUploader from './Components/Item/avatarPage';
 import UserItemsPage from './Components/LK/UserItemsPage';
 import LkMainPage from './Components/LK/LkMainPage';
 import UserProfilePage from './Components/LK/UserProfilePage';
+import Basket from './Components/LK/Basket'
 
 function App(): JSX.Element {
  
@@ -25,9 +27,11 @@ function App(): JSX.Element {
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/:auth" element={<AuthPage />} />
+            <Route path="/" element={<PhotoUploader/>} />
             <Route path='/useritem/:id' element={<UserItemsPage/>}/>
             <Route path="/cabinet" element={<LkMainPage />} />
             <Route path='/userprofile' element={<UserProfilePage/>}/>
+            <Route path="/cabinet/basket" element={<Basket />} />
           </Routes>
         </Col>
         <Col xs="2">

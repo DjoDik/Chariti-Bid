@@ -13,6 +13,7 @@ export type ItemType = {
     Items: ItemType[];
     img: string
     editedPost:ItemType[]
+    FotoGaleries: FotoType[]
 }
 
 export type ItemStateSlice = {
@@ -32,3 +33,9 @@ export type itemFormType = {
     city: string,
     category_id: string
 };
+
+export type FotoType = {
+    id: number,
+    img: string,
+    item_id: number
+}
