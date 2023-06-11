@@ -15,10 +15,10 @@ import {
 } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../Redux/hooks';
 import { logoutThunk, checkUserThunk } from '../Redux/slice/userSlice';
-import bg1 from '/public/img/bg1.jpg';
-import bg2 from '/public/img/bg2.jpg';
-import bg3 from '/public/img/bg3.jpg';
-import bg4 from '/public/img/bg4.jpg';
+import bg1 from '/img/bg1.jpg';
+import bg2 from '/img/bg2.jpg';
+import bg3 from '/img/bg3.jpg';
+import bg4 from '/img/bg4.jpg';
 import '../../Avatar.css';
 import LeftSideMenu from '../LK/UI/LeftSideMenu';
 
@@ -68,13 +68,12 @@ export default function Navbar(): JSX.Element {
   };
 
   useEffect(() => {
-    const intervalId = setInterval(changeBackgroundImage, 5000); // Здесь 5000 - интервал в миллисекундах, через который будет меняться фоновая картинка
+    const intervalId = setInterval(changeBackgroundImage, 500000); // Здесь 5000 - интервал в миллисекундах, через который будет меняться фоновая картинка
 
     return () => {
       clearInterval(intervalId); // Очищаем интервал при размонтировании компонента
     };
   }, []);
-  console.log(user);
   let userContent = null;
 
   if (user.id) {
