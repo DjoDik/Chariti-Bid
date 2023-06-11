@@ -20,6 +20,7 @@ export const userSlice = createSlice({
         newPassword: string;
         email: string;
         userName: string;
+        newPhone:string;
       }>,
     ) => {
       state.password = action.payload.newPassword;

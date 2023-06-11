@@ -81,6 +81,9 @@ router.post('/change-password', async (req, res) => {
       if (req.body.userName) {
         user.username = req.body.userName;
       }
+      if (req.body.newPhone) {
+        user.phone = req.body.newPhone;
+      }
 
       await user.save();
 

@@ -12,6 +12,7 @@ export default function UserProfilePage(): JSX.Element {
   const [modalOpen, setModalOpen] = useState(false);
   const [newPassword, setNewPassword] = useState('');
   const [oldPassword, setOldPassword] = useState('');
+  const [newPhone, setNewPhone] = useState('');
   const [email, setEmail] = useState('');
 
   const toggleModal = () => {
@@ -19,7 +20,7 @@ export default function UserProfilePage(): JSX.Element {
   };
 
   const handleChangePassword = () => {
-    dispatch(changePasswordThunk({ email, oldPassword, newPassword, userName }));
+    dispatch(changePasswordThunk({ email, oldPassword, newPassword, userName, newPhone }));
     setModalOpen(false);
   };
 
@@ -54,6 +55,13 @@ export default function UserProfilePage(): JSX.Element {
             placeholder="Логин"
             value={userName || user.username}
             onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            className="mt-2"
+            type="text"
+            placeholder="Номер телефона"
+            value={newPhone || user.phone}
+            onChange={(e) => setNewPhone(e.target.value)}
           />
           <Input
             className="mt-2"
