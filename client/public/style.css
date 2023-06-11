@@ -9,3 +9,11 @@
         transform: scale(1) translateY(0px);
     }
 }
+.card-description {
+  max-height: 4em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}

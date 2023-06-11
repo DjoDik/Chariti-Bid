@@ -11,6 +11,8 @@ export type ItemType = {
     name:string,
     id:number
     Items: ItemType[];
+    img: string
+    editedPost:ItemType[]
     FotoGaleries: FotoType[]
 }
 

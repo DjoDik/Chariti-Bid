@@ -32,6 +32,7 @@ app.use(
     },
   }),
 );
+app.use(express.static('uploads'));
 app.use((req, res, next) => {
   res.locals.path = req.originalUrl;
   res.locals.user = req.session?.user;
@@ -41,7 +42,7 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/sort', sortRouter);
 app.use('/user', userRouter);
-app.use('/useritem', userItemRouter)
+app.use('/useritem', userItemRouter);
 app.use('/api', apiRouter);
 
 app.listen(PORT, () => console.log(`Server has started on PORT ${PORT}`));
