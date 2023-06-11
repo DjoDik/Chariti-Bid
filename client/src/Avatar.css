@@ -21,3 +21,43 @@
 .image-size-info {
   margin-top: 20px;
 }
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+.background-container {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+}
+
+.background-image {
+  position: absolute;
+  bottom: 0; /* Показать только нижнюю часть картинки */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%; /* Используйте ширину 100% для растягивания по ширине контейнера */
+  height: auto; /* Автоматическая высота, чтобы сохранить пропорции картинки */
+  transition: opacity 0.5s ease; /* Плавный переход прозрачности */
+}
+
+.background-container:not(.image-loaded) .background-image {
+  opacity: 0; /* Скрытие изображения до загрузки */
+}
