@@ -3,12 +3,14 @@ import { Button, Input, Modal, ModalHeader } from 'reactstrap';
 import { useAppDispatch } from '../Redux/hooks';
 import { addAvatarThunk } from '../Redux/slice/avatarSlice';
 import '../../Avatar.css';
+import { Link, Navigate } from 'react-router-dom';
 
 export default function PhotoUploader(): JSX.Element {
   const dispatch = useAppDispatch();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [cropArea, setCropArea] = useState<DOMRect | null>(null);
+  const [uploaded, setUploaded] = useState(false);
 
   const toggleModal = () => {
     setModalOpen(!modalOpen);
@@ -24,8 +26,13 @@ export default function PhotoUploader(): JSX.Element {
   const handleUpload = () => {
     if (selectedFile) {
       dispatch(addAvatarThunk(selectedFile));
+      setUploaded(true);
     }
   };
+
+  if (uploaded) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, Navigate, useParams } from 'react-router-dom';
 import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 import { useAppDispatch } from '..//Components/Redux/hooks';
 import { loginThunk, signUpThunk } from '../Components/Redux/slice/userSlice';
@@ -9,6 +9,7 @@ import PhotoUploader from '../Components/Item/avatarPage';
 export default function AuthPage(): JSX.Element {
   const { auth } = useParams();
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const [input, setInput] = useState<UserSignUpType>(
     auth === 'signup'
@@ -26,13 +27,17 @@ export default function AuthPage(): JSX.Element {
     e.preventDefault();
 
     if (auth === 'signup') {
-      await dispatch(signUpThunk(input));
+      dispatch(signUpThunk(input));
       setRegistrationSuccess(true);
     } else {
-      await dispatch(loginThunk(input));
-      // Действия после входа
+      dispatch(loginThunk(input));
+      setLoggedIn(true);
     }
   };
+
+  if (loggedIn) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <Row>
