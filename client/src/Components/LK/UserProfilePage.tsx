@@ -2,12 +2,13 @@ import { Container } from '@mui/material';
 import React, { useState } from 'react';
 import { Button, Card, CardBody, CardImg, CardTitle, Input, Modal, ModalBody } from 'reactstrap';
 import { useAppSelector, useAppDispatch } from '../Redux/hooks';
-import { changePassword } from '../Redux/slice/userSlice';
+import { changePassword, changePasswordThunk } from '../Redux/slice/userSlice';
 
 export default function UserProfilePage(): JSX.Element {
   const user = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
 
+  const [userName, setUsername] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [newPassword, setNewPassword] = useState('');
   const [oldPassword, setOldPassword] = useState('');
@@ -18,8 +19,7 @@ export default function UserProfilePage(): JSX.Element {
   };
 
   const handleChangePassword = () => {
-    // Вызов action для изменения пароля
-    dispatch(changePassword({ email, oldPassword, newPassword }));
+    dispatch(changePasswordThunk({ email, oldPassword, newPassword, userName }));
     setModalOpen(false);
   };
 
@@ -36,8 +36,8 @@ export default function UserProfilePage(): JSX.Element {
           alt="Avatar"
         />
         <CardBody className="text-center">
-          <CardTitle>Имя профиля: {user.username}</CardTitle>
-          <CardTitle>Email: {user.email}</CardTitle>
+          <CardTitle>Имя профиля: {userName || user.username}</CardTitle>
+          <CardTitle>Email: *********</CardTitle>
           <CardTitle>Пароль: *********</CardTitle>
           <Button className="mt-5" onClick={toggleModal}>
             Изменить
@@ -50,8 +50,14 @@ export default function UserProfilePage(): JSX.Element {
           <h3>Изменение пароля</h3>
           <Input
             className="mt-2"
+            type="text"
+            placeholder="Логин"
+            value={userName || user.username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            className="mt-2"
             type="password"
-            
             placeholder="Старый пароль"
             value={oldPassword}
             onChange={(e) => setOldPassword(e.target.value)}
@@ -66,7 +72,7 @@ export default function UserProfilePage(): JSX.Element {
           <Input
             className="mt-2"
             type="email"
-            placeholder="Email"
+            placeholder="Подтверждение Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
