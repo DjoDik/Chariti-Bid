@@ -1,16 +1,24 @@
 import React from 'react';
 import { ListGroup, ListGroupItem } from 'reactstrap';
-import { useAppSelector } from '../../Redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../Redux/hooks';
 import { Link } from 'react-router-dom';
 import { Box } from '@mui/material';
+import { closeModal, openModal } from '../../Redux/slice/modalSlice';
+import LkMainPage from './AddItemModal';
 
-type Props = {
-  toggle: void;
-};
-
-export default function LeftSideMenu({ toggle }: Props) {
+export default function LeftSideMenu({}: Props) {
   const userId = useAppSelector((store) => store.user);
   const { id } = userId;
+
+  const dispatch = useAppDispatch();
+
+  const handleOpenModal = () => {
+    dispatch(openModal());
+  };
+
+  const handleCloseModal = () => {
+    dispatch(closeModal());
+  };
 
   return (
     <Box
@@ -35,7 +43,8 @@ export default function LeftSideMenu({ toggle }: Props) {
         >
           Корзина
         </ListGroupItem>
-        <ListGroupItem href="#" onClick={() => toggle()} style={{ backgroundColor: 'transparent' }}>
+        <ListGroupItem onClick={() => handleOpenModal()} style={{ backgroundColor: 'transparent' }}>
+          <LkMainPage />
           Добавить товар
         </ListGroupItem>
         <ListGroupItem
