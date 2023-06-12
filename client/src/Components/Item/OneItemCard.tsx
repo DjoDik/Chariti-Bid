@@ -44,7 +44,9 @@ export default function OneItemCard({ oneCard }: PropsType): JSX.Element {
         }}
       >
         <img alt="Sample" src={oneCard?.FotoGaleries[0]?.img} style={{ margin: '10px' }} />
-        <CardBody>
+        <CardBody>  
+          <CardTitle tag="h5">{oneCard.title}</CardTitle>
+          
           <Button onClick={toggleModal}>Смотреть</Button>
         </CardBody>
       </Card>
