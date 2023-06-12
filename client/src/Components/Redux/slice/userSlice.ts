@@ -20,7 +20,7 @@ export const userSlice = createSlice({
         newPassword: string;
         email: string;
         userName: string;
-        newPhone:string;
+        newPhone: string;
       }>,
     ) => {
       state.password = action.payload.newPassword;
@@ -34,8 +34,14 @@ export default userSlice.reducer;
 
 export const checkUserThunk = (): AppThunk => (dispatch) => {
   axios<UserType>('/user/check')
-    .then(({ data }) => dispatch(setUser({ ...data, status: true })))
-    .catch(() => dispatch(setUser({ status: true })));
+    .then(({ data }) => {
+      console.log('======>===>++++', data); // Вывод данных в консоль для проверки
+      dispatch(setUser({ ...data, status: true }));
+    })
+    .catch((error) => {
+      console.log(error); // Вывод ошибки в консоль для проверки
+      dispatch(setUser({ status: false }));
+    });
 };
 
 export const signUpThunk =
@@ -44,7 +50,7 @@ export const signUpThunk =
     axios
       .post<UserType>('/user/signup', input)
       .then(({ data }) => dispatch(setUser({ ...data, status: true })))
-      .catch(() => dispatch(setUser({ status: true })));
+      .catch(() => dispatch(setUser({ status: false })));
   };
 
 export const loginThunk =
@@ -53,12 +59,12 @@ export const loginThunk =
     axios
       .post<UserType>('/user/login', input)
       .then(({ data }) => dispatch(setUser({ ...data, status: true })))
-      .catch(() => dispatch(setUser({ status: true })));
+      .catch(() => dispatch(setUser({ status: false })));
   };
 
 export const logoutThunk = (): AppThunk => (dispatch) => {
   axios('/user/logout')
-    .then(() => dispatch(setUser({ status: true })))
+    .then(() => dispatch(setUser({ status: false })))
     .catch(() => dispatch(setUser({ status: true })));
 };
 export const changePasswordThunk =

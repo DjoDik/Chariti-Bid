@@ -21,26 +21,26 @@ import bg3 from '/img/bg3.jpg';
 import bg4 from '/img/bg4.jpg';
 import '../../Avatar.css';
 import LeftSideMenu from '../LK/UI/LeftSideMenu';
+import { setAvatar } from '../Redux/slice/avatarSlice';
 
 export default function Navbar(): JSX.Element {
   const dispatch = useAppDispatch();
   const user = useAppSelector((store) => store.user);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isLeftMenuOpen, setLeftMenuOpen] = useState(false);
-  const isUserLoggedIn = user.id || localStorage.getItem('user');
   const menuRef = useRef<HTMLDivElement>(null);
-  const [avatar, setAvatar] = useState('');
+  const avatar = useAppSelector((store) => store.avatar);
 
   useEffect(() => {
     dispatch(checkUserThunk());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     if (user.id) {
-      setAvatar(`http://localhost:3001/${user.avatar}`);
+      dispatch(setAvatar(`http://localhost:3001/${user.avatar}`));
     }
   }, [user]);
-
+  console.log('=========>', user);
   const logoutHandler = (): void => {
     dispatch(logoutThunk());
   };
@@ -49,8 +49,9 @@ export default function Navbar(): JSX.Element {
     setMenuOpen(!isMenuOpen);
   };
 
-  const toggleLeftMenu = (): void => {
-    setLeftMenuOpen(!isLeftMenuOpen);
+  const toggleLeftMenuAndClose = (): void => {
+    closeMenu();
+    closeLeftMenu();
   };
 
   const closeMenu = (): void => {
@@ -81,10 +82,10 @@ export default function Navbar(): JSX.Element {
       clearInterval(intervalId); // Очищаем интервал при размонтировании компонента
     };
   }, []);
-  console.log(user);
+
   let userContent = null;
 
-  if (user.id) {
+  if (user.status === true) {
     userContent = (
       <Box sx={{ position: 'relative' }}>
         <Button onClick={toggleMenu}>
@@ -100,9 +101,9 @@ export default function Navbar(): JSX.Element {
                 height: 50,
               },
             }}
-          />{' '}
+          />
         </Button>
-        {isMenuOpen && isUserLoggedIn && (
+        {isMenuOpen && (
           <ClickAwayListener onClickAway={closeMenu}>
             <Box
               ref={menuRef}
@@ -128,7 +129,7 @@ export default function Navbar(): JSX.Element {
                   }}
                 />
                 <ListItem disablePadding>
-                  <ListItemButton onClick={toggleLeftMenu} style={{ color: 'black' }}>
+                  <ListItemButton onClick={toggleLeftMenuAndClose} style={{ color: 'black' }}>
                     Личный кабинет
                   </ListItemButton>
                 </ListItem>

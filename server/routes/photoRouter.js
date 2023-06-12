@@ -30,7 +30,7 @@ router.post('/photos', upload.array('photos'), async (req, res) => {
 
     // Получите id вещи, к которой относятся фотографии
     const { item_id } = req.body;
-
+    console.log(req.body);
     // Проверка наличия id вещи
     if (!item_id) {
       res.status(400).json({ message: 'No item_id provided' });
