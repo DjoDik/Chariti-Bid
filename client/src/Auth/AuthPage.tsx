@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import {  Navigate, useParams } from 'react-router-dom';
 import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 import { useAppDispatch } from '..//Components/Redux/hooks';
 import { loginThunk, signUpThunk } from '../Components/Redux/slice/userSlice';
