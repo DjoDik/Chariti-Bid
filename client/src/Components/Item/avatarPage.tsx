@@ -61,7 +61,7 @@ export default function PhotoUploader(): JSX.Element {
               </p>
             </div>
           )}
-          <Button onClick={handleUpload}>Upload</Button>
+          <Button onClick={handleUpload}>Загрузить</Button>
         </div>
       </Modal>
     </div>
