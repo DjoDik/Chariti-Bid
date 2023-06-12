@@ -55,13 +55,13 @@ export default function PhotoUploader(): JSX.Element {
           )}
           {selectedFile && (
             <div className="image-size-info">
-              <p>Image Size: {selectedFile.size} bytes</p>
+              <p>Image Size: {selectedFile?.size} bytes</p>
               <p>
-                Image Dimensions: {selectedFile.width} x {selectedFile.height}
+                Image Dimensions: {selectedFile?.width} x {selectedFile?.height}
               </p>
             </div>
           )}
-          <Button onClick={handleUpload}>Upload</Button>
+          <Button onClick={handleUpload}>Загрузить</Button>
         </div>
       </Modal>
     </div>
