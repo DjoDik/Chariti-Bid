@@ -9,8 +9,12 @@ import PhotoUploader from './Components/Item/avatarPage';
 import UserItemsPage from './Components/LK/UserItemsPage';
 import UserProfilePage from './Components/LK/UserProfilePage';
 import Basket from './Components/LK/Basket';
+import ProtectedRoute from './hoc/ProtectedRoute';
+import { useAppSelector } from './Components/Redux/hooks';
 
 function App(): JSX.Element {
+
+  const user = useAppSelector((store) => store.user);
   return (
     <Container fluid>
       <Row>
@@ -24,9 +28,11 @@ function App(): JSX.Element {
             <Route path="/" element={<MainPage />} />
             <Route path="/:auth" element={<AuthPage />} />
             <Route path="/" element={<PhotoUploader />} />
-            <Route path="/useritem/:id" element={<UserItemsPage />} />
-            <Route path="/userprofile" element={<UserProfilePage />} />
-            <Route path="/basket" element={<Basket />} />
+            <Route element={<ProtectedRoute redirect="/" isAllowed={user.status} />}>
+              <Route path="/useritem/:id" element={<UserItemsPage />} />
+              <Route path="/userprofile" element={<UserProfilePage />} />
+              <Route path="/basket" element={<Basket />} />
+            </Route>
           </Routes>
         </Col>
         <Col xs="2">
