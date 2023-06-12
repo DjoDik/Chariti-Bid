@@ -44,7 +44,9 @@ export default function OneItemCard({ oneCard }: PropsType): JSX.Element {
         }}
       >
         <img alt="Sample" src={oneCard?.FotoGaleries[0]?.img} style={{ margin: '10px' }} />
-        <CardBody>
+        <CardBody>  
+          <CardTitle tag="h5">{oneCard.title}</CardTitle>
+          
           <Button onClick={toggleModal}>Смотреть</Button>
         </CardBody>
       </Card>
@@ -58,6 +60,7 @@ export default function OneItemCard({ oneCard }: PropsType): JSX.Element {
               <CardText tag="h5">{oneCard.body}</CardText>
               <CardText tag="h5">Ставка:{oneCard.price}</CardText>
               <CardText tag="h5">Город:{oneCard.city}</CardText>
+              <CardTitle tag="h5">Стоимость:{oneCard.price}</CardTitle>
               <CardTitle tag="h5">Ваша ставка:{countBid}</CardTitle>
               <CardFooter>
                 <Button className="w-50 mt-4" color="primary" onClick={() => counterBidHandler()}>
