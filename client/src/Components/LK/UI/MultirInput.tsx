@@ -23,7 +23,7 @@ export default function PhotoUploadForm(): JSX.Element {
     <div>
       <p style={{ margin: '25px 5px 4px' }}>Добавить фотографии</p>
       <Input
-        name="imgArr"
+        name="uploads"
         type="file"
         multiple
         onChange={handleFileChange}

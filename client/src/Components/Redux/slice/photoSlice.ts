@@ -31,6 +31,7 @@ export const addPhotoThunk =
       photos.forEach((photo) => {
         formData.append('photos', photo);
       });
+      console.log('============>---------->', photos);
 
       const response = await axios.post<FotoType[]>('/add/photos', formData);
       const newPhotos = response.data;
