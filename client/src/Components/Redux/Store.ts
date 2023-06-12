@@ -1,16 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
-import itemReducer from './slice/itemSlice'
+import itemReducer from './slice/itemSlice';
 import userReducer from '../Redux/slice/userSlice';
-import sortReducer from '../Redux/slice/sortSlice'
-import UserItemReducer from '../Redux/slice/userItemSlice'
-import modalReducer from './slice/modalSlice'
+import sortReducer from '../Redux/slice/sortSlice';
+import UserItemReducer from '../Redux/slice/userItemSlice';
+import modalReducer from './slice/modalSlice';
+import avatarReducer from './slice/avatarSlice';
 export const store = configureStore({
   reducer: {
     item: itemReducer,
     user: userReducer,
     sort: sortReducer,
-    userItem:UserItemReducer,
+    userItem: UserItemReducer,
     modal: modalReducer,
+    avatar: avatarReducer,
   },
 });
 
