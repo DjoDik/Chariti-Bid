@@ -14,7 +14,7 @@ import {
 import { ItemType } from '../types/itemType';
 import { deleteThunk, editThunk } from '../Redux/slice/userItemSlice';
 import { useAppDispatch } from '../Redux/hooks';
-import Footer from './Footer';
+
 
 type PropsType = {
   oneCard: ItemType;
@@ -28,7 +28,6 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
     title: oneCard.title,
     body: oneCard.body,
     city: oneCard.city,
-    price: oneCard.price,
   });
 
   const deleteHandler = (id: string) => {
@@ -97,13 +96,6 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
               placeholder="Город"
               name="city"
               value={editedPost.city}
-              onChange={handleInputChange}
-            />
-            <Input
-              className="mt-4"
-              placeholder="Стоимость"
-              name="price"
-              value={editedPost.price}
               onChange={handleInputChange}
             />
             <Button className="w-100 mt-4" color="primary" onClick={saveChanges}>
