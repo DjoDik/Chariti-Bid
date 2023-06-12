@@ -26,17 +26,18 @@ router.post('/signup', async (req, res) => {
       if (!created) return res.sendStatus(401);
 
       // Отправка письма пользователю
+
+      const sessionUser = JSON.parse(JSON.stringify(user));
+      delete sessionUser.password;
+      req.session.user = sessionUser;
+      console.log('------------------>', sessionUser);
+
       await transporter.sendMail({
         from: 'charitybet@mail.ru',
         to: email,
         subject: 'Регистрация успешна',
         text: 'Вы успешно зарегистрированы на нашем сайте.',
       });
-
-      const sessionUser = JSON.parse(JSON.stringify(user));
-      delete sessionUser.password;
-      req.session.user = sessionUser;
-      console.log('------------------>',sessionUser);
       return res.json(sessionUser);
     } catch (e) {
       console.log(e);

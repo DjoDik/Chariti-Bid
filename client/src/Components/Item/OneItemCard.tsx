@@ -11,6 +11,9 @@ import {
   ModalHeader,
 } from 'reactstrap';
 import { ItemType } from '../types/itemType';
+import Timer from '../UI/Timer';
+import axios from 'axios';
+import { TimerStateSlice } from '../types/TimerType';
 
 type PropsType = {
   oneCard: ItemType;
@@ -20,9 +23,9 @@ export default function OneItemCard({ oneCard }: PropsType): JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [countBid, setCountBid] = useState(0);
 
+
   useEffect(() => {
     if (!isModalOpen) {
-      setCountBid(0);
     }
   }, [isModalOpen]);
 
@@ -31,8 +34,9 @@ export default function OneItemCard({ oneCard }: PropsType): JSX.Element {
   };
 
   const counterBidHandler = () => {
-    
-    setCountBid(countBid + 100);
+    const currentTime = new Date().getTime() / 1000
+    axios.post<TimerStateSlice>('/api/timer', {item_id: oneCard.id, value: currentTime})
+    setCountBid(countBid + 100); 
   };
 
   return (
@@ -62,6 +66,7 @@ export default function OneItemCard({ oneCard }: PropsType): JSX.Element {
               <CardText tag="h5">Город:{oneCard.city}</CardText>
               <CardTitle tag="h5">Стоимость:{oneCard.price}</CardTitle>
               <CardTitle tag="h5">Ваша ставка:{countBid}</CardTitle>
+              <CardTitle ><Timer countBid={countBid} id={oneCard.id}/></CardTitle>
               <CardFooter>
                 <Button className="w-50 mt-4" color="primary" onClick={() => counterBidHandler()}>
                   Поднять на: 100р

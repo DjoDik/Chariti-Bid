@@ -81,7 +81,6 @@ export default function Navbar(): JSX.Element {
       clearInterval(intervalId); // Очищаем интервал при размонтировании компонента
     };
   }, []);
-  console.log(user);
   let userContent = null;
 
   if (user.id) {

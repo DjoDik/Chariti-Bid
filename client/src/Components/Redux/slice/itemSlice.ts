@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { ItemStateSlice, ItemType, itemFormType } from '../../types/itemType';
-import { AppThunk } from '../hooks';
+import { AppThunk, useAppSelector } from '../hooks';
 import {addUserItemPosts}  from './userItemSlice'
 
 const initialState: ItemStateSlice = {
