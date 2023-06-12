@@ -21,10 +21,13 @@ export const UserItemSlice = createSlice({
     editUserItem: (state, action: PayloadAction<ItemType>) => {
       state.userItems = state.userItems.map((item) => (item.id !== action.payload.id ? item : action.payload));
     },
+    addUserItemPosts: (state, action: PayloadAction<ItemType>) => {
+      state.userItems = [...state.userItems, action.payload];
+    },
   },
 });
 
-export const { userItemPosts, deleteUserItem, editUserItem } = UserItemSlice.actions;
+export const { userItemPosts, deleteUserItem, editUserItem, addUserItemPosts } = UserItemSlice.actions;
 
 export const getUserItemThunk = (id: string): AppThunk => (dispatch) => {
   axios
