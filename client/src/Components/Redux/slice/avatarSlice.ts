@@ -3,18 +3,16 @@ import { AppThunk } from '../hooks';
 import axios from 'axios';
 import { UserType, UserSignUpType } from '../../types/UserTypes';
 
-export type AvatarState = UserType;
+export type AvatarState = UserType['avatar'];
 
-const initialState: AvatarState = {
-  avatar: null,
-};
+const initialState: AvatarState = '';
 
 export const avatarSlice = createSlice({
   name: 'avatar',
   initialState,
   reducers: {
-    setAvatar: (state, action: PayloadAction<string | null>) => {
-      state.avatar = action.payload;
+    setAvatar: (state, action: PayloadAction<string>) => {
+      return action.payload;
     },
   },
 });
@@ -29,9 +27,12 @@ export const addAvatarThunk =
       formData.append('avatar', avatar);
 
       const response = await axios.post<UserSignUpType>('/api/avatar', formData);
-      const { avatar: newAvatar } = response.data;
 
-      dispatch(setAvatar(newAvatar)); // Обновляем аватар пользователя в Redux-стейте
+      const {
+        user: { avatar: newAvatar },
+      } = response.data;
+      console.log({ newAvatar });
+      dispatch(setAvatar(`http://localhost:3001/${newAvatar}`)); // Обновляем аватар пользователя в Redux-стейте
     } catch (error) {
       console.error('Failed to upload avatar:', error);
     }
@@ -42,7 +43,7 @@ export const getAvatarThunk = (): AppThunk => async (dispatch) => {
     const response = await axios.get<UserType>('/api/avatar');
     const { avatar: currentAvatar } = response.data;
 
-    dispatch(setAvatar(currentAvatar)); // Обновляем аватар пользователя в Redux-стейте
+    dispatch(setAvatar(`http://localhost:3001/${currentAvatar}`)); // Обновляем аватар пользователя в Redux-стейте
   } catch (error) {
     console.error('Failed to fetch avatar:', error);
   }

@@ -31,8 +31,9 @@ export const addPhotoThunk =
       photos.forEach((photo) => {
         formData.append('photos', photo);
       });
+      console.log('============>---------->', photos);
 
-      const response = await axios.post<FotoType[]>('/photos', formData);
+      const response = await axios.post<FotoType[]>('/add/photos', formData);
       const newPhotos = response.data;
 
       dispatch(addPhotos(newPhotos)); // Добавляем фотографии в Redux-стейт
