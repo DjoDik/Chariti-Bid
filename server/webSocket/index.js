@@ -1,5 +1,6 @@
 const { WebSocketServer } = require('ws');
-const { User, Item } = require('../db/models');
+const { User, Item, FotoGalery } = require('../db/models');
+
 
 const wss = new WebSocketServer({ clientTracking: false, noServer: true });
 
@@ -38,7 +39,9 @@ wss.on('connection', (ws, request, wsMap) => {
       }
       case 'UPDATE_PRICE': {
         const { id, countBid,userId } = payload;
-        const item = await Item.findByPk(id);
+        const item = await Item.findByPk(id, {
+          include: {model: FotoGalery}
+        });
         item.price += countBid;
         item.lastUser_id = userId;
         await item.save();

@@ -11,24 +11,32 @@ import {
   Input,
   CardText,
 } from 'reactstrap';
-import { ItemType } from '../types/itemType';
+import { ItemType, FotoType } from '../types/itemType';
 import { deleteThunk, editThunk } from '../Redux/slice/userItemSlice';
 import { useAppDispatch } from '../Redux/hooks';
-
+import PhotoUploadForm from '../LK/UI/MultirInput';
+import { useSelector } from 'react-redux';
+import { RootState } from '../Redux/Store';
 
 type PropsType = {
   oneCard: ItemType;
 };
 
 export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
+
   const dispatch = useAppDispatch();
   const [modalOpen, setModalOpen] = useState(false);
-  const [editedPost, setEditedPost] = useState<ItemType[]>({
+  const [editedPost, setEditedPost] = useState<ItemType>({
     id: oneCard.id,
     title: oneCard.title,
     body: oneCard.body,
     city: oneCard.city,
+    FotoGaleries: oneCard.FotoGaleries,
   });
+  const userItems = useSelector((state: RootState) => state.userItem.userItems);
+  const editedPosts = userItems.find((item) => item.id === oneCard.id);
+
+  const [editedPhotos, setEditedPhotos] = useState<string[]>(oneCard.FotoGaleries);
 
   const deleteHandler = (id: string) => {
     dispatch(deleteThunk(id));
@@ -40,10 +48,17 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setEditedPost((prevPost) => ({
-      ...prevPost,
-      [name]: value,
-    }));
+
+    if (name === 'deletePhoto') {
+      const photoIndex = parseInt(value, 10);
+      const updatedPhotos = editedPhotos.filter((_, index) => index !== photoIndex);
+      setEditedPhotos(updatedPhotos);
+    } else {
+      setEditedPost((prevPost) => ({
+        ...prevPost,
+        [name]: value,
+      }));
+    }
   };
 
   const saveChanges = () => {
@@ -59,7 +74,17 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
         border: '0px solid white',
       }}
     >
-      <img alt="Sample" src={oneCard.img} />
+      {oneCard.FotoGaleries && oneCard.FotoGaleries.length > 0 ? (
+        oneCard.FotoGaleries.map((photo, index) => (
+          <img
+            key={index}
+            alt="Sample"
+            src={`http://localhost:3001/photo/${photo}`} // Добавляем базовый URL перед именем файла
+          />
+        ))
+      ) : (
+        <div>No Image</div> // Отобразить сообщение, если нет фотографий
+      )}
       <CardBody>
         <CardTitle tag="h5">{oneCard.title}</CardTitle>
         <CardText>{oneCard.body}</CardText>
@@ -98,6 +123,29 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
               value={editedPost.city}
               onChange={handleInputChange}
             />
+
+            <div>
+              {editedPhotos.map((photo, index) => (
+                <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
+                  <img
+                    alt="Sample"
+                    src={`http://localhost:3001/photo/${photo}`}
+                    style={{ width: '100px', height: '100px', marginRight: '10px' }}
+                  />
+                  <Button
+                    color="danger"
+                    name="deletePhoto"
+                    value={index.toString()}
+                    onClick={handleInputChange}
+                    style={{ height: '100px', padding: '5px' }}
+                  >
+                    &times;
+                  </Button>
+                </div>
+              ))}
+            </div>
+
+            <PhotoUploadForm itemId={editedPost.id} existingPhotos={editedPhotos} />
             <Button className="w-100 mt-4" color="primary" onClick={saveChanges}>
               Сохранить
             </Button>
