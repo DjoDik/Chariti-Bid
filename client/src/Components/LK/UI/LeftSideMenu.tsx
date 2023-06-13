@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListItem, ListItemButton } from '@mui/material';
+import { ListItemButton } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../Redux/hooks';
 import { Link } from 'react-router-dom';
 import { Box } from '@mui/material';
@@ -39,7 +39,7 @@ export default function LeftSideMenu({}: Props) {
       <ListItemButton component={Link} to="/basket">
         Корзина
       </ListItemButton>
-      <ListItemButton button onClick={() => handleOpenModal()}>
+      <ListItemButton onClick={() => handleOpenModal()}>
         <LkMainPage />
         Добавить товар
       </ListItemButton>
