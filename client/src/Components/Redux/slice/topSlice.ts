@@ -17,6 +17,9 @@ export const topSlice = createSlice({
     topPosts: (state, action: PayloadAction<ItemType[]>) => {
       state.top = action.payload;
     },
+    updateItemPrice:( state, action:PayloadAction<ItemType>) => {
+      state.top = state.top.map((el) => el.id !== action.payload.id ? el : action.payload )
+    }
    
 }
 });

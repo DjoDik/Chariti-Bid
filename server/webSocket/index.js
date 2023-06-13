@@ -54,6 +54,16 @@ wss.on('connection', (ws, request, wsMap) => {
             }),
           );
         }
+        for (const [, wsClient] of wsMap) {
+          wsClient.ws.send(
+            
+           
+            JSON.stringify({
+              type: 'top/updateItemPrice',
+              payload: item,
+            }),
+          );
+        }
 
         break;
       }
