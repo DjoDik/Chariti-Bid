@@ -22,7 +22,7 @@ import { useAppSelector } from '../Redux/hooks';
 
 type PropsType = {
   oneCard: ItemType;
-  onBid: (id: number, countBid: number) => void;
+  onBid: (id: number, countBid: number, userId: number) => void;
 };
 
 function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {

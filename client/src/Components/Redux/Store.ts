@@ -8,6 +8,7 @@ import modalReducer from './slice/modalSlice'
 import rootSaga from './sagas/rootSaga';
 const sagaMiddleware = createSagaMiddleware();
 import avatarReducer from './slice/avatarSlice';
+import topReducer from './slice/topSlice';
 export const store = configureStore({
   reducer: {
     item: itemReducer,
@@ -16,6 +17,7 @@ export const store = configureStore({
     userItem: UserItemReducer,
     modal: modalReducer,
     avatar: avatarReducer,
+    top: topReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
 });
