@@ -11,12 +11,19 @@ import UserProfilePage from './Components/LK/UserProfilePage';
 import Basket from './Components/LK/Basket';
 import { useAppDispatch, useAppSelector } from './Components/Redux/hooks';
 import { checkUserThunk } from './Components/Redux/slice/userSlice';
-import { SOCKET_INIT } from './Components/types/wsTypes';
+import { SOCKET_INIT, UPDATE_PRICE } from './Components/types/wsTypes';
 import ProtectedRoute from './hoc/ProtectedRoute';
+import { TimerStateSlice } from './Components/types/TimerType';
+import axios from 'axios';
 function App(): JSX.Element {
   const user = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
 
+  const handleBid = (id: number, countBid: number, userId:number) => {
+    dispatch({ type: UPDATE_PRICE, payload: { id, countBid,userId } });
+    const currentTime = new Date().getTime() / 1000
+    axios.post<TimerStateSlice>('/api/timer', {item_id: id, value: currentTime})
+  };
   useEffect(() => {
     dispatch(checkUserThunk());
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -38,7 +45,7 @@ function App(): JSX.Element {
       <Row>
         <Col xs="10">
           <Routes>
-            <Route path="/" element={<MainPage />} />
+            <Route path="/" element={<MainPage handleBid={handleBid}  />} />
             <Route path="/:auth" element={<AuthPage />} />
             <Route path="/" element={<PhotoUploader />} />
             <Route element={<ProtectedRoute redirect="/" isAllowed={user.status} />}>
@@ -49,7 +56,7 @@ function App(): JSX.Element {
           </Routes>
         </Col>
         <Col xs="2">
-          <SideBarAucTop />
+          <SideBarAucTop handleBid={handleBid}/>
         </Col>
       </Row>
     </Container>

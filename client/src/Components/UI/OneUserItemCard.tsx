@@ -23,7 +23,7 @@ type PropsType = {
 };
 
 export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
-  console.log(oneCard);
+
   const dispatch = useAppDispatch();
   const [modalOpen, setModalOpen] = useState(false);
   const [editedPost, setEditedPost] = useState<ItemType>({
@@ -35,6 +35,7 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
   });
   const userItems = useSelector((state: RootState) => state.userItem.userItems);
   const editedPosts = userItems.find((item) => item.id === oneCard.id);
+  console.log('---------&&--------->', userItems);
   const [editedPhotos, setEditedPhotos] = useState<string[]>(oneCard.FotoGaleries);
 
   const deleteHandler = (id: string) => {
