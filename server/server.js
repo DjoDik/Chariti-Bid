@@ -13,6 +13,7 @@ const userItemRouter = require('./routes/userItemRouter');
 const apiRouter = require('./routes/apiRouter');
 const itemRouter = require('./routes/itemRouter');
 const photoRouter = require('./routes/photoRouter');
+const topRouter = require('./routes/topRouter');
 
 require('dotenv').config();
 
@@ -53,6 +54,7 @@ app.use('/useritem', userItemRouter);
 app.use('/api', apiRouter);
 app.use('/api/item', itemRouter)
 app.use('/add', photoRouter);
+app.use('/top', topRouter)
 const server = http.createServer(app);
 
 const map = new Map();
