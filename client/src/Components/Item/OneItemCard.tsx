@@ -26,7 +26,7 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
   const userId = useAppSelector((state) => state.user.id);
 
 
-  console.log('oneCard?.FotoGaleries[0]?.img', oneCard?.FotoGaleries);
+  
   
   useEffect(() => {
     if (!isModalOpen) {

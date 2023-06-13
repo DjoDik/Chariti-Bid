@@ -23,7 +23,7 @@ const upload = multer({ storage });
 router.post('/photos/:itemId', upload.array('photos'), async (req, res) => {
   try {
     const { itemId } = req.params;
-    console.log(itemId);
+  
     // Проверка наличия itemId
     if (!itemId) {
       res.status(400).json({ message: 'No item_id provided' });
