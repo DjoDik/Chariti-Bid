@@ -67,7 +67,7 @@ const userId = useAppSelector(state => state.user.id)
             <CardBody>
               <CardText tag="h5">{oneCard.body}</CardText>             
               <CardText tag="h5">Город:{oneCard.city}</CardText>
-              <CardTitle tag="h5">Стоимость:{oneCard.price}</CardTitle>
+              <CardTitle tag="h5">Стоимость:{oneCard.price} ID last user:{oneCard.lastUser_id}</CardTitle>
               <CardTitle tag="h5">Ваша ставка:{countBid}</CardTitle>
               <CardTitle ><Timer countBid={oneCard.price} id={oneCard.id}/></CardTitle>
               <CardFooter>

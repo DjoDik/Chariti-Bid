@@ -30,7 +30,6 @@ router.post('/avatar', upload.single('avatar'), async (req, res) => {
 
     // Получите идентификатор пользователя из сессии
     const { id } = req.session.user;
-  
 
     // Проверка наличия идентификатора пользователя в сессии
     if (!id) {
@@ -49,7 +48,7 @@ router.post('/avatar', upload.single('avatar'), async (req, res) => {
 
     // Получите название файла с расширением
     const fileName = req.file.originalname;
-   
+
     // Обновите поле avatar пользователя с названием файла
     user.avatar = fileName;
 
@@ -62,8 +61,6 @@ router.post('/avatar', upload.single('avatar'), async (req, res) => {
     res.sendStatus(500);
   }
 });
-
-
 
 router.post('/timer', async (req, res) => {
   try {
@@ -84,13 +81,14 @@ router.post('/timer', async (req, res) => {
   }
 });
 
-
 router.get('/timer/:id', async (req, res) => {
-  try {
-    const time = await Timer.findOne({ where: { item_id: req.params.id } })
-    res.json(time.value)
-  } catch (error) {
-    console.log(error);
+  if (req.params.id) {
+    try {
+      const time = await Timer.findOne({ where: { item_id: req.params.id } });
+      res.json(time?.value);
+    } catch (error) {
+      console.log(error);
+    }
   }
 });
 
