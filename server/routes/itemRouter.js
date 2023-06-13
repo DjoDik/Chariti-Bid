@@ -6,10 +6,12 @@ const router = express.Router();
 
 
 router.post('/updateprice', async (req, res) => {
+
   const { itemId, newPrice } = req.body;
   
   try {
     const item = await Item.findByPk(itemId);
+    
     if (!item) {
       return res.sendStatus(404);
     }

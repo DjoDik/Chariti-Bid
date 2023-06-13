@@ -31,7 +31,9 @@ type PropsType = {
 function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [countBid, setCountBid] = useState(0);
+const userId = useAppSelector(state => state.user.id)
 
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!isModalOpen) {
@@ -41,6 +43,7 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
+    setCountBid(0);
   };
 
   const counterBidHandler = () => {
@@ -67,8 +70,7 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
           <Card>
             {/* <img alt="Sample" src={oneCard?.FotoGaleries[0]?.img} style={{ margin: '10px' }} /> */}
             <CardBody>
-              <CardText tag="h5">{oneCard.body}</CardText>
-              <CardText tag="h5">Ставка:{oneCard.price}</CardText>
+              <CardText tag="h5">{oneCard.body}</CardText>             
               <CardText tag="h5">Город:{oneCard.city}</CardText>
               <CardTitle tag="h5">Стоимость:{oneCard.price}</CardTitle>
               <CardTitle tag="h5">Ваша ставка:{countBid}</CardTitle>
@@ -77,7 +79,7 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
                 <Button className="w-50 mt-4" color="primary" onClick={() => counterBidHandler()}>
                   Поднять на: 100р
                 </Button>
-                <Button className="w-50 mt-4" color="danger" onClick={() => onBid(oneCard.id, countBid)}>
+                <Button className="w-50 mt-4" color="danger" onClick={() => onBid(oneCard.id, countBid, userId)}>
                   Bid
                 </Button>
               </CardFooter>
