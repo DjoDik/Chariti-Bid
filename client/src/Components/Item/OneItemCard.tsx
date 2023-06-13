@@ -12,10 +12,16 @@ import {
   ModalHeader,
 } from 'reactstrap';
 import { ItemType } from '../types/itemType';
+import Timer from '../UI/Timer';
+import axios from 'axios';
+import { TimerStateSlice } from '../types/TimerType';
 
 
 import { useAppSelector } from '../Redux/hooks';
 import { it } from 'node:test';
+
+
+
 
 type PropsType = {
   oneCard: ItemType;
@@ -27,13 +33,8 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
   const [countBid, setCountBid] = useState(0);
 
 
-  console.log(oneCard);
-
-  
-
   useEffect(() => {
     if (!isModalOpen) {
-      setCountBid(0);
     }
   }, [isModalOpen]);
 
@@ -43,7 +44,9 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
   };
 
   const counterBidHandler = () => {
-    setCountBid(countBid + 100);
+    const currentTime = new Date().getTime() / 1000
+    axios.post<TimerStateSlice>('/api/timer', {item_id: oneCard.id, value: currentTime})
+    setCountBid(countBid + 100); 
   };
 
 
@@ -65,9 +68,11 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
             {/* <img alt="Sample" src={oneCard?.FotoGaleries[0]?.img} style={{ margin: '10px' }} /> */}
             <CardBody>
               <CardText tag="h5">{oneCard.body}</CardText>
-              <CardText tag="h5">Город: {oneCard.city}</CardText>
-              <CardTitle tag="h5">Стоимость: {oneCard.price}</CardTitle>
-              <CardTitle tag="h5">Ваша ставка: {countBid}</CardTitle>
+              <CardText tag="h5">Ставка:{oneCard.price}</CardText>
+              <CardText tag="h5">Город:{oneCard.city}</CardText>
+              <CardTitle tag="h5">Стоимость:{oneCard.price}</CardTitle>
+              <CardTitle tag="h5">Ваша ставка:{countBid}</CardTitle>
+              <CardTitle ><Timer countBid={countBid} id={oneCard.id}/></CardTitle>
               <CardFooter>
                 <Button className="w-50 mt-4" color="primary" onClick={() => counterBidHandler()}>
                   Поднять на: 100р

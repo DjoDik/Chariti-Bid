@@ -1,0 +1,8 @@
+.menu-button {
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.menu-button:hover {
+  background-color: #f8f9fa;
+}

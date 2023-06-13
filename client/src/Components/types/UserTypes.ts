@@ -5,7 +5,7 @@ export type UserType = {
   password: string;
   role?: boolean;
   phone: string;
-  avatar: string | null; // Обновлено: поле avatar не является необязательным
+  avatar: string | undefined; // Обновлено: поле avatar не является необязательным
   onlinestatus: boolean;
 };
 

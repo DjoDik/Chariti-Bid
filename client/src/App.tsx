@@ -12,7 +12,7 @@ import Basket from './Components/LK/Basket';
 import { useAppDispatch, useAppSelector } from './Components/Redux/hooks';
 import { checkUserThunk } from './Components/Redux/slice/userSlice';
 import { SOCKET_INIT } from './Components/types/wsTypes';
-
+import ProtectedRoute from './hoc/ProtectedRoute';
 function App(): JSX.Element {
   const user = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
@@ -41,9 +41,11 @@ function App(): JSX.Element {
             <Route path="/" element={<MainPage />} />
             <Route path="/:auth" element={<AuthPage />} />
             <Route path="/" element={<PhotoUploader />} />
-            <Route path="/useritem/:id" element={<UserItemsPage />} />
-            <Route path="/userprofile" element={<UserProfilePage />} />
-            <Route path="/cabinet/basket" element={<Basket />} />
+            <Route element={<ProtectedRoute redirect="/" isAllowed={user.status} />}>
+              <Route path="/useritem/:id" element={<UserItemsPage />} />
+              <Route path="/userprofile" element={<UserProfilePage />} />
+              <Route path="/basket" element={<Basket />} />
+            </Route>
           </Routes>
         </Col>
         <Col xs="2">

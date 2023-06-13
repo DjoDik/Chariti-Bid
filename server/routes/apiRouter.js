@@ -1,7 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
-const { User } = require('../db/models');
+const { User, Timer } = require('../db/models');
 
 const router = express.Router();
 
@@ -63,5 +63,36 @@ router.post('/avatar', upload.single('avatar'), async (req, res) => {
   }
 });
 
+
+
+router.post('/timer', async (req, res) => {
+  try {
+    const [, created] = await Timer.findOrCreate({
+      where: { item_id: req.body.item_id },
+      defaults: { value: req.body.value }, // Значение по умолчанию, если запись не найдена
+    });
+    if (created) {
+      // Запись была создана
+      res.status(201).json({ message: 'Timer created successfully' });
+    } else {
+      // Запись уже существует
+      res.status(200).json({ message: 'Timer already exists' });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+router.get('/timer/:id', async (req, res) => {
+  try {
+    const time = await Timer.findOne({ where: { item_id: req.params.id } })
+    console.log('timevalue', time.value);
+    res.json(time.value)
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 module.exports = router;

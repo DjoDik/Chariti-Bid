@@ -1,42 +1,49 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const nodemailer = require('nodemailer');
+// const nodemailer = require('nodemailer');
 const { User } = require('../db/models');
 
 const router = express.Router();
 
-const transporter = nodemailer.createTransport({
-  host: 'smtp.mail.ru',
-  port: 465,
-  secure: true,
-  auth: {
-    user: 'charitybet@mail.ru',
-    pass: 'EacBhrUafgGQYN4jU9Bj',
-  },
-});
+// const transporter = nodemailer.createTransport({
+//   host: 'smtp.mail.ru',
+//   port: 465,
+//   secure: true,
+//   auth: {
+//     user: 'charitybet@mail.ru',
+//     pass: 'EacBhrUafgGQYN4jU9Bj',
+//   },
+// });
 
 router.post('/signup', async (req, res) => {
-  const { username, email, password, phone, avatar } = req.body;
+  const { username, email, password, phone } = req.body;
+  console.log('2222222222222222222222222', req.body);
   if (username && email && password && phone) {
     try {
       const [user, created] = await User.findOrCreate({
         where: { email },
-        defaults: { username, password: await bcrypt.hash(password, 10), phone, avatar },
+        defaults: { username, password: await bcrypt.hash(password, 10), phone },
       });
       if (!created) return res.sendStatus(401);
 
       // Отправка письма пользователю
-      await transporter.sendMail({
-        from: 'charitybet@mail.ru',
-        to: email,
-        subject: 'Регистрация успешна',
-        text: 'Вы успешно зарегистрированы на нашем сайте.',
-      });
 
       const sessionUser = JSON.parse(JSON.stringify(user));
       delete sessionUser.password;
+      // sessionUser.onlinestatus = true; // Установка статуса аутентификации на true
       req.session.user = sessionUser;
-      console.log('------------------>',sessionUser);
+      const { id } = sessionUser;
+      const sevUser = await User.findOne({ where: { id } });
+      sevUser.onlinestatus = true;
+      await sevUser.save();
+      console.log('---------------##--->', sessionUser.id);
+      // await transporter.sendMail({
+      //   from: 'charitybet@mail.ru',
+      //   to: email,
+      //   subject: 'Регистрация успешна',
+      //   text: 'Вы успешно зарегистрированы на нашем сайте.',
+      // });
+      console.log(sessionUser, '888888888888888888888888888888');
       return res.json(sessionUser);
     } catch (e) {
       console.log(e);
@@ -45,6 +52,7 @@ router.post('/signup', async (req, res) => {
   }
   return res.sendStatus(500);
 });
+
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   if (email && password) {
@@ -62,6 +70,7 @@ router.post('/login', async (req, res) => {
 
       const sessionUser = JSON.parse(JSON.stringify(user));
       delete sessionUser.password;
+      sessionUser.isAuthenticated = true; // Установка статуса аутентификации на true
       req.session.user = sessionUser;
       return res.json(sessionUser);
     } catch (e) {
@@ -71,11 +80,13 @@ router.post('/login', async (req, res) => {
   }
   return res.sendStatus(500);
 });
-
-
-router.get('/check', (req, res) => {
+router.get('/check', async (req, res) => {
   if (req.session.user) {
-    return res.json(req.session.user);
+    const user = await User.findByPk(req.session.user.id);
+    if (user) {
+      delete user.password;
+    }
+    return res.json(user);
   }
   return res.sendStatus(401);
 });

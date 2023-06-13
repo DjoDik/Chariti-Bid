@@ -21,68 +21,67 @@ import bg3 from '/img/bg3.jpg';
 import bg4 from '/img/bg4.jpg';
 import '../../Avatar.css';
 import LeftSideMenu from '../LK/UI/LeftSideMenu';
+import { setAvatar } from '../Redux/slice/avatarSlice';
 
 export default function Navbar(): JSX.Element {
   const dispatch = useAppDispatch();
   const user = useAppSelector((store) => store.user);
-  const [isMenuOpen, setMenuOpen] = useState(false);
-  const [isLeftMenuOpen, setLeftMenuOpen] = useState(false);
-  const isUserLoggedIn = user.id || localStorage.getItem('user');
-  const menuRef = useRef<HTMLDivElement>(null);
+  const avatar = useAppSelector((store) => store.avatar);
 
   useEffect(() => {
     dispatch(checkUserThunk());
-  }, [dispatch]);
+  }, []);
+
+  useEffect(() => {
+    if (user.id) {
+      dispatch(setAvatar(`http://localhost:3001/${user.avatar}`));
+    }
+  }, [user]);
 
   const logoutHandler = (): void => {
     dispatch(logoutThunk());
-  };
-
-  const toggleMenu = (): void => {
-    setMenuOpen(!isMenuOpen);
-  };
-
-  const toggleLeftMenu = (): void => {
-    setLeftMenuOpen(!isLeftMenuOpen);
-  };
-
-  const closeMenu = (): void => {
-    setMenuOpen(false);
-  };
-
-  const closeLeftMenu = (): void => {
-    setLeftMenuOpen(false);
   };
 
   const [bgImages] = useState([bg1, bg2, bg3, bg4]);
   const [currentBgImageIndex, setCurrentBgImageIndex] = useState(0);
   const currentBgImage = bgImages[currentBgImageIndex];
   const [isImageLoaded, setImageLoaded] = useState(false);
+  const userMenuRef = useRef(null);
+  const [isUserMenuOpen, setUserMenuOpen] = useState(false);
 
   const changeBackgroundImage = () => {
     setImageLoaded(false);
     setTimeout(() => {
       setCurrentBgImageIndex((prevIndex) => (prevIndex + 1) % bgImages.length);
       setImageLoaded(true);
-    }, 1000); // Задержка перед сменой и отображением новой фоновой картинки (в миллисекундах)
+    }, 1000); // Delay before changing and displaying the new background image (in milliseconds)
   };
 
   useEffect(() => {
-    const intervalId = setInterval(changeBackgroundImage, 500000); // Здесь 5000 - интервал в миллисекундах, через который будет меняться фоновая картинка
+    const intervalId = setInterval(changeBackgroundImage, 500000); // Interval in milliseconds for changing the background image
 
     return () => {
-      clearInterval(intervalId); // Очищаем интервал при размонтировании компонента
+      clearInterval(intervalId); // Clear the interval on component unmount
     };
   }, []);
+
+  const handleAvatarClick = () => {
+    setUserMenuOpen((prevValue) => !prevValue);
+  };
+
+  const handleClickAway = () => {
+    setUserMenuOpen(false);
+  };
+
   let userContent = null;
 
-  if (user.id) {
+  if (user.status === true) {
     userContent = (
-      <Box sx={{ position: 'relative' }}>
-        <Button onClick={toggleMenu}>
+      <ClickAwayListener onClickAway={handleClickAway}>
+        <Box sx={{ position: 'relative' }}>
           <Avatar
             alt="User Avatar"
-            src={`http://localhost:3001/${user.avatar}`}
+            src={avatar}
             sx={{
               width: 40,
               height: 40,
@@ -92,20 +91,21 @@ export default function Navbar(): JSX.Element {
                 height: 50,
               },
             }}
-          />{' '}
-        </Button>
-        {isMenuOpen && isUserLoggedIn && (
-          <ClickAwayListener onClickAway={closeMenu}>
+            onClick={handleAvatarClick}
+          />
+          {isUserMenuOpen && (
             <Box
-              ref={menuRef}
+              ref={userMenuRef}
               sx={{
+                display: 'flex',
+                justifyContent: 'space-around',
                 position: 'absolute',
-                width: '500px',
-                height: '300px',
+                width: '200px',
+                height: '400px',
                 top: '100%',
                 right: 0,
                 zIndex: 1,
-                backgroundColor: '#DFF0D8',
+                backgroundColor: 'white',
                 boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.2)',
                 mt: 1,
               }}
@@ -113,34 +113,32 @@ export default function Navbar(): JSX.Element {
               <List component="nav">
                 <Avatar
                   alt="User Avatar"
-                  src={`http://localhost:3001/${user.avatar}`}
+                  src={avatar}
                   sx={{
                     width: 150,
                     height: 150,
                   }}
                 />
                 <ListItem disablePadding>
-                  <ListItemButton onClick={toggleLeftMenu} style={{ color: 'black' }}>
-                    Личный кабинет
-                  </ListItemButton>
+                  <LeftSideMenu />
                 </ListItem>
                 <ListItem disablePadding>
                   <ListItemButton component={Link} to="/userprofile" style={{ color: 'black' }}>
                     Настройки
                   </ListItemButton>
                 </ListItem>
+
                 <Divider />
                 <ListItem disablePadding>
-                  <ListItemButton onClick={logoutHandler} style={{ color: 'black' }}>
+                  <ListItemButton onClick={logoutHandler} style={{ color: 'black', top: '130px' }}>
                     Выход
                   </ListItemButton>
                 </ListItem>
               </List>
             </Box>
-          </ClickAwayListener>
-        )}
-        {isLeftMenuOpen && <LeftSideMenu onClose={closeLeftMenu} />}
-      </Box>
+          )}
+        </Box>
+      </ClickAwayListener>
     );
   } else {
     userContent = (
@@ -154,8 +152,6 @@ export default function Navbar(): JSX.Element {
       </>
     );
   }
-
-  // Rest of the code...
 
   return (
     <>
@@ -178,9 +174,6 @@ export default function Navbar(): JSX.Element {
             backgroundColor: 'black',
           }}
         >
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, mr: 2 }}>
-            Logo
-          </Typography>
           <Box sx={{ display: 'flex', alignItems: 'center' }} component={Link} to="/">
             <Button type="button" style={{ height: '40px' }}>
               <img style={{ height: '50px', borderRadius: '10px' }} src="/logo.png" alt="#" />
@@ -190,7 +183,7 @@ export default function Navbar(): JSX.Element {
               component="div"
               sx={{ marginLeft: '10px', fontWeight: 'bold', color: '#B51718' }}
             >
-              CHARITY BID{' '}
+              CHARITY BET{' '}
             </Typography>
           </Box>
         </Box>
@@ -199,20 +192,16 @@ export default function Navbar(): JSX.Element {
       <Box
         className={`background-container ${isImageLoaded ? 'image-loaded' : ''}`}
         sx={{
-          // backgroundImage: `url(${currentBgImage})`,
-          animation: `${isImageLoaded ? 'fade-in 0.5s ease' : 'fade-out 0.5s ease'} forwards`, // Анимация появления/исчезания
           height: '400px',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
-          // minHeight: 'calc(100vh - 60px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          opacity: isImageLoaded ? 1 : 0, // Прозрачность фоновой картинки
-          transition: 'opacity 0.5s ease', // Плавная анимация перехода
+          opacity: isImageLoaded ? 1 : 0,
+          transition: 'opacity 0.5s ease',
         }}
       >
-        {' '}
         <img
           className="background-image"
           src={currentBgImage}
