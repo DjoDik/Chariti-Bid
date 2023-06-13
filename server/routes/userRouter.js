@@ -64,6 +64,10 @@ router.post('/login', async (req, res) => {
         return res.sendStatus(401);
       }
 
+      if (!req.session) {
+        req.session = {}; // Создание объекта сессии, если он не существует
+      }
+
       const sessionUser = JSON.parse(JSON.stringify(user));
       delete sessionUser.password;
       sessionUser.isAuthenticated = true; // Установка статуса аутентификации на true
@@ -89,7 +93,7 @@ router.get('/check', async (req, res) => {
 
 router.get('/logout', (req, res) => {
   req.session.destroy();
-  res.clearCookie('sid').sendStatus(200);
+  res.clearCookie('sid_socket').sendStatus(200);
 });
 
 router.post('/change-password', async (req, res) => {

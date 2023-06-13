@@ -1,9 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import itemReducer from './slice/itemSlice';
+import createSagaMiddleware from 'redux-saga';
+import itemReducer from './slice/itemSlice'
 import userReducer from '../Redux/slice/userSlice';
-import sortReducer from '../Redux/slice/sortSlice';
-import UserItemReducer from '../Redux/slice/userItemSlice';
-import modalReducer from './slice/modalSlice';
+import sortReducer from '../Redux/slice/sortSlice'
+import UserItemReducer from '../Redux/slice/userItemSlice'
+import modalReducer from './slice/modalSlice'
+import rootSaga from './sagas/rootSaga';
+const sagaMiddleware = createSagaMiddleware();
 import avatarReducer from './slice/avatarSlice';
 export const store = configureStore({
   reducer: {
@@ -14,8 +17,9 @@ export const store = configureStore({
     modal: modalReducer,
     avatar: avatarReducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
 });
-
+sagaMiddleware.run(rootSaga)
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}

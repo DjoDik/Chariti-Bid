@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Navbar from './Components/UI/NavBar';
 import MainPage from './Components/MainPage';
@@ -9,12 +9,25 @@ import PhotoUploader from './Components/Item/avatarPage';
 import UserItemsPage from './Components/LK/UserItemsPage';
 import UserProfilePage from './Components/LK/UserProfilePage';
 import Basket from './Components/LK/Basket';
+import { useAppDispatch, useAppSelector } from './Components/Redux/hooks';
+import { checkUserThunk } from './Components/Redux/slice/userSlice';
+import { SOCKET_INIT } from './Components/types/wsTypes';
 import ProtectedRoute from './hoc/ProtectedRoute';
-import { useAppSelector } from './Components/Redux/hooks';
-
 function App(): JSX.Element {
-
   const user = useAppSelector((store) => store.user);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(checkUserThunk());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (user.id) {
+      dispatch({ type: SOCKET_INIT });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user.id]);
   return (
     <Container fluid>
       <Row>
