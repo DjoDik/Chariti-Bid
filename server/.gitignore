@@ -3,7 +3,7 @@ public/app.js
 public/vendor.js
 sessions/
 session/
-
+uploads/
 .env
 
 # Logs
@@ -48,6 +48,7 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+uploads/
 
 # TypeScript v1 declaration files
 typings/
