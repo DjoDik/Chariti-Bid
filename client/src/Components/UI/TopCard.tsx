@@ -5,7 +5,7 @@ type PropType = {
     itemTop:ItemType
 }
 export default function TopCard({itemTop}:PropType):JSX.Element {
-const item = itemTop.Items.map((el) => el.price)
+const item = itemTop?.Items?.map((el) => el.price)
   return (
     <Card
   style={{

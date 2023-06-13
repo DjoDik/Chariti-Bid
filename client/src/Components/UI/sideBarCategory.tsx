@@ -6,9 +6,7 @@ import { SortItemThunk, selectSelectedCategory } from '../Redux/slice/sortSlice'
 
 export default function SideBarCategory(): JSX.Element {
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(getItemThunk());
-  }, []);
+  
 
   const allCategory = useAppSelector((store) => store.item.allProduct);
   

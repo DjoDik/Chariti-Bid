@@ -22,11 +22,11 @@ export const itemSlice = createSlice({
           el.Items = [action.payload, ...state.allProduct]
         }
       })
-    }
-  },
+    },
+}
 });
 
-export const { itemPosts, addPost } = itemSlice.actions;
+export const { itemPosts, addPost} = itemSlice.actions;
 
 export default itemSlice.reducer;
 

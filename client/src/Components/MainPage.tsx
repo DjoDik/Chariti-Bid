@@ -6,31 +6,30 @@ import { CardGroup } from 'reactstrap';
 
 import OneItemCard from './Item/OneItemCard';
 import SideBarCategory from './UI/sideBarCategory';
-import { selectItems } from './Redux/slice/sortSlice';
+import { SOCKET_INIT, UPDATE_PRICE } from './types/wsTypes';
 
 export default function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
+  const items = useAppSelector((store) => store.sort.allProduct);
 
-  useEffect(() => {
-    dispatch(getItemThunk());
-  }, []);
+  const handleBid = (id: number, countBid: number) => {
+    dispatch({ type: UPDATE_PRICE, payload: { id, countBid } });
+  };
 
-  const item = useAppSelector(selectItems);
-  
   return (
     <Row>
-    <Col xs="auto">
-      <SideBarCategory />
-    </Col>
-    <Col>
-      <CardGroup>
-        <Row className="justify-content-center">
-          {item.map((el) => (
-            <OneItemCard oneCard={el} key={el.id}/>
-          ))}
-        </Row>
-      </CardGroup>
-    </Col>
-  </Row>
+      <Col xs="auto">
+        <SideBarCategory />
+      </Col>
+      <Col>
+        <CardGroup>
+          <Row className="justify-content-center">
+            {items.map((el) => (
+              <OneItemCard oneCard={el} key={el.id} onBid={handleBid} />
+            ))}
+          </Row>
+        </CardGroup>
+      </Col>
+    </Row>
   );
 }
