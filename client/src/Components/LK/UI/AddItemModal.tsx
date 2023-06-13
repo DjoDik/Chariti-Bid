@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Button, Input, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
 import { useAppDispatch, useAppSelector } from '../../Redux/hooks';
 import { addItemThunk } from '../../Redux/slice/itemSlice';
-import MultirInput from './MultirInput';
-import { closeModal, openModal } from '../../Redux/slice/modalSlice';
+// import MultirInput from './MultirInput';
+import PhotoUploadForm from './MultirInput'; // Импортируем компонент PhotoUploadForm
+import { closeModal, handleModal, openModal } from '../../Redux/slice/modalSlice';
 
 export default function LkMainPage() {
   const dispatch = useAppDispatch();
@@ -13,14 +14,18 @@ export default function LkMainPage() {
     city: '',
     category_id: '',
   });
+  const [showPhotoUpload, setShowPhotoUpload] = useState(false); // Состояние для отображения инпута на добавление фото
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-
   const handleCloseModal = () => {
     dispatch(closeModal());
+  };
+
+  const handlereversModal = () => {
+    setShowPhotoUpload(!showPhotoUpload);
   };
 
   const allCategory = useAppSelector((store) => store.item.allProduct);
@@ -35,10 +40,12 @@ export default function LkMainPage() {
         city: '',
         category_id: '',
       });
-      handleCloseModal();
+      setShowPhotoUpload(true); // Показываем инпут на добавление фото после успешного добавления
     }
   };
+
   const isOpen = useAppSelector((state) => state.modal.isOpen);
+  const itemId = useAppSelector((state) => state.modal.itemId);
 
   return (
     <>
@@ -47,58 +54,70 @@ export default function LkMainPage() {
           <Modal isOpen={isOpen} toggle={handleCloseModal}>
             <ModalHeader toggle={handleCloseModal}>Добавить товар</ModalHeader>
             <ModalBody>
-              <form onSubmit={addHandler} id="modalForm">
-                <Input
-                  placeholder="Название"
-                  name="title"
-                  style={{ marginBottom: 10 }}
-                  value={formData.title}
-                  onChange={handleChange}
-                />
-                <Input
-                  placeholder="Описание"
-                  name="body"
-                  style={{ marginBottom: 10 }}
-                  value={formData.body}
-                  onChange={handleChange}
-                />
-                <Input
-                  placeholder="Город"
-                  name="city"
-                  style={{ marginBottom: 10 }}
-                  value={formData.city}
-                  onChange={handleChange}
-                />
-                <Input
-                  name="category_id"
-                  type="select"
-                  style={{ marginBottom: 10 }}
-                  value={formData.category_id}
-                  onChange={handleChange}
-                >
-                  <option value="" hidden>
-                    Категория
-                  </option>
-                  {allCategory.slice(1).map((category) => (
-                    <option value={category.id} key={category.name}>
-                      {category.name}
+              {showPhotoUpload ? ( // Показываем инпут на добавление фото, если showPhotoUpload равно true
+                <>
+                  <PhotoUploadForm itemId={itemId} />
+                  <Button color="secondary" onClick={handlereversModal}>
+                    Назад
+                  </Button>
+                </>
+              ) : (
+                <form onSubmit={addHandler} id="modalForm">
+                  <Input
+                    placeholder="Название"
+                    name="title"
+                    style={{ marginBottom: 10 }}
+                    value={formData.title}
+                    onChange={handleChange}
+                  />
+                  <Input
+                    placeholder="Описание"
+                    name="body"
+                    style={{ marginBottom: 10 }}
+                    value={formData.body}
+                    onChange={handleChange}
+                  />
+                  <Input
+                    placeholder="Город"
+                    name="city"
+                    style={{ marginBottom: 10 }}
+                    value={formData.city}
+                    onChange={handleChange}
+                  />
+                  <Input
+                    name="category_id"
+                    type="select"
+                    style={{ marginBottom: 10 }}
+                    value={formData.category_id}
+                    onChange={handleChange}
+                  >
+                    <option value="" hidden>
+                      Категория
                     </option>
-                  ))}
-                </Input>
-                <MultirInput />
-              </form>
+                    {allCategory.slice(1).map((category) => (
+                      <option value={category.id} key={category.name}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </Input>
+                </form>
+              )}
             </ModalBody>
             <ModalFooter>
-              <Button
-                color={
-                  formData.title && formData.body && formData.city && formData.category_id
-                    ? 'primary'
-                    : 'danger'
-                }
-                onClick={addHandler}
-              >
-                Добавить
-              </Button>{' '}
+              {showPhotoUpload ? null : ( // Скрыть кнопку "Добавить" при открытом инпуте на добавление фото
+                <Button
+                  color={
+                    formData.title && formData.body && formData.city && formData.category_id
+                      ? 'primary'
+                      : 'danger'
+                  }
+                  onClick={addHandler}
+                  button="true"
+                >
+                  Добавить
+                </Button>
+              )}
+
               <Button color="secondary" onClick={handleCloseModal}>
                 Закрыть
               </Button>

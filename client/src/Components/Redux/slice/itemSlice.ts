@@ -2,8 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { ItemStateSlice, ItemType, itemFormType } from '../../types/itemType';
-import { AppThunk, useAppSelector } from '../hooks';
-import {addUserItemPosts}  from './userItemSlice'
+import { AppThunk } from '../hooks';
+import { addUserItemPosts } from './userItemSlice';
+import { addPhotos } from './photoSlice';
+import { setItem } from './modalSlice';
 
 const initialState: ItemStateSlice = {
   allProduct: [],
@@ -18,12 +20,12 @@ export const itemSlice = createSlice({
     },
     addPost: (state, action: PayloadAction<ItemType>) => {
       state.allProduct.forEach((el) => {
-        if(el.category_id === action.payload.category_id) {
-          el.Items = [action.payload, ...state.allProduct]
+        if (el.category_id === action.payload.category_id) {
+          el.Items = [action.payload, ...state.allProduct];
         }
-      })
+      });
     },
-}
+  },
 });
 
 export const { itemPosts, addPost} = itemSlice.actions;
@@ -36,13 +38,19 @@ export const getItemThunk = (): AppThunk => (dispatch) => {
     .catch(console.log);
 };
 
-export const addItemThunk = (inputs: itemFormType): AppThunk => (dispatch) => {
-  axios
-    .post<ItemType>('/useritem', inputs)
-    .then(({ data }) => {
-      dispatch(addPost(data));
-      dispatch(addUserItemPosts(data));
-    })
-    .catch(console.log);
-};
+export const addItemThunk =
+  (inputs: itemFormType): AppThunk =>
+  async (dispatch) => {
+    try {
+      const response = await axios.post<ItemType>('/useritem', inputs);
+      const newItem = response.data;
 
+      dispatch(addPost(newItem));
+      dispatch(addUserItemPosts(newItem));
+      dispatch(setItem(newItem.id)); // Передача ID добавленного товара в санку addPhotos
+
+      // Здесь можете добавить другие операции или санки
+    } catch (error) {
+      console.log('Failed to add item:', error);
+    }
+  };
