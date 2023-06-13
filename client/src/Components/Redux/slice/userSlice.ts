@@ -35,11 +35,10 @@ export default userSlice.reducer;
 export const checkUserThunk = (): AppThunk => (dispatch) => {
   axios<UserType>('/user/check')
     .then(({ data }) => {
-      console.log('======>===>++++', data); // Вывод данных в консоль для проверки
       dispatch(setUser({ ...data, status: true }));
     })
     .catch((error) => {
-      console.log(error); // Вывод ошибки в консоль для проверки
+      console.log(error);
       dispatch(setUser({ status: false }));
     });
 };

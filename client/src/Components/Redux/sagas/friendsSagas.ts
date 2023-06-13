@@ -34,7 +34,6 @@ function createSocketChannel(socket: WebSocket): EventChannel<WsActionTypes> {
 function* updatePrice(socket: WebSocket): Generator {
   while (true) {
     const message = yield take(UPDATE_PRICE);
-    console.log("MESAGEEEEEEEEEEEEEEEEE",message)
     socket.send(JSON.stringify(message));
   }
 }

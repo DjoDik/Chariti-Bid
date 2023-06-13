@@ -31,7 +31,6 @@ export const addAvatarThunk =
       const {
         user: { avatar: newAvatar },
       } = response.data;
-      console.log({ newAvatar });
       dispatch(setAvatar(`http://localhost:3001/${newAvatar}`)); // Обновляем аватар пользователя в Redux-стейте
     } catch (error) {
       console.error('Failed to upload avatar:', error);

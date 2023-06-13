@@ -38,7 +38,6 @@ wss.on('connection', (ws, request, wsMap) => {
       }
       case 'UPDATE_PRICE': {
         const { id, countBid,userId } = payload;
-        console.log(payload)
         const item = await Item.findByPk(id);
         item.price += countBid;
         item.lastUser_id = userId;
