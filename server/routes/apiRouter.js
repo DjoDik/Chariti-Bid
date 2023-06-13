@@ -1,7 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
-const { User } = require('../db/models');
+const { User, Timer } = require('../db/models');
 
 const router = express.Router();
 
@@ -30,7 +30,6 @@ router.post('/avatar', upload.single('avatar'), async (req, res) => {
 
     // Получите идентификатор пользователя из сессии
     const { id } = req.session.user;
-    console.log('==========', id);
 
     // Проверка наличия идентификатора пользователя в сессии
     if (!id) {
@@ -49,7 +48,7 @@ router.post('/avatar', upload.single('avatar'), async (req, res) => {
 
     // Получите название файла с расширением
     const fileName = req.file.originalname;
-    console.log('===========----------==', fileName);
+
     // Обновите поле avatar пользователя с названием файла
     user.avatar = fileName;
 
@@ -60,6 +59,36 @@ router.post('/avatar', upload.single('avatar'), async (req, res) => {
   } catch (err) {
     console.error(err);
     res.sendStatus(500);
+  }
+});
+
+router.post('/timer', async (req, res) => {
+  try {
+    const [, created] = await Timer.findOrCreate({
+      where: { item_id: req.body.item_id },
+      defaults: { value: req.body.value }, // Значение по умолчанию, если запись не найдена
+    });
+    if (created) {
+      // Запись была создана
+      res.status(201).json({ message: 'Timer created successfully' });
+    } else {
+      // Запись уже существует
+      res.status(200).json({ message: 'Timer already exists' });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.get('/timer/:id', async (req, res) => {
+  if (req.params.id) {
+    try {
+      const time = await Timer.findOne({ where: { item_id: req.params.id } });
+      res.json(time?.value);
+    } catch (error) {
+      console.log(error);
+    }
   }
 });
 

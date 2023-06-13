@@ -28,7 +28,7 @@ export const itemSlice = createSlice({
   },
 });
 
-export const { itemPosts, addPost } = itemSlice.actions;
+export const { itemPosts, addPost} = itemSlice.actions;
 
 export default itemSlice.reducer;
 

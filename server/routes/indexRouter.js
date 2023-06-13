@@ -15,7 +15,7 @@ indexRouter.get('/avatar', async (req, res) => {
   try {
     // Получите идентификатор пользователя из сессии
     const { id } = req.session.user;
-    console.log('==========', id);
+ 
 
     // Проверка наличия идентификатора пользователя в сессии
     if (!id) {

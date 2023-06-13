@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Button, Container, List } from 'reactstrap';
 import { useAppDispatch, useAppSelector } from '../Redux/hooks';
 import { getItemThunk } from '../Redux/slice/itemSlice';
-import { SortItemThunk, selectSelectedCategory } from '../Redux/slice/sortSlice';
+import { SortItemThunk } from '../Redux/slice/sortSlice';
 
 export default function SideBarCategory(): JSX.Element {
   const dispatch = useAppDispatch();

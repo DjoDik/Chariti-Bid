@@ -17,7 +17,7 @@ const router = express.Router();
 
 router.post('/signup', async (req, res) => {
   const { username, email, password, phone } = req.body;
-  console.log('2222222222222222222222222', req.body);
+  
   if (username && email && password && phone) {
     try {
       const [user, created] = await User.findOrCreate({
@@ -36,14 +36,14 @@ router.post('/signup', async (req, res) => {
       const sevUser = await User.findOne({ where: { id } });
       sevUser.onlinestatus = true;
       await sevUser.save();
-      console.log('---------------##--->', sessionUser.id);
+      
       // await transporter.sendMail({
       //   from: 'charitybet@mail.ru',
       //   to: email,
       //   subject: 'Регистрация успешна',
       //   text: 'Вы успешно зарегистрированы на нашем сайте.',
       // });
-      console.log(sessionUser, '888888888888888888888888888888');
+      
       return res.json(sessionUser);
     } catch (e) {
       console.log(e);
@@ -62,6 +62,10 @@ router.post('/login', async (req, res) => {
       });
       if (!(await bcrypt.compare(password, user.password))) {
         return res.sendStatus(401);
+      }
+
+      if (!req.session) {
+        req.session = {}; // Создание объекта сессии, если он не существует
       }
 
       const sessionUser = JSON.parse(JSON.stringify(user));
@@ -89,7 +93,7 @@ router.get('/check', async (req, res) => {
 
 router.get('/logout', (req, res) => {
   req.session.destroy();
-  res.clearCookie('sid').sendStatus(200);
+  res.clearCookie('sid_socket').sendStatus(200);
 });
 
 router.post('/change-password', async (req, res) => {

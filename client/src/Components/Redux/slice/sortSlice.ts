@@ -1,6 +1,5 @@
-import { createSlice, createAsyncThunk, Dispatch } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, Dispatch, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { RootState } from '../Store';
 import { AppThunk } from '../hooks';
 import { ItemType } from '../../types/itemType';
 
@@ -29,24 +28,26 @@ const sortSlice = createSlice({
     setSelectedCategory: (state, action) => {
       state.selectedCategory = action.payload;
     },
+    updateItemPrice:( state, action:PayloadAction<ItemType>) => {
+      state.allProduct = state.allProduct.map((el) => el.id !== action.payload.id ? el : action.payload )
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(getSortedItems.fulfilled, (state, action) => {
       state.allProduct = action.payload;
     });
   },
+ 
 });
 
-export const { setSelectedCategory } = sortSlice.actions;
+export const { setSelectedCategory,updateItemPrice } = sortSlice.actions;
 
-export const selectItems = (state: RootState) => state.sort.allProduct;
-export const selectSelectedCategory = (state: RootState) => state.sort.selectedCategory;
+
 
 export default sortSlice.reducer;
 
 export const SortItemThunk = (id: string): AppThunk => (
   dispatch: Dispatch<any>,
-  getState: () => RootState
 ): void => {
   dispatch(getSortedItems(id))
     .then(() => {
