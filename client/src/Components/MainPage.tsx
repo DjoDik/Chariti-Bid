@@ -14,8 +14,8 @@ export default function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const items = useAppSelector((store) => store.sort.allProduct);
 
-  const handleBid = (id: number, countBid: number) => {
-    dispatch({ type: UPDATE_PRICE, payload: { id, countBid } });
+  const handleBid = (id: number, countBid: number, userId:number) => {
+    dispatch({ type: UPDATE_PRICE, payload: { id, countBid,userId } });
     const currentTime = new Date().getTime() / 1000
     axios.post<TimerStateSlice>('/api/timer', {item_id: id, value: currentTime})
   };

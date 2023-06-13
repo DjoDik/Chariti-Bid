@@ -17,7 +17,7 @@ const router = express.Router();
 
 router.post('/signup', async (req, res) => {
   const { username, email, password, phone } = req.body;
-  console.log('2222222222222222222222222', req.body);
+  
   if (username && email && password && phone) {
     try {
       const [user, created] = await User.findOrCreate({
@@ -36,14 +36,14 @@ router.post('/signup', async (req, res) => {
       const sevUser = await User.findOne({ where: { id } });
       sevUser.onlinestatus = true;
       await sevUser.save();
-      console.log('---------------##--->', sessionUser.id);
+      
       // await transporter.sendMail({
       //   from: 'charitybet@mail.ru',
       //   to: email,
       //   subject: 'Регистрация успешна',
       //   text: 'Вы успешно зарегистрированы на нашем сайте.',
       // });
-      console.log(sessionUser, '888888888888888888888888888888');
+      
       return res.json(sessionUser);
     } catch (e) {
       console.log(e);

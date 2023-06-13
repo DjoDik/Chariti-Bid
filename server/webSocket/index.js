@@ -37,10 +37,10 @@ wss.on('connection', (ws, request, wsMap) => {
         break;
       }
       case 'UPDATE_PRICE': {
-        const { id, countBid } = payload;
-       
+        const { id, countBid,userId } = payload;
         const item = await Item.findByPk(id);
         item.price += countBid;
+        item.lastUser_id = userId;
         await item.save();
         wsMap.set(id, { ws, item });
 
