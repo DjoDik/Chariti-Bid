@@ -45,23 +45,24 @@ userItemRouter.patch('/:id', async (req, res) => {
 
 userItemRouter.post('/', async (req, res) => {
   try {
-  const { title, body, city, category_id } = req.body;
-  const newItem = await Item.create({
-    user_id: req.session.user.id,
-    title, 
-    body, 
-    city,
-    category_id: Number(category_id),
-    price: 0,
-    sellStatus: false,
-    lastUser_id: null,
-    uuid: uuidv4()
-  });
-  res.json(newItem);
-} catch (error) {
-  res.sendStatus(401);
-}
-});
+    const { title, body, city, category_id } = req.body;
+    const newItem = await Item.create({
+      user_id: req.session.user.id,
+      title,
+      body,
+      city,
+      category_id: Number(category_id),
+      price: 0,
+      sellStatus: false,
+      lastUser_id: null,
+      uuid: uuidv4(),
+    });
 
+    res.json(newItem);
+    // console.log('55555555sdddddddewfw----->', newItem);
+  } catch (error) {
+    res.sendStatus(401);
+  }
+});
 
 module.exports = userItemRouter;

@@ -24,17 +24,22 @@ export const photoSlice = createSlice({
 export const { addPhotos } = photoSlice.actions;
 
 export const addPhotoThunk =
-  (photos: File[]): AppThunk =>
+  (itemId: string, photos: File[]): AppThunk =>
   async (dispatch) => {
     try {
+      if (!photos) {
+        throw new Error('No photos provided');
+      }
+
       const formData = new FormData();
       photos.forEach((photo) => {
         formData.append('photos', photo);
       });
-      console.log('============>---------->', photos);
+      // console.log('============>---------->', photos);
 
-      const response = await axios.post<FotoType[]>('/add/photos', formData);
+      const response = await axios.post<FotoType[]>(`/add/photos/${itemId}`, formData);
       const newPhotos = response.data;
+      console.log('============>---------->', newPhotos);
 
       dispatch(addPhotos(newPhotos)); // Добавляем фотографии в Redux-стейт
     } catch (error) {

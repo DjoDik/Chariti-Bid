@@ -3,7 +3,7 @@ import { useAppDispatch } from '../../Redux/hooks';
 import { addPhotoThunk } from '../../Redux/slice/photoSlice';
 import { Button, Input } from 'reactstrap';
 
-export default function PhotoUploadForm(): JSX.Element {
+export default function PhotoUploadForm({ itemId }: { itemId: number }): JSX.Element {
   const dispatch = useAppDispatch();
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
@@ -14,7 +14,7 @@ export default function PhotoUploadForm(): JSX.Element {
 
   const handleUpload = () => {
     if (selectedFiles.length > 0) {
-      dispatch(addPhotoThunk(selectedFiles));
+      dispatch(addPhotoThunk(itemId.toString(), selectedFiles)); // Передача itemId в addPhotoThunk
       setSelectedFiles([]);
     }
   };

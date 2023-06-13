@@ -20,28 +20,26 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Ручка для загрузки фотографий
-router.post('/photos', upload.array('photos'), async (req, res) => {
-  console.log('req.files--', req.files);
+router.post('/photos/:itemId', upload.array('photos'), async (req, res) => {
   try {
-    // Доступ к информации о загруженных файлах через req.files
-    // if (!req.files || req.files.length > 0) {
-    //   res.status(400).json({ message: 'No files uploaded' });
-    //   return;
-    // }
+    const { itemId } = req.params;
+    console.log(itemId);
+    // Проверка наличия itemId
+    if (!itemId) {
+      res.status(400).json({ message: 'No item_id provided' });
+      return;
+    }
 
-    // Получите id вещи, к которой относятся фотографии
-    // const { item_id } = req.body;
-
-    // // Проверка наличия id вещи
-    // if (!item_id) {
-    //   res.status(400).json({ message: 'No item_id provided' });
-    //   return;
-    // }
+    // Проверка наличия загруженных файлов
+    if (!req.files || req.files.length === 0) {
+      res.status(400).json({ message: 'No files uploaded' });
+      return;
+    }
 
     // Создание объектов FotoGallery и сохранение их в базе данных
     const photos = req.files.map((file) => ({
       img: file.originalname,
-      // item_id,
+      item_id: itemId, // Добавляем itemId в объект фотографии
     }));
 
     const createdPhotos = await FotoGalery.bulkCreate(photos);
