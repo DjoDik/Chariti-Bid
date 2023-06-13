@@ -14,11 +14,7 @@ import {
 import { ItemType } from '../types/itemType';
 import Timer from '../UI/Timer';
 import axios from 'axios';
-import { TimerStateSlice } from '../types/TimerType';
 
-
-import { useAppSelector } from '../Redux/hooks';
-import { it } from 'node:test';
 
 
 
@@ -44,8 +40,6 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
   };
 
   const counterBidHandler = () => {
-    const currentTime = new Date().getTime() / 1000
-    axios.post<TimerStateSlice>('/api/timer', {item_id: oneCard.id, value: currentTime})
     setCountBid(countBid + 100); 
   };
 
@@ -72,7 +66,7 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
               <CardText tag="h5">Город:{oneCard.city}</CardText>
               <CardTitle tag="h5">Стоимость:{oneCard.price}</CardTitle>
               <CardTitle tag="h5">Ваша ставка:{countBid}</CardTitle>
-              <CardTitle ><Timer countBid={countBid} id={oneCard.id}/></CardTitle>
+              <CardTitle ><Timer countBid={oneCard.price} id={oneCard.id}/></CardTitle>
               <CardFooter>
                 <Button className="w-50 mt-4" color="primary" onClick={() => counterBidHandler()}>
                   Поднять на: 100р

@@ -1,7 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useAppSelector } from '../Redux/hooks';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { totalmem } from 'os';
 
 type Props = {
   countBid: number;
@@ -28,7 +26,7 @@ const Timer = ({ countBid, id }: Props): JSX.Element => {
           const newMinute = Math.floor((timer - elapsedTime )/ 60  - (60 * newHourse))
           const newSeconds = Math.floor((timer - elapsedTime )% 60)
 
-          setHours(hours)
+          setHours(newHourse)
           setMinutes(newMinute)
           setSeconds(newSeconds)
         })
