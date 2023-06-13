@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../Redux/hooks';
 import { addItemThunk } from '../../Redux/slice/itemSlice';
 // import MultirInput from './MultirInput';
 import PhotoUploadForm from './MultirInput'; // Импортируем компонент PhotoUploadForm
-import { closeModal, openModal } from '../../Redux/slice/modalSlice';
+import { closeModal, handleModal, openModal } from '../../Redux/slice/modalSlice';
 
 export default function LkMainPage() {
   const dispatch = useAppDispatch();
@@ -24,6 +24,10 @@ export default function LkMainPage() {
     dispatch(closeModal());
   };
 
+  const handlereversModal = () => {
+    setShowPhotoUpload(!showPhotoUpload);
+  };
+
   const allCategory = useAppSelector((store) => store.item.allProduct);
 
   const addHandler: React.FormEventHandler<HTMLFormElement> = (e): void => {
@@ -37,7 +41,6 @@ export default function LkMainPage() {
         category_id: '',
       });
       setShowPhotoUpload(true); // Показываем инпут на добавление фото после успешного добавления
-      // handleCloseModal(); // Вы можете закрыть модальное окно после добавления, если это требуется
     }
   };
 
@@ -52,7 +55,12 @@ export default function LkMainPage() {
             <ModalHeader toggle={handleCloseModal}>Добавить товар</ModalHeader>
             <ModalBody>
               {showPhotoUpload ? ( // Показываем инпут на добавление фото, если showPhotoUpload равно true
-                <PhotoUploadForm itemId ={itemId}/>
+                <>
+                  <PhotoUploadForm itemId={itemId} />
+                  <Button color="secondary" onClick={handlereversModal}>
+                    Назад
+                  </Button>
+                </>
               ) : (
                 <form onSubmit={addHandler} id="modalForm">
                   <Input
@@ -109,11 +117,7 @@ export default function LkMainPage() {
                   Добавить
                 </Button>
               )}
-              {/* {showPhotoUpload ? null : ( // Скрыть кнопку "Добавить фото" при открытом инпуте на добавление фото
-                <Button color="secondary" onClick={() => setShowPhotoUpload(true)}>
-                  Добавить фото
-                </Button>
-              )} */}
+
               <Button color="secondary" onClick={handleCloseModal}>
                 Закрыть
               </Button>

@@ -12,9 +12,13 @@ export default function PhotoUploadForm({ itemId }: { itemId: number }): JSX.Ele
     setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
   };
 
+  const handleRemove = (index: number) => {
+    setSelectedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+  };
+
   const handleUpload = () => {
     if (selectedFiles.length > 0) {
-      dispatch(addPhotoThunk(itemId.toString(), selectedFiles)); // Передача itemId в addPhotoThunk
+      dispatch(addPhotoThunk(itemId.toString(), selectedFiles));
       setSelectedFiles([]);
     }
   };
@@ -31,13 +35,33 @@ export default function PhotoUploadForm({ itemId }: { itemId: number }): JSX.Ele
         accept="image/*"
       />
       {selectedFiles.length > 0 && (
-        <div>
-          <h3>Выбранные фотографии:</h3>
-          <ul>
-            {selectedFiles.map((file, index) => (
-              <li key={index}>{file.name}</li>
-            ))}
-          </ul>
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+          {selectedFiles.map((file, index) => (
+            <div key={index} style={{ position: 'relative', marginRight: 10, marginBottom: 10 }}>
+              <img src={URL.createObjectURL(file)} alt={file.name} style={{ width: 100 }} />
+              <Button
+                onClick={() => handleRemove(index)}
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  right: 0,
+                  padding: 0,
+                  width: 20,
+                  height: 20,
+                  fontSize: 12,
+                  borderRadius: '50%',
+                  backgroundColor: 'white',
+                  color: 'black',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  cursor: 'pointer',
+                }}
+              >
+                X
+              </Button>
+            </div>
+          ))}
         </div>
       )}
       <Button onClick={handleUpload}>Загрузить</Button>

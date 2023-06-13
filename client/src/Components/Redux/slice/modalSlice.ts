@@ -5,6 +5,7 @@ const modalSlice = createSlice({
   initialState: {
     isOpen: false,
     itemId: 0,
+    itemIdPhoto: 0,
   },
   reducers: {
     openModal: (state) => {
@@ -16,9 +17,12 @@ const modalSlice = createSlice({
     closeModal: (state) => {
       state.isOpen = false;
     },
+    setItemPhoto: (state, action: PayloadAction<number>) => {
+      state.itemIdPhoto = action.payload;
+    },
   },
 });
 
-export const { openModal, closeModal, setItem } = modalSlice.actions;
+export const { openModal, closeModal, setItem, setItemPhoto } = modalSlice.actions;
 
 export default modalSlice.reducer;

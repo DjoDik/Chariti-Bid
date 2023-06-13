@@ -1,14 +1,17 @@
 const express = require('express');
 const { v4: uuidv4 } = require('uuid');
-const { Item } = require('../db/models');
+const { Item, FotoGalery } = require('../db/models');
 
 const userItemRouter = express.Router();
 
 userItemRouter.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const data = await Item.findAll({ where: { user_id: id } });
-    res.json(data);
+    const items = await Item.findAll({ where: { user_id: id } , include: FotoGalery});
+    // const itemIds = items.map((item) => item.id);
+    // const galleryData = await FotoGalery.findAll({ where: { item_id: itemIds } });
+    console.log('===================>', items);
+    res.json(items);
   } catch (err) {
     res.sendStatus(500);
   }
