@@ -4,8 +4,8 @@ import { useAppDispatch, useAppSelector } from '../../Redux/hooks';
 import { addItemThunk } from '../../Redux/slice/itemSlice';
 // import MultirInput from './MultirInput';
 import PhotoUploadForm from './MultirInput'; // Импортируем компонент PhotoUploadForm
-import { closeModal, handleModal, openModal } from '../../Redux/slice/modalSlice';
-import { getUserItemThunk } from '../../Redux/slice/userItemSlice';
+import { closeModal } from '../../Redux/slice/modalSlice';
+
 
 export default function LkMainPage() {
   const dispatch = useAppDispatch();

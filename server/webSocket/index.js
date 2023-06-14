@@ -43,11 +43,10 @@ wss.on('connection', (ws, request, wsMap) => {
           include: { model: FotoGalery },
         });
         if (countBid === 0 && item.lastUser_id !== null) {
-          console.log('if    ==================2');
-        
+          return
+         
         }
         if (countBid === 0 && item.lastUser_id === null) {
-          console.log('if    ==================1');
           item.lastUser_id = userId;
           await item.save();
         }

@@ -25,7 +25,7 @@ type PropsType = {
 function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [countBid, setCountBid] = useState(0);
-  const userId = useAppSelector((state) => state.user.id);
+  const userId = useAppSelector((state) => state.user.id!);
 
   useEffect(() => {
     if (!isModalOpen) {
@@ -43,7 +43,7 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
 
   return (
     <>
-      <Card style={{ width: '13rem', margin: '10px' }}>
+      <Card style={{ width: '20rem', margin: '10px' }}>
         {oneCard?.FotoGaleries[0]?.img ? (
           <img
             alt="Пример"
@@ -54,7 +54,9 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
           <div>Нет изображения</div>
         )}
         <CardBody>
-          <CardTitle tag="h5"></CardTitle>
+          <CardTitle tag="h5">{oneCard.title}</CardTitle>
+          <CardTitle tag="h5">Город: {oneCard.city}</CardTitle>
+          <CardTitle tag="h5">Текущая цена: {oneCard.price}</CardTitle>
           <Button onClick={toggleModal}>Смотреть</Button>
         </CardBody>
       </Card>
@@ -80,11 +82,15 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
               <CardTitle tag="h5">
                 Стоимость: {oneCard.price} ID последнего пользователя: {oneCard.lastUser_id}
               </CardTitle>
-              <CardTitle tag="h5">Ваша ставка: {countBid}</CardTitle>
-              <CardTitle>
-                <Timer countBid={oneCard.price} id={oneCard.id} />
+             
+              <CardTitle style={{ color: 'red' }}>
+               Таймер: <Timer  countBid={oneCard.price} id={oneCard.id} />
+              </CardTitle>
+              <CardTitle tag="h5">
+                Последний BID-ID: {oneCard.lastUser_id}
               </CardTitle>
               <CardFooter>
+              <CardTitle tag="h5" style={{ color: 'red' }}>Ваша ставка:{countBid}</CardTitle>
                 <Button className="w-50 mt-4" color="primary" onClick={() => counterBidHandler()}>
                   Поднять на: 100р
                 </Button>

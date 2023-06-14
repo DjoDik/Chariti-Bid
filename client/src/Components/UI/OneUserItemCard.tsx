@@ -26,7 +26,7 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
 
   const dispatch = useAppDispatch();
   const [modalOpen, setModalOpen] = useState(false);
-  const [editedPost, setEditedPost] = useState<ItemType>({
+  const [editedPost, setEditedPost] = useState<FotoType>({
     id: oneCard.id,
     title: oneCard.title,
     body: oneCard.body,
