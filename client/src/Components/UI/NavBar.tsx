@@ -58,7 +58,7 @@ export default function Navbar(): JSX.Element {
   };
 
   useEffect(() => {
-    const intervalId = setInterval(changeBackgroundImage, 500000); // Interval in milliseconds for changing the background image
+    const intervalId = setInterval(changeBackgroundImage, 5000); // Interval in milliseconds for changing the background image
 
     return () => {
       clearInterval(intervalId); // Clear the interval on component unmount
@@ -81,8 +81,6 @@ export default function Navbar(): JSX.Element {
         <Box sx={{ position: 'relative' }}>
           <div style={{ position: 'relative', marginTop: '150px' }}>
             <Button
-              // variant="contained"
-              // color="primary"
               onClick={handleAvatarClick}
               sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
             >
@@ -108,28 +106,20 @@ export default function Navbar(): JSX.Element {
               ref={userMenuRef}
               sx={{
                 display: 'flex',
-                justifyContent: 'space-around',
+                // justifyContent: 'space-around',
                 position: 'absolute',
                 width: '200px',
                 height: '400px',
-                top: '100%',
+                // top: '100%',
                 right: 0,
                 zIndex: 1,
                 backgroundColor: 'white',
                 boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.2)',
                 mt: 1,
-                overflowY: 'auto',
+                // overflowY: 'auto',
               }}
             >
               <List component="nav">
-                {/* <Avatar
-                  alt="User Avatar"
-                  src={avatar}
-                  sx={{
-                    width: 150,
-                    height: 150,
-                  }}
-                /> */}
                 <ListItem disablePadding>
                   <LeftSideMenu />
                 </ListItem>
@@ -138,10 +128,9 @@ export default function Navbar(): JSX.Element {
                     Настройки
                   </ListItemButton>
                 </ListItem>
-
                 <Divider />
                 <ListItem disablePadding>
-                  <ListItemButton onClick={logoutHandler} style={{ color: 'black', top: '130px' }}>
+                  <ListItemButton onClick={logoutHandler} style={{ color: 'black' }}>
                     Выход
                   </ListItemButton>
                 </ListItem>
@@ -181,6 +170,7 @@ export default function Navbar(): JSX.Element {
           sx={{
             display: 'flex',
             alignItems: 'center',
+            flex: 1,
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center' }} component={Link} to="/">
@@ -202,7 +192,6 @@ export default function Navbar(): JSX.Element {
           sx={{
             height: '250px',
             backgroundRepeat: 'no-repeat',
-
             width: '800px',
             opacity: isImageLoaded ? 1 : 0,
             transition: 'opacity 0.5s ease',
