@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -27,6 +27,9 @@ export default function Navbar(): JSX.Element {
   const dispatch = useAppDispatch();
   const user = useAppSelector((store) => store.user);
   const avatar = useAppSelector((store) => store.avatar);
+
+  const location = useLocation();
+  console.log('location', location.pathname !== '/signup');
 
   useEffect(() => {
     dispatch(checkUserThunk());
@@ -109,7 +112,7 @@ export default function Navbar(): JSX.Element {
                 // justifyContent: 'space-around',
                 position: 'absolute',
                 width: '200px',
-                height: '400px',
+                height: '220px',
                 // top: '100%',
                 right: 0,
                 zIndex: 1,
@@ -187,23 +190,25 @@ export default function Navbar(): JSX.Element {
         {userContent}
       </Box>
       <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', zIndex: 1 }}>
-        <Box
-          className={`background-container ${isImageLoaded ? 'image-loaded' : ''}`}
-          sx={{
-            height: '250px',
-            backgroundRepeat: 'no-repeat',
-            width: '800px',
-            opacity: isImageLoaded ? 1 : 0,
-            transition: 'opacity 0.5s ease',
-          }}
-        >
-          <img
-            className="background-image"
-            src={currentBgImage}
-            alt="Background"
-            onLoad={() => setImageLoaded(true)}
-          />
-        </Box>
+        {(location.pathname !== '/signup' && location.pathname !== '/login') && (
+          <Box
+            className={`background-container ${isImageLoaded ? 'image-loaded' : ''}`}
+            sx={{
+              height: '250px',
+              backgroundRepeat: 'no-repeat',
+              width: '800px',
+              opacity: isImageLoaded ? 1 : 0,
+              transition: 'opacity 0.5s ease',
+            }}
+          >
+            <img
+              className="background-image"
+              src={currentBgImage}
+              alt="Background"
+              onLoad={() => setImageLoaded(true)}
+            />
+          </Box>
+        )}
       </div>
     </>
   );

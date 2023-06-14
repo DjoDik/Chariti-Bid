@@ -13,10 +13,13 @@ export default function SideBarCategory(): JSX.Element {
   }, []);
 
   const allCategory = useAppSelector((store) => store.item.allProduct);
+  console.log(allCategory);
+  
 
   const handleCategoryClick = (categoryName: string) => {
     dispatch(SortItemThunk(categoryName));
   };
+  
 
   return (
     <Container>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {  useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './Redux/hooks';
 import { Col, Row } from 'reactstrap';
 import { CardGroup } from 'reactstrap';
@@ -7,6 +7,7 @@ import OneItemCard from './Item/OneItemCard';
 import SideBarCategory from './UI/sideBarCategory';
 import { SOCKET_INIT, UPDATE_PRICE } from './types/wsTypes';
 import axios from 'axios';
+import { SortItemThunk } from './Redux/slice/sortSlice';
 type PropsType = {
   
   handleBid: (id: number, countBid: number, userId: number) => void;
@@ -15,6 +16,10 @@ export default function MainPage({handleBid}:PropsType): JSX.Element {
   
   const items = useAppSelector((store) => store.sort.allProduct);
 
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(SortItemThunk('Все'))
+  }, []);
   
 
   return (
