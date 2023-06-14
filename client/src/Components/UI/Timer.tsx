@@ -4,9 +4,10 @@ import axios from 'axios';
 type Props = {
   id: number,
   bidCheck: boolean,
+  setBidCheck: React.Dispatch<React.SetStateAction<boolean>> 
 };
 
-const Timer = ({ id, bidCheck }: Props): JSX.Element => {
+const Timer = ({ id, bidCheck, setBidCheck }: Props): JSX.Element => {
   const [hours, setHours] = useState(1);
   const [minutes, setMinutes] = useState(59);
   const [seconds, setSeconds] = useState(59);
@@ -18,9 +19,9 @@ const Timer = ({ id, bidCheck }: Props): JSX.Element => {
       .then((response) => {
         const savedTime = response.data;
         if (typeof savedTime !== 'string') {
+          setBidCheck(true)
           const currentTime = new Date().getTime() / 1000; // текущее время в секундах
           const elapsedTime = currentTime - savedTime;
-          console.log('savedTime', typeof savedTime);
 
           const timer = 7200;
           const newHourse = Math.floor((timer - elapsedTime) / 3600);

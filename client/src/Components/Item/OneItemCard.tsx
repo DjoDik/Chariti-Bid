@@ -25,14 +25,14 @@ type PropsType = {
 function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [countBid, setCountBid] = useState(0);
-  const userId = useAppSelector((state) => state.user.id);
+  const user = useAppSelector((state) => state.user);
   const [bidCheck, setBidCheck] = useState(false);
+  console.log('bidCheck', bidCheck);
 
   const clickHandler = () => {
-    onBid(oneCard.id, countBid, userId)
-    setBidCheck(true)
-  }
-  
+    onBid(oneCard.id, countBid, user.id);
+    setBidCheck(true);
+  };
 
   useEffect(() => {
     if (!isModalOpen) {
@@ -87,27 +87,37 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
               <CardText tag="h5">{oneCard.body}</CardText>
               <CardText tag="h5">Город: {oneCard.city}</CardText>
               <CardTitle tag="h5">
-                Стоимость: {oneCard.price} ID последнего пользователя: {oneCard.lastUser_id}
+                Стоимость: {oneCard.price} имя последнего пользователя: {user.username}
               </CardTitle>
-             
+
               <CardTitle style={{ color: 'red' }}>
-               Таймер: <Timer  countBid={oneCard.price} id={oneCard.id} />
+                Таймер: <Timer bidCheck={bidCheck} id={oneCard.id} setBidCheck={setBidCheck} />
               </CardTitle>
-              <CardTitle tag="h5">
-                Последний BID-ID: {oneCard.lastUser_id}
-              </CardTitle>
+              <CardTitle tag="h5">Последний BID-ID: {oneCard.lastUser_id}</CardTitle>
               <CardFooter>
-              <CardTitle tag="h5" style={{ color: 'red' }}>Ваша ставка:{countBid}</CardTitle>
-                <Button className="w-50 mt-4" color="primary" onClick={() => counterBidHandler()}>
-                  Поднять на: 100р
-                </Button>
-                <Button
-                  className="w-50 mt-4"
-                  color="danger"
-                  onClick={() => clickHandler()}
-                >
-                  Bid
-                </Button>
+                {user.id !== oneCard.user_id && (
+                  <>
+                    {user.status ? (
+                      <>
+                        <CardTitle tag="h5" style={{ color: 'red' }}>
+                          Ваша ставка: {countBid}
+                        </CardTitle>
+                        <Button
+                          className="w-50 mt-4"
+                          color="primary"
+                          onClick={() => counterBidHandler()}
+                        >
+                          Поднять на: 100р
+                        </Button>
+                        <Button className="w-50 mt-4" color="danger" onClick={() => clickHandler()}>
+                          Bid
+                        </Button>
+                      </>
+                    ) : (
+                      'Для участия в торгах - зарегистрируйтесь'
+                    )}
+                  </>
+                )}
               </CardFooter>
             </CardBody>
           </Card>
