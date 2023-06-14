@@ -14,6 +14,8 @@ import { ItemType } from '../types/itemType';
 import Timer from '../UI/Timer';
 import axios from 'axios';
 import { useAppSelector } from '../Redux/hooks';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 type PropsType = {
   oneCard: ItemType;
@@ -25,9 +27,6 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
   const [countBid, setCountBid] = useState(0);
   const userId = useAppSelector((state) => state.user.id);
 
-
-  
-  
   useEffect(() => {
     if (!isModalOpen) {
     }
@@ -45,7 +44,15 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
   return (
     <>
       <Card style={{ width: '13rem', margin: '10px' }}>
-        <img alt="Sample" src={oneCard?.FotoGaleries[0]?.img} style={{ margin: '10px' }} />
+        {oneCard?.FotoGaleries[0]?.img ? (
+          <img
+            alt="Пример"
+            src={`http://localhost:3001/photo/${oneCard?.FotoGaleries[0]?.img}`}
+            style={{ margin: '10px' }}
+          />
+        ) : (
+          <div>Нет изображения</div>
+        )}
         <CardBody>
           <CardTitle tag="h5"></CardTitle>
           <Button onClick={toggleModal}>Смотреть</Button>
@@ -56,14 +63,24 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
         <ModalHeader toggle={toggleModal}>{oneCard.title}</ModalHeader>
         <ModalBody>
           <Card>
-            <img alt="Sample" src={oneCard?.FotoGaleries[0]?.img} style={{ margin: '10px' }} />
+            <Carousel showArrows={true} showThumbs={true}>
+              {oneCard?.FotoGaleries.map((image) => (
+                <div key={image.id}>
+                  <img
+                    alt="Пример"
+                    src={`http://localhost:3001/photo/${image.img}`}
+                    style={{ margin: '10px' }}
+                  />
+                </div>
+              ))}
+            </Carousel>
             <CardBody>
               <CardText tag="h5">{oneCard.body}</CardText>
-              <CardText tag="h5">Город:{oneCard.city}</CardText>
+              <CardText tag="h5">Город: {oneCard.city}</CardText>
               <CardTitle tag="h5">
-                Стоимость:{oneCard.price} ID last user:{oneCard.lastUser_id}
+                Стоимость: {oneCard.price} ID последнего пользователя: {oneCard.lastUser_id}
               </CardTitle>
-              <CardTitle tag="h5">Ваша ставка:{countBid}</CardTitle>
+              <CardTitle tag="h5">Ваша ставка: {countBid}</CardTitle>
               <CardTitle>
                 <Timer countBid={oneCard.price} id={oneCard.id} />
               </CardTitle>
@@ -86,4 +103,5 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
     </>
   );
 }
+
 export default React.memo(OneItemCard);
