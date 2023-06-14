@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button, Input, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { useAppDispatch, useAppSelector } from '../../Redux/hooks';
 import { addItemThunk } from '../../Redux/slice/itemSlice';
-import PhotoUploadForm from './MultirInput';
-import { closeModal } from '../../Redux/slice/modalSlice';
+// import MultirInput from './MultirInput';
+import PhotoUploadForm from './MultirInput'; // Импортируем компонент PhotoUploadForm
+import { closeModal, handleModal, openModal } from '../../Redux/slice/modalSlice';
+import { getUserItemThunk } from '../../Redux/slice/userItemSlice';
 
 export default function LkMainPage() {
   const dispatch = useAppDispatch();

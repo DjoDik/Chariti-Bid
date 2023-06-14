@@ -7,6 +7,7 @@ export type UserType = {
   phone: string;
   avatar: string | undefined; // Обновлено: поле avatar не является необязательным
   onlinestatus: boolean;
+  status:boolean
 };
 
 export type UserSignUpType = {

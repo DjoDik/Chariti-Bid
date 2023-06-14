@@ -17,6 +17,7 @@ import { useAppSelector } from '../Redux/hooks';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
+
 type PropType = {
   itemTop: ItemType;
   onBid: (id: number, countBid: number, userId: number) => void;
@@ -55,12 +56,18 @@ export default function TopCard({ itemTop, onBid }: PropType): JSX.Element {
           <div>Нет изображения</div>
         )}
         <CardBody>
+        <CardTitle style={{ color: 'red',marginTop:"20px" }}>
+               <Timer  countBid={itemTop.price} id={itemTop.id} />
+              </CardTitle>
           <CardTitle tag="h5"></CardTitle>
           <CardSubtitle className="mb-2 text-muted" tag="h6"></CardSubtitle>
           <CardText>{itemTop.title}</CardText>
           <Button color="danger" onClick={toggleModal}>
             Bid: {itemTop.price}
           </Button>
+         
+         
+          
         </CardBody>
       </Card>
 
@@ -88,8 +95,8 @@ export default function TopCard({ itemTop, onBid }: PropType): JSX.Element {
               <CardText tag="h5">Город: {itemTop.city}</CardText>
               <CardTitle tag="h5">Стоимость: {itemTop.price}</CardTitle>
               <CardTitle tag="h5">Ваша ставка: {countBid}</CardTitle>
-              <CardTitle>
-                <Timer countBid={itemTop.price} id={itemTop.id} />
+              <CardTitle style={{ color: 'red' }}>
+                Таймер:<Timer countBid={itemTop.price} id={itemTop.id} />
               </CardTitle>
               <CardFooter>
                 <Button className="w-50 mt-4" color="primary" onClick={counterBidHandler}>
