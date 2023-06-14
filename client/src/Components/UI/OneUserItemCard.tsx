@@ -17,13 +17,13 @@ import { useAppDispatch } from '../Redux/hooks';
 import PhotoUploadForm from '../LK/UI/MultirInput';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/Store';
+// import { addUserItemPostsThunk } from '../Redux/slice/userItemSlice';
 
 type PropsType = {
   oneCard: ItemType;
 };
 
 export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
-
   const dispatch = useAppDispatch();
   const [modalOpen, setModalOpen] = useState(false);
   const [editedPost, setEditedPost] = useState<FotoType>({
