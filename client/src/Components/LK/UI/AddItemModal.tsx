@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Input, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
+import React, { useState, useEffect, useRef } from 'react';
+import { Button, Input, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { useAppDispatch, useAppSelector } from '../../Redux/hooks';
 import { addItemThunk } from '../../Redux/slice/itemSlice';
-// import MultirInput from './MultirInput';
-import PhotoUploadForm from './MultirInput'; // Импортируем компонент PhotoUploadForm
-import { closeModal, handleModal, openModal } from '../../Redux/slice/modalSlice';
-import { getUserItemThunk } from '../../Redux/slice/userItemSlice';
+import PhotoUploadForm from './MultirInput';
+import { closeModal } from '../../Redux/slice/modalSlice';
 
 export default function LkMainPage() {
   const dispatch = useAppDispatch();
@@ -15,8 +13,9 @@ export default function LkMainPage() {
     city: '',
     category_id: '',
   });
-  const [showPhotoUpload, setShowPhotoUpload] = useState(false); // Состояние для отображения инпута на добавление фото
-  const [itemAdded, setItemAdded] = useState(false);
+  const [showPhotoUpload, setShowPhotoUpload] = useState(false);
+  const [isItemAdded, setIsItemAdded] = useState(false);
+  const modalRef = useRef(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -30,9 +29,7 @@ export default function LkMainPage() {
     setShowPhotoUpload(!showPhotoUpload);
   };
 
-  const allCategory = useAppSelector((store) => store.item.allProduct);
-
-  const addHandler: React.FormEventHandler<HTMLFormElement> = (e): void => {
+  const addHandler = (e) => {
     e.preventDefault();
     if (formData.title && formData.body && formData.city && formData.category_id) {
       dispatch(addItemThunk(formData));
@@ -42,13 +39,34 @@ export default function LkMainPage() {
         city: '',
         category_id: '',
       });
-      setItemAdded(true);
-      setShowPhotoUpload(true); // Показываем инпут на добавление фото после успешного добавления
+      setIsItemAdded(true);
+      setShowPhotoUpload(true);
     }
   };
 
   const isOpen = useAppSelector((state) => state.modal.isOpen);
   const itemId = useAppSelector((state) => state.modal.itemId);
+  const allCategory = useAppSelector((store) => store.item.allProduct);
+
+  useEffect(() => {
+    if (isItemAdded && !showPhotoUpload) {
+      dispatch(closeModal());
+      setIsItemAdded(false);
+    }
+  }, [isItemAdded, showPhotoUpload, dispatch]);
+
+  const handleOutsideClick = (e) => {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      setShowPhotoUpload(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, []);
 
   return (
     <>
@@ -57,13 +75,13 @@ export default function LkMainPage() {
           <Modal isOpen={isOpen} toggle={handleCloseModal}>
             <ModalHeader toggle={handleCloseModal}>Добавить товар</ModalHeader>
             <ModalBody>
-              {showPhotoUpload ? ( // Показываем инпут на добавление фото, если showPhotoUpload равно true
-                <>
+              {showPhotoUpload ? (
+                <div ref={modalRef}>
                   <PhotoUploadForm itemId={itemId} />
                   <Button color="secondary" onClick={handlereversModal}>
-                    Назад
+                    Закрыть
                   </Button>
-                </>
+                </div>
               ) : (
                 <form onSubmit={addHandler} id="modalForm">
                   <Input
@@ -98,7 +116,7 @@ export default function LkMainPage() {
                       Категория
                     </option>
                     {allCategory.slice(1).map((category) => (
-                      <option value={category.id} key={category.name}>
+                      <option value={category.id} key={category.id}>
                         {category.name}
                       </option>
                     ))}
@@ -107,7 +125,7 @@ export default function LkMainPage() {
               )}
             </ModalBody>
             <ModalFooter>
-              {showPhotoUpload ? null : ( // Скрыть кнопку "Добавить" при открытом инпуте на добавление фото
+              {showPhotoUpload ? null : (
                 <Button
                   color={
                     formData.title && formData.body && formData.city && formData.category_id
@@ -119,10 +137,6 @@ export default function LkMainPage() {
                   Добавить
                 </Button>
               )}
-
-              <Button color="secondary" onClick={handleCloseModal}>
-                Закрыть
-              </Button>
             </ModalFooter>
           </Modal>
         </div>
