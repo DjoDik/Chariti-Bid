@@ -16,6 +16,7 @@ export default function UserProfilePage(): JSX.Element {
   const [newPhone, setNewPhone] = useState('');
   const [email, setEmail] = useState('');
   const [avatar, setAvatar] = useState('');
+  const [modalType, setModalType] = useState('');
 
   useEffect(() => {
     if (user.avatar) {
@@ -27,17 +28,19 @@ export default function UserProfilePage(): JSX.Element {
     setModalOpen(!modalOpen);
   };
 
-  const handleChangePassword = () => {
-    dispatch(changePasswordThunk({ email, oldPassword, newPassword, userName, newPhone }));
-    setModalOpen(false);
-  };
-
   const handleOpenAvatarModal = () => {
+    setModalType('avatar');
     setModalOpen(true);
   };
 
   const handleOpenDataModal = () => {
+    setModalType('data');
     setModalOpen(true);
+  };
+
+  const handleChangePassword = () => {
+    dispatch(changePasswordThunk({ email, oldPassword, newPassword, userName, newPhone }));
+    setModalOpen(false);
   };
 
   return (
@@ -69,8 +72,8 @@ export default function UserProfilePage(): JSX.Element {
 
       <Modal isOpen={modalOpen} toggle={toggleModal}>
         <ModalBody>
-          {modalOpen && <PhotoUploader />}
-          {!modalOpen && (
+          {modalType === 'avatar' && <PhotoUploader />}
+          {modalType === 'data' && (
             <>
               <h3>Изменение данных</h3>
               <Input
