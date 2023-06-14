@@ -175,14 +175,12 @@ export default function Navbar(): JSX.Element {
           position: 'relative',
           px: 4,
           justifyContent: 'space-between',
-          
         }}
       >
         <Box
           sx={{
             display: 'flex',
             alignItems: 'center',
-            
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center' }} component={Link} to="/">
