@@ -16,9 +16,9 @@ export default function SideBarAucTop({ handleBid }: PropsType): JSX.Element {
     dispatch(getTopItemThunk());
   }, []);
   const allTop = useAppSelector((store) => store.top.top);
-
+  console.log(allTop);
   return (
-    <Container className="d-flex flex-column-reverse align-items-end">
+    <Container>
       {allTop.map((itemTop) => (
         <CSSTransition
           key={itemTop.id}
