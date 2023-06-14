@@ -26,7 +26,7 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
 
   const dispatch = useAppDispatch();
   const [modalOpen, setModalOpen] = useState(false);
-  const [editedPost, setEditedPost] = useState<ItemType>({
+  const [editedPost, setEditedPost] = useState<FotoType>({
     id: oneCard.id,
     title: oneCard.title,
     body: oneCard.body,
@@ -35,7 +35,7 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
   });
   const userItems = useSelector((state: RootState) => state.userItem.userItems);
   const editedPosts = userItems.find((item) => item.id === oneCard.id);
-
+  console.log('---------&&--------->', userItems);
   const [editedPhotos, setEditedPhotos] = useState<string[]>(oneCard.FotoGaleries);
 
   const deleteHandler = (id: string) => {
@@ -79,7 +79,7 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
           <img
             key={index}
             alt="Sample"
-            src={`http://localhost:3001/photo/${photo}`} // Добавляем базовый URL перед именем файла
+            src={`http://localhost:3001/photo/${photo.img}`} // Добавляем базовый URL перед именем файла
           />
         ))
       ) : (
@@ -125,11 +125,11 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
             />
 
             <div>
-              {editedPhotos.map((photo, index) => (
+              {editedPhotos?.map((photo, index) => (
                 <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
                   <img
                     alt="Sample"
-                    src={`http://localhost:3001/photo/${photo}`}
+                    src={`http://localhost:3001/photo/${photo.img}`}
                     style={{ width: '100px', height: '100px', marginRight: '10px' }}
                   />
                   <Button

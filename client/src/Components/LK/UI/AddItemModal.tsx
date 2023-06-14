@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Input, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
 import { useAppDispatch, useAppSelector } from '../../Redux/hooks';
 import { addItemThunk } from '../../Redux/slice/itemSlice';
 // import MultirInput from './MultirInput';
 import PhotoUploadForm from './MultirInput'; // Импортируем компонент PhotoUploadForm
-import { closeModal, handleModal, openModal } from '../../Redux/slice/modalSlice';
+import { closeModal } from '../../Redux/slice/modalSlice';
+
 
 export default function LkMainPage() {
   const dispatch = useAppDispatch();
@@ -15,6 +16,7 @@ export default function LkMainPage() {
     category_id: '',
   });
   const [showPhotoUpload, setShowPhotoUpload] = useState(false); // Состояние для отображения инпута на добавление фото
+  const [itemAdded, setItemAdded] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -40,6 +42,7 @@ export default function LkMainPage() {
         city: '',
         category_id: '',
       });
+      setItemAdded(true);
       setShowPhotoUpload(true); // Показываем инпут на добавление фото после успешного добавления
     }
   };
@@ -112,7 +115,6 @@ export default function LkMainPage() {
                       : 'danger'
                   }
                   onClick={addHandler}
-                  button="true"
                 >
                   Добавить
                 </Button>

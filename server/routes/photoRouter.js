@@ -8,7 +8,7 @@ const router = express.Router();
 // Конфигурация Multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'photo'); // Указываем папку для сохранения файлов
+    cb(null, 'uploads/photo'); // Указываем папку для сохранения файлов
   },
   filename: (req, file, cb) => {
     const fileExtension = path.extname(file.originalname);
@@ -24,6 +24,7 @@ router.post('/photos/:itemId', upload.array('photos'), async (req, res) => {
   try {
     const { itemId } = req.params;
   
+    console.log('-----------444444>>>', itemId);
     // Проверка наличия itemId
     if (!itemId) {
       res.status(400).json({ message: 'No item_id provided' });
@@ -50,6 +51,5 @@ router.post('/photos/:itemId', upload.array('photos'), async (req, res) => {
     res.sendStatus(500);
   }
 });
-
 
 module.exports = router;

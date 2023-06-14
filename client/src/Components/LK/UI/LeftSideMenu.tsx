@@ -34,12 +34,13 @@ export default function LeftSideMenu({}: Props) {
         top: '100%',
         backgroundColor: '#white',
         mt: 5,
+        overflowY: 'auto',
       }}
     >
       <ListItemButton component={Link} to="/basket">
         Корзина
       </ListItemButton>
-      <ListItemButton button onClick={() => handleOpenModal()}>
+      <ListItemButton onClick={() => handleOpenModal()}>
         <LkMainPage />
         Добавить товар
       </ListItemButton>

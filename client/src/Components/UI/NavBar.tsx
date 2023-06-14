@@ -79,20 +79,30 @@ export default function Navbar(): JSX.Element {
     userContent = (
       <ClickAwayListener onClickAway={handleClickAway}>
         <Box sx={{ position: 'relative' }}>
-          <Avatar
-            alt="User Avatar"
-            src={avatar}
-            sx={{
-              width: 40,
-              height: 40,
-              transition: 'all 0.3s',
-              '&:hover': {
-                width: 50,
-                height: 50,
-              },
-            }}
-            onClick={handleAvatarClick}
-          />
+          <div style={{ position: 'relative', marginTop: '150px' }}>
+            <Button
+              // variant="contained"
+              // color="primary"
+              onClick={handleAvatarClick}
+              sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+            >
+              <Avatar
+                alt="User Avatar"
+                src={avatar}
+                sx={{
+                  width: 140,
+                  height: 140,
+                  transition: 'all 0.3s',
+                  '&:hover': {
+                    width: 150,
+                    height: 150,
+                  },
+                }}
+              />
+              <p className="profile-text">Profile</p>
+            </Button>
+          </div>
+
           {isUserMenuOpen && (
             <Box
               ref={userMenuRef}
@@ -108,17 +118,18 @@ export default function Navbar(): JSX.Element {
                 backgroundColor: 'white',
                 boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.2)',
                 mt: 1,
+                overflowY: 'auto',
               }}
             >
               <List component="nav">
-                <Avatar
+                {/* <Avatar
                   alt="User Avatar"
                   src={avatar}
                   sx={{
                     width: 150,
                     height: 150,
                   }}
-                />
+                /> */}
                 <ListItem disablePadding>
                   <LeftSideMenu />
                 </ListItem>
@@ -157,7 +168,6 @@ export default function Navbar(): JSX.Element {
     <>
       <Box
         sx={{
-          backgroundColor: 'black',
           height: '60px',
           display: 'flex',
           alignItems: 'center',
@@ -171,7 +181,6 @@ export default function Navbar(): JSX.Element {
           sx={{
             display: 'flex',
             alignItems: 'center',
-            backgroundColor: 'black',
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center' }} component={Link} to="/">
@@ -182,33 +191,31 @@ export default function Navbar(): JSX.Element {
               variant="h6"
               component="div"
               sx={{ marginLeft: '10px', fontWeight: 'bold', color: '#B51718' }}
-            >
-              CHARITY BET{' '}
-            </Typography>
+            ></Typography>
           </Box>
         </Box>
         {userContent}
       </Box>
-      <Box
-        className={`background-container ${isImageLoaded ? 'image-loaded' : ''}`}
-        sx={{
-          height: '400px',
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          opacity: isImageLoaded ? 1 : 0,
-          transition: 'opacity 0.5s ease',
-        }}
-      >
-        <img
-          className="background-image"
-          src={currentBgImage}
-          alt="Background"
-          onLoad={() => setImageLoaded(true)}
-        />
-      </Box>
+      <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', zIndex: 1 }}>
+        <Box
+          className={`background-container ${isImageLoaded ? 'image-loaded' : ''}`}
+          sx={{
+            height: '250px',
+            backgroundRepeat: 'no-repeat',
+
+            width: '800px',
+            opacity: isImageLoaded ? 1 : 0,
+            transition: 'opacity 0.5s ease',
+          }}
+        >
+          <img
+            className="background-image"
+            src={currentBgImage}
+            alt="Background"
+            onLoad={() => setImageLoaded(true)}
+          />
+        </Box>
+      </div>
     </>
   );
 }
