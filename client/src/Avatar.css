@@ -46,18 +46,26 @@
   position: relative;
   height: 400px;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .background-image {
   position: absolute;
-  bottom: 0; /* Показать только нижнюю часть картинки */
   left: 50%;
   transform: translateX(-50%);
-  width: 100%; /* Используйте ширину 100% для растягивания по ширине контейнера */
-  height: auto; /* Автоматическая высота, чтобы сохранить пропорции картинки */
-  transition: opacity 0.5s ease; /* Плавный переход прозрачности */
+  width: 100%;
+  height: 450px;
+  transition: opacity 0.5s ease;
 }
 
 .background-container:not(.image-loaded) .background-image {
   opacity: 0; /* Скрытие изображения до загрузки */
+}
+.profile-text {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 16px;
+  color: #333;
 }
