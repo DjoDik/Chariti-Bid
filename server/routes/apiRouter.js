@@ -74,11 +74,11 @@ router.post('/timer', async (req, res) => {
     });
     if (created) {
       // Запись была создана
-      const deleteTimer = cron.once('*/10 * * * * *', () => {
-        const timerId = req.body.item_id;
-        deleteTimerValue(timerId);
-      });
-      deleteTimer.stop()
+      // const deleteTimer = cron.once('*/10 * * * * *', () => {
+      //   const timerId = req.body.item_id;
+      //   deleteTimerValue(timerId);
+      // });
+      // deleteTimer.stop()
       
       res.status(201).json({ message: 'Timer created successfully' });
     } else {
