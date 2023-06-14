@@ -26,7 +26,8 @@ type PropType = {
 export default function TopCard({ itemTop, onBid }: PropType): JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [countBid, setCountBid] = useState(0);
-  const userId = useAppSelector((state) => state.user.id);
+  const userId = useAppSelector(state => state.user.id)
+  const [bidCheck, setBidCheck] = useState(false);
 
   useEffect(() => {
     if (!isModalOpen) {
@@ -37,6 +38,11 @@ export default function TopCard({ itemTop, onBid }: PropType): JSX.Element {
     setIsModalOpen(!isModalOpen);
     setCountBid(0);
   };
+
+  const clickHandler = () => {
+    onBid(itemTop.id, countBid, userId)
+    setBidCheck(true)
+  }
 
   const counterBidHandler = () => {
     setCountBid(countBid + 100);

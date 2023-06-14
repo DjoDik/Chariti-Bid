@@ -1,7 +1,11 @@
 const express = require('express');
+const cron = require('node-cron');
 const multer = require('multer');
 const path = require('path');
 const { User, Timer } = require('../db/models');
+const deleteTimerValue = require('../cronFuctions')
+
+
 
 const router = express.Router();
 
@@ -70,6 +74,12 @@ router.post('/timer', async (req, res) => {
     });
     if (created) {
       // Запись была создана
+      // const deleteTimer = cron.once('*/10 * * * * *', () => {
+      //   const timerId = req.body.item_id;
+      //   deleteTimerValue(timerId);
+      // });
+      // deleteTimer.stop()
+      
       res.status(201).json({ message: 'Timer created successfully' });
     } else {
       // Запись уже существует
@@ -83,6 +93,7 @@ router.post('/timer', async (req, res) => {
 
 router.get('/timer/:id', async (req, res) => {
   if (req.params.id) {
+    console.log('req.params.id', req.params.id);
     try {
       const time = await Timer.findOne({ where: { item_id: req.params.id } });
       res.json(time?.value);

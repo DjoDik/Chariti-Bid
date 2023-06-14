@@ -25,7 +25,14 @@ type PropsType = {
 function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [countBid, setCountBid] = useState(0);
-  const userId = useAppSelector((state) => state.user.id!);
+  const userId = useAppSelector((state) => state.user.id);
+  const [bidCheck, setBidCheck] = useState(false);
+
+  const clickHandler = () => {
+    onBid(oneCard.id, countBid, userId)
+    setBidCheck(true)
+  }
+  
 
   useEffect(() => {
     if (!isModalOpen) {
@@ -97,7 +104,7 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
                 <Button
                   className="w-50 mt-4"
                   color="danger"
-                  onClick={() => onBid(oneCard.id, countBid, userId)}
+                  onClick={() => clickHandler()}
                 >
                   Bid
                 </Button>
