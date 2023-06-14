@@ -16,7 +16,6 @@ export default function SideBarAucTop({ handleBid }: PropsType): JSX.Element {
     dispatch(getTopItemThunk());
   }, []);
   const allTop = useAppSelector((store) => store.top.top);
-  console.log(allTop);
   return (
     <Container>
       {allTop.map((itemTop) => (
