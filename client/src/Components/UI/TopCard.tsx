@@ -22,6 +22,11 @@ export default function TopCard({ itemTop,onBid }: PropType): JSX.Element {
     setCountBid(0);
   };
 
+  const clickHandler = () => {
+    onBid(itemTop.id, countBid, userId)
+    setBidCheck(true)
+  }
+
   const counterBidHandler = () => {
     setCountBid(countBid + 100); 
   };
@@ -53,12 +58,12 @@ export default function TopCard({ itemTop,onBid }: PropType): JSX.Element {
           <CardText tag="h5">Город:{itemTop.city}</CardText>
           <CardTitle tag="h5">Стоимость:{itemTop.price}</CardTitle>
           <CardTitle tag="h5">Ваша ставка:{countBid}</CardTitle>
-          <CardTitle ><Timer countBid={itemTop.price} id={itemTop.id} bidCheck={bidCheck}/></CardTitle>
+          <CardTitle ><Timer id={itemTop.id} bidCheck={bidCheck}/></CardTitle>
           <CardFooter>
             <Button className="w-50 mt-4" color="primary" onClick={() => counterBidHandler()}>
               Поднять на: 100р
             </Button>
-            <Button className="w-50 mt-4" color="danger" onClick={() => onBid(itemTop.id, countBid, userId)}>
+            <Button className="w-50 mt-4" color="danger" onClick={() => clickHandler()}>
               Bid
             </Button>
           </CardFooter>
