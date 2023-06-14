@@ -19,7 +19,7 @@ import bg1 from '/img/bg1.jpg';
 import bg2 from '/img/bg2.jpg';
 import bg3 from '/img/bg3.jpg';
 import bg4 from '/img/bg4.jpg';
-import '../../Avatar.css';
+import '../../css/Avatar.css';
 import LeftSideMenu from '../LK/UI/LeftSideMenu';
 import { setAvatar } from '../Redux/slice/avatarSlice';
 
