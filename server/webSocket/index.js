@@ -1,7 +1,6 @@
 const { WebSocketServer } = require('ws');
 const { User, Item, FotoGalery } = require('../db/models');
 
-
 const wss = new WebSocketServer({ clientTracking: false, noServer: true });
 
 wss.on('connection', (ws, request, wsMap) => {
@@ -38,10 +37,20 @@ wss.on('connection', (ws, request, wsMap) => {
         break;
       }
       case 'UPDATE_PRICE': {
-        const { id, countBid,userId } = payload;
+        const { id, countBid, userId } = payload;
+        console.log('countBid', countBid);
         const item = await Item.findByPk(id, {
-          include: {model: FotoGalery}
+          include: { model: FotoGalery },
         });
+        if (countBid === 0 && item.lastUser_id !== null) {
+          console.log('if    ==================2');
+        
+        }
+        if (countBid === 0 && item.lastUser_id === null) {
+          console.log('if    ==================1');
+          item.lastUser_id = userId;
+          await item.save();
+        }
         item.price += countBid;
         item.lastUser_id = userId;
         await item.save();
@@ -49,8 +58,6 @@ wss.on('connection', (ws, request, wsMap) => {
 
         for (const [, wsClient] of wsMap) {
           wsClient.ws.send(
-            
-           
             JSON.stringify({
               type: 'sort/updateItemPrice',
               payload: item,
@@ -59,8 +66,6 @@ wss.on('connection', (ws, request, wsMap) => {
         }
         for (const [, wsClient] of wsMap) {
           wsClient.ws.send(
-            
-           
             JSON.stringify({
               type: 'top/updateItemPrice',
               payload: item,

@@ -25,5 +25,29 @@ export type UpdatePriceType = {
     newPrice: number;
   };
 };
+export const SEND_MESSAGE = 'SEND_MESSAGE';
+export type SendMessageType = {
+  type: typeof SEND_MESSAGE;
+  payload: {
+    message: string;
+    recipient: string;
+  };
+};
 
-export type WsActionTypes = WsInitType | WsConnectType | WsUpdateStatusType | WsCloseType | UpdatePriceType;
+export const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE';
+export type ReceiveMessageType = {
+  type: typeof RECEIVE_MESSAGE;
+  payload: {
+    message: string;
+    sender: string;
+  };
+};
+
+export type WsActionTypes = 
+  | WsInitType 
+  | WsConnectType 
+  | WsUpdateStatusType 
+  | WsCloseType 
+  | UpdatePriceType
+  | SendMessageType
+  | ReceiveMessageType;
