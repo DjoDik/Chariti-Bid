@@ -24,7 +24,7 @@ router.post('/photos/:itemId', upload.array('photos'), async (req, res) => {
   try {
     const { itemId } = req.params;
 
-    console.log('-----------444444>>>', itemId);
+
     // Проверка наличия itemId
     if (!itemId) {
       res.status(400).json({ message: 'No item_id provided' });

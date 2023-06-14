@@ -7,7 +7,6 @@ import OneItemCard from './Item/OneItemCard';
 import SideBarCategory from './UI/sideBarCategory';
 import { SOCKET_INIT, UPDATE_PRICE } from './types/wsTypes';
 import axios from 'axios';
-import { TimerStateSlice } from './types/TimerType';
 type PropsType = {
   
   handleBid: (id: number, countBid: number, userId: number) => void;
