@@ -69,7 +69,6 @@ const Timer = ({ countBid, id }: Props): JSX.Element => {
 
   return (
     <div>
-      <h4>Таймер</h4>
       <div>
         {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}:
         {String(seconds).padStart(2, '0')}
