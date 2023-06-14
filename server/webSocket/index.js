@@ -38,18 +38,18 @@ wss.on('connection', (ws, request, wsMap) => {
       }
       case 'UPDATE_PRICE': {
         const { id, countBid, userId } = payload;
-        console.log('countBid', countBid)
+        console.log('countBid', countBid);
         const item = await Item.findByPk(id, {
           include: { model: FotoGalery },
         });
+        if (countBid === 0 && item.lastUser_id !== null) {
+          console.log('if    ==================2');
+        
+        }
         if (countBid === 0 && item.lastUser_id === null) {
-          console.log('if    ==================1')
+          console.log('if    ==================1');
           item.lastUser_id = userId;
           await item.save();
-        }
-        if (countBid === 0 && item.lastUser_id !== null) {
-          console.log('if    ==================2')
-          return 
         }
         item.price += countBid;
         item.lastUser_id = userId;
