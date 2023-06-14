@@ -40,7 +40,7 @@ export default function LeftSideMenu({}: Props) {
       <ListItemButton component={Link} to="/basket">
         Корзина
       </ListItemButton>
-      <ListItemButton button onClick={() => handleOpenModal()}>
+      <ListItemButton onClick={() => handleOpenModal()}>
         <LkMainPage />
         Добавить товар
       </ListItemButton>

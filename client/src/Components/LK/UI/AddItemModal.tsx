@@ -115,7 +115,6 @@ export default function LkMainPage() {
                       : 'danger'
                   }
                   onClick={addHandler}
-                  button="true"
                 >
                   Добавить
                 </Button>

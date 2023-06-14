@@ -23,9 +23,9 @@ export default function UserItemsPage(): JSX.Element {
     <CardGroup>
       <Row className="justify-content-center">
         {allUserItems.map((el) => (
-          <>
+         
             <OneUserItemCard key={el.id} oneCard={el} />
-          </>
+          
         ))}
       </Row>
     </CardGroup>
