@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container } from 'reactstrap';
 import { useAppDispatch, useAppSelector } from '../Redux/hooks';
 import { getItemThunk } from '../Redux/slice/itemSlice';
@@ -12,14 +12,15 @@ type PropsType = {
 };
 
 export default function SideBarAucTop({ handleBid }: PropsType): JSX.Element {
+  const [sellStatus, setSellStatus] = useState(false);
   const dispatch = useAppDispatch();
+  const sortedTop = useAppSelector((store) => store.top.sortedTop);
 
   useEffect(() => {
     dispatch(getTopItemThunk());
-  }, []);
+  }, [sellStatus]);
+console.log("qwe",sellStatus)
 
-
-  const sortedTop = useAppSelector((store) => store.top.sortedTop);
 
   
 
@@ -39,7 +40,7 @@ export default function SideBarAucTop({ handleBid }: PropsType): JSX.Element {
             timeout={1500}
           >
             <div className="box">
-              <TopCard itemTop={itemTop} onBid={handleBid} />
+              <TopCard setSellStatus={setSellStatus} itemTop={itemTop} onBid={handleBid} />
             </div>
           </CSSTransition>
         ))}

@@ -6,6 +6,9 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     const data = await Item.findAll({
+      where: {
+        sellStatus: false,
+      },
       limit: 5,
       order: [['price', 'DESC']],
       include: [FotoGalery],
