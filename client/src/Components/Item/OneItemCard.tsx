@@ -99,7 +99,7 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
       </Card>
 
       <Modal isOpen={isModalOpen} toggle={toggleModal} size="lg">
-        <ModalHeader toggle={toggleModal}>{oneCard.title}</ModalHeader>
+        <ModalHeader toggle={toggleModal} style={{border: '0px solid white'}}>{oneCard.title} </ModalHeader>
         <ModalBody>
           <Card>
             <Carousel
