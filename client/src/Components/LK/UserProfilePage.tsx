@@ -4,9 +4,11 @@ import { Button, Card, CardBody, CardTitle, Input, Modal, ModalBody } from 'reac
 import { useAppSelector, useAppDispatch } from '../Redux/hooks';
 import { changePasswordThunk } from '../Redux/slice/userSlice';
 import PhotoUploader from '../../Components/Item/avatarPage';
+import { setAvatar, handleAvatarChange } from '../Redux/slice/avatarSlice';
 
 export default function UserProfilePage(): JSX.Element {
   const user = useAppSelector((store) => store.user);
+  const avatar = useAppSelector((store) => store.avatar);
   const dispatch = useAppDispatch();
 
   const [userName, setUsername] = useState('');
@@ -15,14 +17,20 @@ export default function UserProfilePage(): JSX.Element {
   const [oldPassword, setOldPassword] = useState('');
   const [newPhone, setNewPhone] = useState('');
   const [email, setEmail] = useState('');
-  const [avatar, setAvatar] = useState('');
+  const [localAvatar, setLocalAvatar] = useState('');
   const [modalType, setModalType] = useState('');
 
   useEffect(() => {
     if (user.avatar) {
-      setAvatar(`http://localhost:3001/${user.avatar}`);
+      setLocalAvatar(`http://localhost:3001/${user.avatar}`);
     }
   }, [user.avatar]);
+
+  useEffect(() => {
+    if (avatar) {
+      setLocalAvatar(avatar);
+    }
+  }, [avatar]);
 
   const toggleModal = () => {
     setModalOpen(!modalOpen);
@@ -31,6 +39,7 @@ export default function UserProfilePage(): JSX.Element {
   const handleOpenAvatarModal = () => {
     setModalType('avatar');
     setModalOpen(true);
+    setAvatar(`http://localhost:3001/${user.avatar}`);
   };
 
   const handleOpenDataModal = () => {
@@ -43,6 +52,11 @@ export default function UserProfilePage(): JSX.Element {
     setModalOpen(false);
   };
 
+  const handleLocalAvatarChange = (newAvatar: string) => {
+    setLocalAvatar(newAvatar);
+    dispatch(handleAvatarChange(newAvatar));
+  };
+
   return (
     <Container className="mt-5">
       <Card>
@@ -50,7 +64,7 @@ export default function UserProfilePage(): JSX.Element {
           <div className="d-flex justify-content-center align-items-center">
             <Avatar
               alt="User Avatar"
-              src={avatar}
+              src={localAvatar}
               sx={{
                 width: 140,
                 height: 140,
@@ -72,7 +86,13 @@ export default function UserProfilePage(): JSX.Element {
 
       <Modal isOpen={modalOpen} toggle={toggleModal}>
         <ModalBody>
-          {modalType === 'avatar' && <PhotoUploader />}
+          {modalType === 'avatar' && (
+            <PhotoUploader
+              onAvatarChange={handleLocalAvatarChange}
+              isEditing={true}
+              closeModal={toggleModal} // Close modal using toggleModal
+            />
+          )}
           {modalType === 'data' && (
             <>
               <h3>Изменение данных</h3>

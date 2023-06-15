@@ -72,7 +72,7 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
   };
 
   const handlePhotoUpload = (photos: FotoType[]) => {
-    const updatedPhotos = [...editedPhotos, ...photos];
+    const updatedPhotos = [...editedPhotos, photos];
     setEditedPhotos(updatedPhotos);
   };
 
