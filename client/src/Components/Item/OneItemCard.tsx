@@ -20,8 +20,6 @@ import Timer from '../UI/Timer';
 import axios from 'axios';
 import { useAppSelector } from '../Redux/hooks';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-// Подключите файл стилей CSS
-
 import '../../css/shine-button.css';
 import '../../css/OneItemCard.css';
 import '../../css/custom-buttons.css';
@@ -85,15 +83,15 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
                   margin: '10px',
                   width: '350px',
                   height: '350px',
-                  objectFit: 'cover', // Добавленный стиль
+                  objectFit: 'cover',
                 }}
               />
             ) : (
               <div>Нет изображения</div>
             )}
           </div>
-          <CardTitle tag="h5">{oneCard.title}</CardTitle>
-          <CardTitle tag="h5">Город: {oneCard.city}</CardTitle>
+          <CardText tag="h5">{oneCard.title}</CardText>
+          <CardText tag="h5">Город: {oneCard.city}</CardText>
           <CardTitle tag="h5">Текущая цена: {oneCard.price}</CardTitle>
           <Button onClick={toggleModal}>Смотреть</Button>
         </CardBody>
@@ -125,7 +123,7 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
                         margin: '10px',
                         width: '100%',
                         height: '100%',
-                        objectFit: 'contain', // Измененный стиль
+                        objectFit: 'contain',
                       }}
                     />
                   </div>
@@ -163,16 +161,13 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
                           Ваша ставка: {countBid}
                         </CardTitle>
 
-                        <div className="b1">
-                          <Button class=" shine-button" onClick={counterBidHandler}>
-                            Поднять на 100р
-                          </Button>
-                        </div>
-                        <div className="b2">
-                          <Button className="custom-button sliding-button" onClick={clickHandler}>
-                            Bid
-                          </Button>
-                        </div>
+                        <button className="shine-button" onClick={counterBidHandler}>
+                          Поднять на 100р
+                        </button>
+
+                        <button className="shine-button" onClick={clickHandler}>
+                          Bid
+                        </button>
                       </>
                     ) : (
                       'Для участия в торгах - зарегистрируйтесь'

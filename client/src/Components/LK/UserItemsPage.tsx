@@ -17,15 +17,13 @@ export default function UserItemsPage(): JSX.Element {
     dispatch(getUserItemThunk(userId[0]));
     setItemAdded(false);
   }, [itemAdded]);
-
   const allUserItems = useAppSelector((store) => store.userItem.userItems);
+
   return (
     <CardGroup>
       <Row className="justify-content-center">
         {allUserItems.map((el) => (
-         
-            <OneUserItemCard key={el.id} oneCard={el} />
-          
+          <OneUserItemCard key={el.id} oneCard={el} />
         ))}
       </Row>
     </CardGroup>
