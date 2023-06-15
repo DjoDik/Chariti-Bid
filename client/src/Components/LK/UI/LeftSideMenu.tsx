@@ -37,7 +37,7 @@ export default function LeftSideMenu({}: Props) {
         overflowY: 'auto',
       }}
     >
-      <ListItemButton component={Link} to="/basket">
+      <ListItemButton component={Link} to={`/basket/${id}`}>
         Корзина
       </ListItemButton>
       <ListItemButton onClick={() => handleOpenModal()}>

@@ -1,5 +1,5 @@
 const { WebSocketServer } = require('ws');
-const { User, Item, FotoGalery } = require('../db/models');
+const { Chat, Item, FotoGalery,User } = require('../db/models');
 
 const wss = new WebSocketServer({ clientTracking: false, noServer: true });
 
@@ -20,17 +20,39 @@ wss.on('connection', (ws, request, wsMap) => {
   ws.on('message', async (data) => {
     const { type, payload } = JSON.parse(data);
     switch (type) {
-      case 'UPDATE_STATUS': {
-        const user = await User.findByPk(id);
-        user.status = payload.status;
-        await user.save();
-        wsMap.set(id, { ws, user });
+      case 'SEND_MESSAGE': {
+       
+        const {item_id,userId,body} = payload
+        console.log(payload)
+        await Chat.create({ item_id,user_id:userId,body});
+        const messages =  await Item.findAll({
+          where: {
+            lastUser_id: id,
+            sellStatus: true,
+          },
+          include: [
+            {
+              model: Chat,
+            },
+            {
+              model: User,
+              as: 'Users',
+            },
+          ],
+        });
+        const mess = JSON.parse(JSON.stringify(messages)).map((el) => ({
+          name: el.Users.map((user) => user.name),
+          id: el.Users.map((user) => user.id),
+          message: el.Chats.body,
+          msId: el.Chats.id
+        }));
+        wsMap.set(id, { ws, mess });
 
         for (const [, wsClient] of wsMap) {
           wsClient.ws.send(
             JSON.stringify({
-              type: 'friends/setFriendsOnline',
-              payload: Array.from(wsMap.values()).map((el) => el.user),
+              type: 'chat/updateMessage',
+              payload: Array.from(wsMap.values()).map((el) => el.message),
             }),
           );
         }
