@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {  Navigate, useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 import { useAppDispatch } from '..//Components/Redux/hooks';
 import { loginThunk, signUpThunk } from '../Components/Redux/slice/userSlice';
@@ -38,67 +38,78 @@ export default function AuthPage(): JSX.Element {
   if (loggedIn) {
     return <Navigate to="/" />;
   }
+  
 
   return (
     <Row>
       <Col>
-        <Form onSubmit={submitHandler}>
-          {registrationSuccess ? (
-            <PhotoUploader />
-          ) : (
-            <>
-              {auth === 'signup' && (
-                <>
-                  <FormGroup floating>
-                    <Input
-                      id="examplePhone"
-                      name="phone"
-                      placeholder="Phone"
-                      type="text"
-                      value={input.phone}
-                      onChange={changeHandler}
-                    />
-                    <Label for="exampleName">Phone</Label>
-                  </FormGroup>
-                  <FormGroup floating>
-                    <Input
-                      id="exampleName"
-                      name="username"
-                      placeholder="Name"
-                      type="text"
-                      value={input.username}
-                      onChange={changeHandler}
-                    />
-                    <Label for="exampleName">Name</Label>
-                  </FormGroup>
-                </>
-              )}
-              <FormGroup floating>
-                <Input
-                  id="exampleEmail"
-                  name="email"
-                  placeholder="Email"
-                  type="email"
-                  value={input.email}
-                  onChange={changeHandler}
-                />
-                <Label for="exampleEmail">Email</Label>
-              </FormGroup>
-              <FormGroup floating>
-                <Input
-                  id="examplePassword"
-                  name="password"
-                  placeholder="Password"
-                  type="password"
-                  value={input.password}
-                  onChange={changeHandler}
-                />
-                <Label for="examplePassword">Password</Label>
-              </FormGroup>
-              <Button type="submit">{auth === 'signup' ? 'Signup' : 'Login'}</Button>
-            </>
-          )}
-        </Form>
+        <div className="login-box">
+          <form onSubmit={submitHandler} className="user-box">
+            {registrationSuccess ? (
+              <PhotoUploader />
+            ) : (
+              <>
+                {auth === 'signup' && (
+                  <>
+                    <FormGroup floating className="user-box">
+                    <div  className="user-box">
+                      <input
+                        id="examplePhone"
+                        name="phone"
+                        type="text"
+                        value={input.phone}
+                        onChange={changeHandler}
+                      />
+                      <Label for="examplePhone">Phone</Label>
+                      </div>
+                    </FormGroup>
+                    <div  className="user-box">
+                      <input
+                        id="exampleName"
+                        name="username"
+                        type="text"
+                        value={input.username}
+                        onChange={changeHandler}
+                      />
+                      <label>Name</label>
+                    </div>
+                  </>
+                )}
+               
+                <div  className="user-box">
+                  <input
+                    id="exampleEmail"
+                    name="email"
+                    type="email"
+                    value={input.email}
+                    onChange={changeHandler}
+                  />
+                  <label>Email</label>
+                  </div>
+               
+                <FormGroup floating>
+                <div  className="user-box">
+                  <input
+                    id="examplePassword"
+                    name="password"
+                    type="password"
+                    value={input.password}
+                    onChange={changeHandler}
+                  />
+                  <Label for="examplePassword">Password</Label>
+                </div>
+                </FormGroup>
+                <a href="#">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <button className='clearButton' type="submit">{auth === 'signup' ? 'Signup' : 'Login'}</button>
+                </a>
+              </>
+            )}
+          </form>
+        </div>
       </Col>
     </Row>
   );

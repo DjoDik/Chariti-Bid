@@ -29,8 +29,9 @@ export const SEND_MESSAGE = 'SEND_MESSAGE';
 export type SendMessageType = {
   type: typeof SEND_MESSAGE;
   payload: {
-    message: string;
-    recipient: string;
+    body: string;
+    user_id: number;
+    item_id: number;
   };
 };
 

@@ -4,14 +4,14 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Chat extends Model {
-    static associate({ Item }) {
+    static associate({ Item,User }) {
       this.belongsTo(Item, { foreignKey: 'item_id' });
+      this.belongsTo(User, { foreignKey: 'user_id' });
     }
   }
   Chat.init({
-    massage: DataTypes.TEXT,
-    byer_id: DataTypes.INTEGER,
-    seller_id: DataTypes.INTEGER,
+    body: DataTypes.TEXT,
+    user_id: DataTypes.INTEGER,
     item_id: DataTypes.INTEGER
   }, {
     sequelize,

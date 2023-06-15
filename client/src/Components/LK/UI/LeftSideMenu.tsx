@@ -39,8 +39,7 @@ export default function LeftSideMenu({}: Props) {
         {/* {`${name} `} */}
         <ListItemButton
           component={NavLink}
-          to="/basket"
-          button
+          to={`/basket/${id}`}
           sx={{ justifyContent: 'flex-start' }}
         >
           Корзина
@@ -52,7 +51,6 @@ export default function LeftSideMenu({}: Props) {
         <ListItemButton
           component={Link}
           to={`/useritem/${id}`}
-          button
           sx={{ justifyContent: 'flex-start' }}
         >
           Мои товары
