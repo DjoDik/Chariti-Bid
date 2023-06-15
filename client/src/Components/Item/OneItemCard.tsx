@@ -20,7 +20,11 @@ import Timer from '../UI/Timer';
 import axios from 'axios';
 import { useAppSelector } from '../Redux/hooks';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import '../../css/OneItemCard.css'; // Подключите файл стилей CSS
+// Подключите файл стилей CSS
+
+import '../../css/shine-button.css';
+import '../../css/OneItemCard.css';
+import '../../css/custom-buttons.css';
 
 type PropsType = {
   oneCard: ItemType;
@@ -70,14 +74,19 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
 
   return (
     <>
-      <Card style={{ width: '20rem', margin: '10px' }}>
+      <Card style={{ width: '400px', height: '550px', margin: '10px' }}>
         <CardBody style={{ alignItems: 'center' }}>
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             {oneCard?.FotoGaleries[0]?.img ? (
               <img
                 alt="Пример"
                 src={`http://localhost:3001/photo/${oneCard?.FotoGaleries[0]?.img}`}
-                style={{ margin: '10px', width: '250px', height: '250px' }}
+                style={{
+                  margin: '10px',
+                  width: '350px',
+                  height: '350px',
+                  objectFit: 'cover', // Добавленный стиль
+                }}
               />
             ) : (
               <div>Нет изображения</div>
@@ -90,7 +99,7 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
         </CardBody>
       </Card>
 
-      <Modal isOpen={isModalOpen} toggle={toggleModal}>
+      <Modal isOpen={isModalOpen} toggle={toggleModal} size="lg">
         <ModalHeader toggle={toggleModal}>{oneCard.title}</ModalHeader>
         <ModalBody>
           <Card>
@@ -112,7 +121,12 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
                     <img
                       alt="Пример"
                       src={`http://localhost:3001/photo/${image.img}`}
-                      style={{ margin: '10px', width: '250px', height: '250px' }}
+                      style={{
+                        margin: '10px',
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'contain', // Измененный стиль
+                      }}
                     />
                   </div>
                   <CarouselCaption captionText="" captionHeader="" />
@@ -148,16 +162,17 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
                         <CardTitle tag="h5" style={{ color: 'red' }}>
                           Ваша ставка: {countBid}
                         </CardTitle>
-                        <Button
-                          className="w-50 mt-4"
-                          color="primary"
-                          onClick={() => counterBidHandler()}
-                        >
-                          Поднять на: 100р
-                        </Button>
-                        <Button className="w-50 mt-4" color="danger" onClick={() => clickHandler()}>
-                          Bid
-                        </Button>
+
+                        <div className="b1">
+                          <Button class=" shine-button" onClick={counterBidHandler}>
+                            Поднять на 100р
+                          </Button>
+                        </div>
+                        <div className="b2">
+                          <Button className="custom-button sliding-button" onClick={clickHandler}>
+                            Bid
+                          </Button>
+                        </div>
                       </>
                     ) : (
                       'Для участия в торгах - зарегистрируйтесь'

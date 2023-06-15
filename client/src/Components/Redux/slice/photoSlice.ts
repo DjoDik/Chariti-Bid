@@ -22,7 +22,7 @@ export const photoSlice = createSlice({
     addPhotos: (state, action: PayloadAction<FotoType[]>) => {
       state.photos.push(...action.payload);
     },
-    deletePhoto: (state, action: PayloadAction<FotoType>) => {
+    deletePhoto: (state, action: PayloadAction<{ id: string }>) => {
       const index = state.photos.findIndex((photo) => photo.id === action.payload.id);
       if (index !== -1) {
         state.photos.splice(index, 1);
@@ -46,7 +46,7 @@ export const getDeletePhotoThunk =
   async (dispatch) => {
     try {
       await axios.delete(`/add/photos/${id}`);
-      dispatch(deletePhoto(id));
+      dispatch(deletePhoto({ id }));
     } catch (error) {
       console.error('Failed to delete photo:', error);
     }

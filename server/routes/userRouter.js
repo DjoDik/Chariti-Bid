@@ -1,19 +1,19 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-// const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer');
 const { User } = require('../db/models');
 
 const router = express.Router();
 
-// const transporter = nodemailer.createTransport({
-//   host: 'smtp.mail.ru',
-//   port: 465,
-//   secure: true,
-//   auth: {
-//     user: 'charitybet@mail.ru',
-//     pass: 'EacBhrUafgGQYN4jU9Bj',
-//   },
-// });
+const transporter = nodemailer.createTransport({
+  host: 'smtp.mail.ru',
+  port: 465,
+  secure: true,
+  auth: {
+    user: 'charitybet@mail.ru',
+    pass: 'EacBhrUafgGQYN4jU9Bj',
+  },
+});
 
 router.post('/signup', async (req, res) => {
   const { username, email, password, phone } = req.body;
@@ -37,12 +37,12 @@ router.post('/signup', async (req, res) => {
       sevUser.onlinestatus = true;
       await sevUser.save();
       
-      // await transporter.sendMail({
-      //   from: 'charitybet@mail.ru',
-      //   to: email,
-      //   subject: 'Регистрация успешна',
-      //   text: 'Вы успешно зарегистрированы на нашем сайте.',
-      // });
+      await transporter.sendMail({
+        from: 'charitybet@mail.ru',
+        to: email,
+        subject: 'Регистрация успешна',
+        text: 'Вы успешно зарегистрированы на нашем сайте.',
+      });
       
       return res.json(sessionUser);
     } catch (e) {

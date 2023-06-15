@@ -24,7 +24,6 @@ router.post('/photos/:itemId', upload.array('photos'), async (req, res) => {
   try {
     const { itemId } = req.params;
 
-
     // Проверка наличия itemId
     if (!itemId) {
       res.status(400).json({ message: 'No item_id provided' });
@@ -65,7 +64,7 @@ router.delete('/photos/:id', async (req, res) => {
   try {
     const { id } = req.params;
     console.log('-----------444????444>>>', id);
-    const deletedPhoto = await FotoGalery.destroy({ where: { id } });
+    const deletedPhoto = await FotoGalery.destroy({ where: { id: parseInt(id) } });
     res.json(deletedPhoto);
   } catch (err) {
     console.error(err);

@@ -22,6 +22,8 @@ import bg4 from '/img/bg4.jpg';
 import '../../css/Avatar.css';
 import LeftSideMenu from '../LK/UI/LeftSideMenu';
 import { setAvatar } from '../Redux/slice/avatarSlice';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 export default function Navbar(): JSX.Element {
   const dispatch = useAppDispatch();

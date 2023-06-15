@@ -41,6 +41,7 @@ export default function LkMainPage() {
         city: '',
         category_id: '',
       });
+
       setIsItemAdded(true);
       setShowPhotoUpload(true);
     }
@@ -80,9 +81,9 @@ export default function LkMainPage() {
               {showPhotoUpload ? (
                 <div ref={modalRef}>
                   <PhotoUploadForm itemId={itemId} />
-                  <Button color="secondary" onClick={handlereversModal}>
+                  <button color="secondary" onClick={handlereversModal}>
                     Закрыть
-                  </Button>
+                  </button>
                 </div>
               ) : (
                 <form onSubmit={addHandler} id="modalForm">
