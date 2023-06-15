@@ -21,9 +21,10 @@ import axios from 'axios';
 import { useAppSelector } from '../Redux/hooks';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 // Подключите файл стилей CSS
+
 import '../../css/shine-button.css';
-import '../../css/custom-buttons.css';
 import '../../css/OneItemCard.css';
+import '../../css/custom-buttons.css';
 
 type PropsType = {
   oneCard: ItemType;
@@ -161,20 +162,17 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
                         <CardTitle tag="h5" style={{ color: 'red' }}>
                           Ваша ставка: {countBid}
                         </CardTitle>
-                        {/* <Button
-                          className="custom-button sliding-button"
-                          onClick={counterBidHandler}
-                        >
-                          Поднять на 100р
-                        </Button> */}
 
-                        <Button class="custom-btn btn-5" onClick={counterBidHandler}>
-                          Поднять на 100р
-                        </Button>
-
-                        <Button className="custom-button sliding-button" onClick={clickHandler}>
-                          Bid
-                        </Button>
+                        <div className="b1">
+                          <Button class=" shine-button" onClick={counterBidHandler}>
+                            Поднять на 100р
+                          </Button>
+                        </div>
+                        <div className="b2">
+                          <Button className="custom-button sliding-button" onClick={clickHandler}>
+                            Bid
+                          </Button>
+                        </div>
                       </>
                     ) : (
                       'Для участия в торгах - зарегистрируйтесь'

@@ -13,7 +13,7 @@ import {
 } from 'reactstrap';
 import { ItemType, FotoType } from '../types/itemType';
 import { deleteThunk, editThunk } from '../Redux/slice/userItemSlice';
-import { useAppDispatch } from '../Redux/hooks';
+import { useAppDispatch, useAppSelector } from '../Redux/hooks';
 import PhotoUploadForm from '../LK/UI/MultirInput';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/Store';
@@ -35,12 +35,13 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
   });
   const userItems = useSelector((state: RootState) => state.userItem.userItems);
   const editedPosts = userItems.find((item) => item.id === oneCard.id);
+  const photos = useAppSelector((state: RootState) => state.photo.photos);
   const [editedPhotos, setEditedPhotos] = useState<FotoType[]>(oneCard.FotoGaleries);
 
   const deleteHandler = (id: string) => {
     dispatch(deleteThunk(id));
   };
-
+  console.log({ oneCard, photos });
   const toggleModal = () => {
     setModalOpen(!modalOpen);
   };
@@ -79,8 +80,8 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
         border: '0px solid white',
       }}
     >
-      {oneCard.FotoGaleries && oneCard.FotoGaleries.length > 0 ? (
-        <img alt="Sample" src={`http://localhost:3001/photo/${oneCard.FotoGaleries[0].img}`} />
+      {photos && photos.length > 0 ? (
+        <img alt="Sample" src={`http://localhost:3001/photo/${photos[0].img}`} />
       ) : (
         <div>No Image</div>
       )}
@@ -124,7 +125,7 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
             />
 
             <div style={{ display: 'flex' }}>
-              {editedPhotos.map((photo) => (
+              {editedPhotos?.map((photo) => (
                 <div key={photo.id} style={{ position: 'relative', marginRight: '10px' }}>
                   <img
                     alt="Sample"
