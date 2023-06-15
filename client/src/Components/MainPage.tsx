@@ -8,6 +8,7 @@ import SideBarCategory from './UI/sideBarCategory';
 import { SOCKET_INIT, UPDATE_PRICE } from './types/wsTypes';
 import axios from 'axios';
 import { SortItemThunk } from './Redux/slice/sortSlice';
+import { log } from 'console';
 type PropsType = {
   
   handleBid: (id: number, countBid: number, userId: number) => void;
@@ -20,6 +21,8 @@ export default function MainPage({handleBid}:PropsType): JSX.Element {
   useEffect(() => {
     dispatch(SortItemThunk('Все'))
   }, []);
+  
+  console.log('items', items);
   
 
   return (
