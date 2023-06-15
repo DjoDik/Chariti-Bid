@@ -41,7 +41,7 @@ function App(): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.id]);
   return (
-    <Container fluid>
+    <Container fluid style={{ backgroundColor: '#FFF5EE	' }}>
       <Row>
         <Col>
           <Navbar />

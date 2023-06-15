@@ -1,39 +1,45 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { Button, Input, Modal, ModalHeader } from 'reactstrap';
 import { useAppDispatch } from '../Redux/hooks';
 import { addAvatarThunk } from '../Redux/slice/avatarSlice';
 import '../../css/Avatar.css';
-import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
-export default function PhotoUploader({ modalOpen, toggleModal }): JSX.Element {
+export default function PhotoUploader(): JSX.Element {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const { path } = useParams();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
   const [cropArea, setCropArea] = useState<DOMRect | null>(null);
   const [uploaded, setUploaded] = useState(false);
+  // const { path } = useParam();
+
+  const toggleModal = () => {
+    setModalOpen(!modalOpen);
+  };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setSelectedFile(e.target.files[0]);
-      setCropArea(null);
+      setCropArea(null); // Сбросить область обрезки
     }
   };
 
   const handleUpload = () => {
     if (selectedFile) {
-      toggleModal();
       dispatch(addAvatarThunk(selectedFile));
       setUploaded(true);
-      // if (path === 'signup') {
-      //   navigate('/');
-      // }
     }
   };
+  // if (path === 'signup') {
+  //   navigate('/');
+  // }
+  if (uploaded) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div>
-      <Modal isOpen={modalOpen}>
+      <Modal isOpen={true}>
         <ModalHeader>Photo Uploader</ModalHeader>
         <div>
           <p>Upload a photo:</p>
@@ -58,7 +64,7 @@ export default function PhotoUploader({ modalOpen, toggleModal }): JSX.Element {
               </p>
             </div>
           )}
-          <Button onClick={handleUpload}>Upload</Button>
+          <Button onClick={handleUpload}>Загрузить</Button>
         </div>
       </Modal>
     </div>

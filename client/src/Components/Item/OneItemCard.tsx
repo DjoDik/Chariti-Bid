@@ -69,7 +69,7 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
 
   return (
     <>
-      <Card style={{ width: '400px', height: '550px', margin: '10px' }}>
+      <Card style={{ width: '300px', height: '550px', margin: '10px', marginTop: '50px' }}>
         <CardBody style={{ alignItems: 'center' }}>
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             {oneCard?.FotoGaleries[0]?.img ? (
@@ -78,7 +78,7 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
                 src={`http://localhost:3001/photo/${oneCard?.FotoGaleries[0]?.img}`}
                 style={{
                   margin: '10px',
-                  width: '350px',
+                  width: '250px',
                   height: '350px',
                   objectFit: 'cover',
                 }}
@@ -118,8 +118,8 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
                       src={`http://localhost:3001/photo/${image.img}`}
                       style={{
                         margin: '10px',
-                        width: '100%',
-                        height: '100%',
+                        width: '550px',
+                        height: '450px',
                         objectFit: 'contain',
                       }}
                     />
