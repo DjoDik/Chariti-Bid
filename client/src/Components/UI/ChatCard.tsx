@@ -24,7 +24,6 @@ export default function ChatCard({handleSendMessage,el }: PropType): JSX.Element
     setIsModalOpen(!isModalOpen);
 
   };
-console.log("CARD==========",el,User,Chats)
 
   return (
     <Container>

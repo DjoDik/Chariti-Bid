@@ -74,7 +74,8 @@ router.post('/timer', async (req, res) => {
     });
     if (created) {
       // Запись была создана
-      const deleteTimer = cron.schedule('0 */2 * * *', async () => {
+      // */10 * * * * *  секунд
+      const deleteTimer = cron.schedule('*/2 * * * *', async () => {
         const timerId = req.body.item_id;
         await Item.update({ sellStatus: true }, { where: { id: req.body.item_id } });
         await Basket.create({user_id: req.session.user.id, item_id: req.body.item_id})
@@ -82,7 +83,7 @@ router.post('/timer', async (req, res) => {
       });
       setTimeout(() => {
         deleteTimer.stop(); // Остановить задачу после первого выполнения
-      }, 2*60*60*1000 + 2000);
+      }, 2*60*1000 + 2000);
       
       res.status(201).json({ message: 'Timer created successfully' });
     } else {
@@ -100,6 +101,7 @@ router.get('/timer/:id', async (req, res) => {
     console.log('req.params.id', req.params.id);
     try {
       const time = await Timer.findOne({ where: { item_id: req.params.id } });
+      console.log('я в ручке таймер', time?.value);
       res.json(time?.value);
     } catch (error) {
       console.log(error);

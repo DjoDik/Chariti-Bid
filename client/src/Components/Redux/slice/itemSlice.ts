@@ -4,8 +4,8 @@ import axios from 'axios';
 import { ItemStateSlice, ItemType, itemFormType } from '../../types/itemType';
 import { AppThunk } from '../hooks';
 import { addUserItemPosts } from './userItemSlice';
-import { addPhotos } from './photoSlice';
 import { setItem } from './modalSlice';
+import { addSortProduct } from './sortSlice';
 
 const initialState: ItemStateSlice = {
   allProduct: [],
@@ -47,6 +47,7 @@ export const addItemThunk =
 
       dispatch(addPost(newItem));
       dispatch(addUserItemPosts(newItem));
+      // dispatch(addSortProduct(newItem));
       dispatch(setItem(newItem.id)); // Передача ID добавленного товара в санку addPhotos
 
       // Здесь можете добавить другие операции или санки
@@ -54,3 +55,6 @@ export const addItemThunk =
       console.log('Failed to add item:', error);
     }
   };
+
+
+

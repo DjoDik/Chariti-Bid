@@ -30,6 +30,9 @@ const sortSlice = createSlice({
     },
     updateItemPrice:( state, action:PayloadAction<ItemType>) => {
       state.allProduct = state.allProduct.map((el) => el.id !== action.payload.id ? el : action.payload )
+    },
+    addSortProduct: (state, action:PayloadAction<ItemType>) => {
+      state.allProduct = [action.payload, ...state.allProduct]
     }
   },
   extraReducers: (builder) => {
@@ -40,9 +43,7 @@ const sortSlice = createSlice({
  
 });
 
-export const { setSelectedCategory,updateItemPrice } = sortSlice.actions;
-
-
+export const { setSelectedCategory,updateItemPrice, addSortProduct } = sortSlice.actions;
 
 export default sortSlice.reducer;
 
