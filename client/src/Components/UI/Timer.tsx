@@ -2,42 +2,44 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 type Props = {
-  countBid: number;
-  id: number;
+  id: number,
+  bidCheck: boolean,
+  setBidCheck: React.Dispatch<React.SetStateAction<boolean>> 
 };
 
-const Timer = ({ countBid, id }: Props): JSX.Element => {
-  const [hours, setHours] = useState(0);
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(0);
-
-
-
+const Timer = ({ id, bidCheck, setBidCheck }: Props): JSX.Element => {
+  const [hours, setHours] = useState(1);
+  const [minutes, setMinutes] = useState(59);
+  const [seconds, setSeconds] = useState(59);
+ 
+  
   useEffect(() => {
     axios
-        .get<number>(`/api/timer/${id}`)
-        .then((response) => {
-          const savedTime = response.data;
+      .get<number>(`/api/timer/${id}`)
+      .then((response) => {
+        const savedTime = response.data;
+        if (typeof savedTime !== 'string') {
+          setBidCheck(true)
           const currentTime = new Date().getTime() / 1000; // текущее время в секундах
-          const elapsedTime = (currentTime - savedTime);
-          
-          const timer = 7200
-          const newHourse = Math.floor((timer - elapsedTime )/ 3600);
-          const newMinute = Math.floor((timer - elapsedTime )/ 60  - (60 * newHourse))
-          const newSeconds = Math.floor((timer - elapsedTime )% 60)
+          const elapsedTime = currentTime - savedTime;
 
-          setHours(newHourse)
-          setMinutes(newMinute)
-          setSeconds(newSeconds)
-        })
-        .catch((error) => {
-          console.log('Ошибка при получении сохраненного времени:', error);
-        });
+          const timer = 7200;
+          const newHourse = Math.floor((timer - elapsedTime) / 3600);
+          const newMinute = Math.floor((timer - elapsedTime) / 60 - 60 * newHourse);
+          const newSeconds = Math.floor((timer - elapsedTime) % 60);
 
-  }, [])
+          setHours(newHourse);
+          setMinutes(newMinute);
+          setSeconds(newSeconds);
+        }
+      })
+      .catch((error) => {
+        console.log('Ошибка при получении сохраненного времени:', error);
+      });
+  }, []);
 
   useEffect(() => {
-    if (countBid > 0) {
+    if (bidCheck) {
       const interval = setInterval(() => {
         // уменьшаем секунды
         setSeconds((prevSeconds) => prevSeconds - 1);
@@ -65,7 +67,7 @@ const Timer = ({ countBid, id }: Props): JSX.Element => {
         clearInterval(interval);
       };
     }
-  }, [seconds, minutes, hours, countBid]);
+  }, [seconds, minutes, hours, bidCheck]);
 
   return (
     <div>

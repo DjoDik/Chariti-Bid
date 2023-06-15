@@ -10,7 +10,6 @@ userItemRouter.get('/:id', async (req, res) => {
     const items = await Item.findAll({ where: { user_id: id } , include: FotoGalery});
     // const itemIds = items.map((item) => item.id);
     // const galleryData = await FotoGalery.findAll({ where: { item_id: itemIds } });
-    console.log('===================>', items);
     res.json(items);
   } catch (err) {
     res.sendStatus(500);
@@ -62,7 +61,6 @@ userItemRouter.post('/', async (req, res) => {
     });
 
     res.json(newItem);
-    // console.log('55555555sdddddddewfw----->', newItem);
   } catch (error) {
     res.sendStatus(401);
   }

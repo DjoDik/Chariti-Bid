@@ -3,7 +3,7 @@ public/app.js
 public/vendor.js
 uploads#
 sessions/
-session/
+uploads/
 .env
 
 # Logs

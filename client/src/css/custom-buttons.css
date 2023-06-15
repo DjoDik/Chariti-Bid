@@ -1,0 +1,35 @@
+.custom-button {
+    text-decoration: none;
+    color: black; /* Черный цвет текста */
+    display: inline-block;
+    position: relative;
+    padding: 15px 30px;
+    margin: 10px 20px;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    overflow: hidden;
+    letter-spacing: 2px;
+    transition: 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+    background: transparent; /* Прозрачный фон */
+    border: none;
+    width: 150px;
+    top: 10px;
+    opacity: 0.7; /* Полупрозрачность */
+  }
+  
+  .custom-button::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #ff3000, #ed0200, #ff096c, #d50082);
+    transform: translateY(100%);
+    transition: transform 0.4s ease-in-out;
+  }
+  
+  .custom-button:hover::before {
+    transform: translateY(0);
+  }
+  

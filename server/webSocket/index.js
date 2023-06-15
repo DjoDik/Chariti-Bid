@@ -60,7 +60,6 @@ wss.on('connection', (ws, request, wsMap) => {
       }
       case 'UPDATE_PRICE': {
         const { id, countBid, userId } = payload;
-        console.log('countBid', countBid);
         const item = await Item.findByPk(id, {
           include: { model: FotoGalery },
         });

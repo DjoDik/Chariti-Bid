@@ -1,0 +1,20 @@
+.one-item-card {
+  width: 20px;
+  height: 10px;
+  margin: 10px;
+}
+
+.card-image {
+  margin: 10px;
+  /* Дополнительные стили для изображения в карточке */
+}
+
+.modal-carousel-image {
+  margin: 10px;
+  /* Дополнительные стили для изображения в модальном окне карточки */
+}
+.custom-carousel-control-prev,
+.custom-carousel-control-next {
+  background-color: black;
+  color: #000;
+}

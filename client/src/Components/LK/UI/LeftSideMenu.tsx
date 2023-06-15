@@ -1,7 +1,7 @@
 import React from 'react';
-import { ListItem, ListItemButton } from '@mui/material';
+import { ListItemButton } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../Redux/hooks';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { closeModal, openModal } from '../../Redux/slice/modalSlice';
 import LkMainPage from './AddItemModal';
@@ -11,9 +11,10 @@ type Props = {
   redirect: string;
   isAllowed: boolean;
 };
+
 export default function LeftSideMenu({}: Props) {
-  const userId = useAppSelector((store) => store.user);
-  const { id } = userId;
+  const user = useAppSelector((store) => store.user);
+  const { id, name } = user;
 
   const dispatch = useAppDispatch();
 
@@ -28,25 +29,33 @@ export default function LeftSideMenu({}: Props) {
   return (
     <Box
       sx={{
-        position: 'absolute',
-        width: '300px',
-        height: '250px',
-        top: '100%',
+        width: '200px',
+        height: '120px',
         backgroundColor: '#white',
-        mt: 5,
         overflowY: 'auto',
       }}
     >
-      <ListItemButton component={Link} to={`/basket/${id}`}>
-        Корзина
-      </ListItemButton>
-      <ListItemButton onClick={() => handleOpenModal()}>
-        <LkMainPage />
-        Добавить товар
-      </ListItemButton>
-      <ListItemButton component={Link} to={`/useritem/${id}`}>
-        Мои товары
-      </ListItemButton>
+      <div>
+        {/* {`${name} `} */}
+        <ListItemButton
+          component={NavLink}
+          to={`/basket/${id}`}
+          sx={{ justifyContent: 'flex-start' }}
+        >
+          Корзина
+        </ListItemButton>
+        <ListItemButton onClick={() => handleOpenModal()} sx={{ justifyContent: 'flex-start' }}>
+          <LkMainPage />
+          Добавить товар
+        </ListItemButton>
+        <ListItemButton
+          component={Link}
+          to={`/useritem/${id}`}
+          sx={{ justifyContent: 'flex-start' }}
+        >
+          Мои товары
+        </ListItemButton>
+      </div>
     </Box>
   );
 }

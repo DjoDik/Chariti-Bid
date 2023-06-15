@@ -26,7 +26,8 @@ type PropType = {
 export default function TopCard({ itemTop, onBid }: PropType): JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [countBid, setCountBid] = useState(0);
-  const userId = useAppSelector((state) => state.user.id);
+  const user = useAppSelector((state) => state.user);
+  const [bidCheck, setBidCheck] = useState(false);
 
   useEffect(() => {
     if (!isModalOpen) {
@@ -38,10 +39,14 @@ export default function TopCard({ itemTop, onBid }: PropType): JSX.Element {
     setCountBid(0);
   };
 
+  const clickHandler = () => {
+    onBid(itemTop.id, countBid, user.id)
+    setBidCheck(true)
+  }
+
   const counterBidHandler = () => {
     setCountBid(countBid + 100);
   };
-  console.log('=======555=====>', itemTop);
 
   return (
     <>
@@ -57,7 +62,7 @@ export default function TopCard({ itemTop, onBid }: PropType): JSX.Element {
         )}
         <CardBody>
         <CardTitle style={{ color: 'red',marginTop:"20px" }}>
-               <Timer  countBid={itemTop.price} id={itemTop.id} />
+               <Timer  bidCheck={bidCheck} id={itemTop.id} setBidCheck={setBidCheck}/>
               </CardTitle>
           <CardTitle tag="h5"></CardTitle>
           <CardSubtitle className="mb-2 text-muted" tag="h6"></CardSubtitle>
@@ -96,19 +101,21 @@ export default function TopCard({ itemTop, onBid }: PropType): JSX.Element {
               <CardTitle tag="h5">Стоимость: {itemTop.price}</CardTitle>
               <CardTitle tag="h5">Ваша ставка: {countBid}</CardTitle>
               <CardTitle style={{ color: 'red' }}>
-                Таймер:<Timer countBid={itemTop.price} id={itemTop.id} />
+                Таймер:<Timer bidCheck={bidCheck} id={itemTop.id} />
               </CardTitle>
               <CardFooter>
-                <Button className="w-50 mt-4" color="primary" onClick={counterBidHandler}>
+                {user.status ? (  <><Button className="w-50 mt-4" color="primary" onClick={counterBidHandler}>
                   Поднять на: 100р
                 </Button>
                 <Button
                   className="w-50 mt-4"
                   color="danger"
-                  onClick={() => onBid(itemTop.id, countBid, userId)}
+                  onClick={() => clickHandler()}
                 >
                   Bid
                 </Button>
+                </>) : ('Для участия в торгах - зарегистрируйтесь')}
+               
               </CardFooter>
             </CardBody>
           </Card>
