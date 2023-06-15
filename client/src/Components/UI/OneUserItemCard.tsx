@@ -13,17 +13,17 @@ import {
 } from 'reactstrap';
 import { ItemType, FotoType } from '../types/itemType';
 import { deleteThunk, editThunk } from '../Redux/slice/userItemSlice';
-import { useAppDispatch } from '../Redux/hooks';
+import { useAppDispatch, useAppSelector } from '../Redux/hooks';
 import PhotoUploadForm from '../LK/UI/MultirInput';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/Store';
+import { deletePhoto, getDeletePhotoThunk } from '../Redux/slice/photoSlice'; // Добавлен импорт действия для удаления фотографии
 
 type PropsType = {
   oneCard: ItemType;
 };
 
 export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
-
   const dispatch = useAppDispatch();
   const [modalOpen, setModalOpen] = useState(false);
   const [editedPost, setEditedPost] = useState<FotoType>({
@@ -35,12 +35,13 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
   });
   const userItems = useSelector((state: RootState) => state.userItem.userItems);
   const editedPosts = userItems.find((item) => item.id === oneCard.id);
-  const [editedPhotos, setEditedPhotos] = useState<string[]>(oneCard.FotoGaleries);
+  const photos = useAppSelector((state: RootState) => state.photo.photos);
+  const [editedPhotos, setEditedPhotos] = useState<FotoType[]>(oneCard.FotoGaleries);
 
   const deleteHandler = (id: string) => {
     dispatch(deleteThunk(id));
   };
-
+  console.log({ oneCard, photos });
   const toggleModal = () => {
     setModalOpen(!modalOpen);
   };
@@ -65,6 +66,12 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
     toggleModal();
   };
 
+  const deletePhotoHandler = (photoId: string) => {
+    dispatch(getDeletePhotoThunk(photoId));
+    const updatedPhotos = editedPhotos.filter((photo) => photo.id !== photoId);
+    setEditedPhotos(updatedPhotos);
+  };
+
   return (
     <Card
       style={{
@@ -73,16 +80,10 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
         border: '0px solid white',
       }}
     >
-      {oneCard.FotoGaleries && oneCard.FotoGaleries.length > 0 ? (
-        oneCard.FotoGaleries.map((photo, index) => (
-          <img
-            key={index}
-            alt="Sample"
-            src={`http://localhost:3001/photo/${photo.img}`} // Добавляем базовый URL перед именем файла
-          />
-        ))
+      {photos && photos.length > 0 ? (
+        <img alt="Sample" src={`http://localhost:3001/photo/${photos[0].img}`} />
       ) : (
-        <div>No Image</div> // Отобразить сообщение, если нет фотографий
+        <div>No Image</div>
       )}
       <CardBody>
         <CardTitle tag="h5">{oneCard.title}</CardTitle>
@@ -123,20 +124,32 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
               onChange={handleInputChange}
             />
 
-            <div>
-              {editedPhotos?.map((photo, index) => (
-                <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
+            <div style={{ display: 'flex' }}>
+              {editedPhotos?.map((photo) => (
+                <div key={photo.id} style={{ position: 'relative', marginRight: '10px' }}>
                   <img
                     alt="Sample"
                     src={`http://localhost:3001/photo/${photo.img}`}
-                    style={{ width: '100px', height: '100px', marginRight: '10px' }}
+                    style={{ width: '100px', height: '100px' }}
                   />
                   <Button
                     color="danger"
-                    name="deletePhoto"
-                    value={index.toString()}
-                    onClick={handleInputChange}
-                    style={{ height: '100px', padding: '5px' }}
+                    onClick={() => deletePhotoHandler(photo.id)}
+                    style={{
+                      position: 'absolute',
+                      top: '5px',
+                      right: '5px',
+                      padding: '0',
+                      width: '20px',
+                      height: '20px',
+                      lineHeight: '20px',
+                      fontSize: '14px',
+                      borderRadius: '50%',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      cursor: 'pointer',
+                    }}
                   >
                     &times;
                   </Button>

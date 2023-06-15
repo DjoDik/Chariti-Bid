@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useAppDispatch } from '../../Redux/hooks';
-import { addPhotoThunk } from '../../Redux/slice/photoSlice';
+import { addPhotoThunk, getDeletePhotoThunk } from '../../Redux/slice/photoSlice';
 import { Button, Input } from 'reactstrap';
 
 export default function PhotoUploadForm({ itemId }: { itemId: number }): JSX.Element {
@@ -13,13 +13,24 @@ export default function PhotoUploadForm({ itemId }: { itemId: number }): JSX.Ele
   };
 
   const handleRemove = (index: number) => {
+    const removedFile = selectedFiles[index];
     setSelectedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+
+    // Delete photo from server if it was already uploaded
+    if (removedFile && removedFile.id) {
+      dispatch(getDeletePhotoThunk(removedFile.id));
+    }
   };
 
   const handleUpload = () => {
     if (selectedFiles.length > 0) {
+      const formData = new FormData();
+      selectedFiles.forEach((file) => {
+        formData.append('photos', file);
+      });
       dispatch(addPhotoThunk(itemId.toString(), selectedFiles));
       setSelectedFiles([]);
+      // window.location.reload(); // Refresh the page after successful upload
     }
   };
 

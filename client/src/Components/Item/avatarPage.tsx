@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from 'react';
 import { Button, Input, Modal, ModalHeader } from 'reactstrap';
 import { useAppDispatch } from '../Redux/hooks';
 import { addAvatarThunk } from '../Redux/slice/avatarSlice';
-import '../../Avatar.css';
+import '../../css/Avatar.css';
 import { Link, Navigate } from 'react-router-dom';
 
 export default function PhotoUploader(): JSX.Element {
