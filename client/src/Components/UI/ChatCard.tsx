@@ -27,7 +27,7 @@ export default function ChatCard({handleSendMessage,el }: PropType): JSX.Element
 
   return (
     <Container>
-   <Card style={{ width: '20rem', margin: '10px' }}>
+   <Card style={{ width: '300px', height: '450px', margin: '10px' }}>
         {el?.FotoGaleries[0]?.img ? (
           <img
             alt="Пример"
