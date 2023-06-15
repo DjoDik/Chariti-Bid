@@ -33,7 +33,6 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
   const [activeIndex, setActiveIndex] = useState(0);
   const user = useAppSelector((state) => state.user);
   const [bidCheck, setBidCheck] = useState(false);
-  console.log('bidCheck', bidCheck);
 
   const clickHandler = () => {
     onBid(oneCard.id, countBid, user.id);

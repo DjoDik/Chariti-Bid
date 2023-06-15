@@ -31,7 +31,6 @@ export default function Navbar(): JSX.Element {
   const avatar = useAppSelector((store) => store.avatar);
 
   const location = useLocation();
-  //console.log('location', location.pathname !== '/signup');
 
   useEffect(() => {
     dispatch(checkUserThunk());

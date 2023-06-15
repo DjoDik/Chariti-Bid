@@ -13,7 +13,6 @@ export default function Basket(): JSX.Element {
   const userId = useAppSelector((store) => store.user.id);
   
   const userItemselld = useAppSelector((store) => store.chat.chat)
-  console.log("++++++++",userItemselld)
  
   const dispatch = useAppDispatch();
   useEffect(() => {

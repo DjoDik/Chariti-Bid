@@ -8,8 +8,8 @@ type Props = {
 };
 
 const Timer = ({ id, bidCheck, setBidCheck }: Props): JSX.Element => {
-  const [hours, setHours] = useState(1);
-  const [minutes, setMinutes] = useState(59);
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(1);
   const [seconds, setSeconds] = useState(59);
  
   
@@ -18,13 +18,19 @@ const Timer = ({ id, bidCheck, setBidCheck }: Props): JSX.Element => {
       .get<number>(`/api/timer/${id}`)
       .then((response) => {
         const savedTime = response.data;
+        console.log('savedTime', savedTime);
+        
         if (typeof savedTime !== 'string') {
           setBidCheck(true)
           const currentTime = new Date().getTime() / 1000; // текущее время в секундах
           const elapsedTime = currentTime - savedTime;
-
-          const timer = 7200;
+          console.log('elapsedTime', elapsedTime);
+          
+          // Время таймера
+          const timer = 120;
           const newHourse = Math.floor((timer - elapsedTime) / 3600);
+          console.log(newHourse);
+          
           const newMinute = Math.floor((timer - elapsedTime) / 60 - 60 * newHourse);
           const newSeconds = Math.floor((timer - elapsedTime) % 60);
 
