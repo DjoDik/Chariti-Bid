@@ -13,9 +13,10 @@ import {
 } from 'reactstrap';
 import { ItemType } from '../types/itemType';
 import Timer from './Timer';
-import { useAppSelector } from '../Redux/hooks';
+import { useAppDispatch, useAppSelector } from '../Redux/hooks';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { sortTopItems } from '../Redux/slice/topSlice';
 
 
 type PropType = {
@@ -28,7 +29,13 @@ export default function TopCard({ itemTop, onBid }: PropType): JSX.Element {
   const [countBid, setCountBid] = useState(0);
   const user = useAppSelector((state) => state.user);
   const [bidCheck, setBidCheck] = useState(false);
-
+  const dispatch = useAppDispatch()
+  // const handleSort = () => {
+  //   dispatch(sortTopItems()); 
+  // };
+  useEffect(() => {
+    dispatch(sortTopItems())
+  },[itemTop.price])
   useEffect(() => {
     if (!isModalOpen) {
     }
@@ -42,6 +49,7 @@ export default function TopCard({ itemTop, onBid }: PropType): JSX.Element {
   const clickHandler = () => {
     onBid(itemTop.id, countBid, user.id)
     setBidCheck(true)
+    // handleSort()
   }
 
   const counterBidHandler = () => {
@@ -67,9 +75,11 @@ export default function TopCard({ itemTop, onBid }: PropType): JSX.Element {
           <CardTitle tag="h5"></CardTitle>
           <CardSubtitle className="mb-2 text-muted" tag="h6"></CardSubtitle>
           <CardText>{itemTop.title}</CardText>
+          <div className='bidButton'>
           <Button color="danger" onClick={toggleModal}>
             Bid: {itemTop.price}
           </Button>
+          </div>
          
          
           

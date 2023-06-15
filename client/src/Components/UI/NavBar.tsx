@@ -24,7 +24,7 @@ import LeftSideMenu from '../LK/UI/LeftSideMenu';
 import { setAvatar } from '../Redux/slice/avatarSlice';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-
+import { CSSTransition } from 'react-transition-group';
 export default function Navbar(): JSX.Element {
   const dispatch = useAppDispatch();
   const user = useAppSelector((store) => store.user);
@@ -59,7 +59,7 @@ export default function Navbar(): JSX.Element {
     setTimeout(() => {
       setCurrentBgImageIndex((prevIndex) => (prevIndex + 1) % bgImages.length);
       setImageLoaded(true);
-    }, 1000); // Delay before changing and displaying the new background image (in milliseconds)
+    }, 200); // Delay before changing and displaying the new background image (in milliseconds)
   };
 
   useEffect(() => {
@@ -193,14 +193,14 @@ export default function Navbar(): JSX.Element {
       </Box>
       <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', zIndex: 1 }}>
         {(location.pathname !== '/signup' && location.pathname !== '/login') && (
-          <Box
+         <Box
             className={`background-container ${isImageLoaded ? 'image-loaded' : ''}`}
             sx={{
               height: '250px',
               backgroundRepeat: 'no-repeat',
               width: '800px',
               opacity: isImageLoaded ? 1 : 0,
-              transition: 'opacity 0.5s ease',
+              transition: 'opacity 1s ease'     
             }}
           >
             <img
@@ -210,6 +210,7 @@ export default function Navbar(): JSX.Element {
               onLoad={() => setImageLoaded(true)}
             />
           </Box>
+          
         )}
       </div>
     </>

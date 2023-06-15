@@ -3,9 +3,13 @@
   animation-delay: 1.5s;
   opacity: 0;
   animation-fill-mode: forwards;
+
 }
-.animated {
-  animation: button-animation 1s infinite;
+.navBox{
+  animation: category-animation 1s ease;
+}
+.bidButton {
+  animation: button-animation 0.5s infinite;
   animation-fill-mode: forwards;
 }
 @keyframes category-animation {
