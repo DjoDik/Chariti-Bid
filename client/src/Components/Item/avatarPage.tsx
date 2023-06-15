@@ -4,6 +4,7 @@ import { useAppDispatch } from '../Redux/hooks';
 import { addAvatarThunk } from '../Redux/slice/avatarSlice';
 import '../../css/Avatar.css';
 import { Navigate } from 'react-router-dom';
+import UserProfilePage from '../LK/UserProfilePage';
 
 interface PhotoUploaderProps {
   onAvatarChange: (newAvatar: string) => void;
@@ -52,17 +53,17 @@ export default function PhotoUploader({
   return (
     <div>
       <Modal isOpen={true} toggle={closeModal}>
-        <ModalHeader>Photo Uploader</ModalHeader>
+        <ModalHeader>Загрузка фото</ModalHeader>
         <div>
-          <p>Upload a photo:</p>
+          <p>Выберите фото:</p>
           <Input type="file" onChange={handleFileChange} accept="image/*" />
           {selectedFile && (
             <div>
-              <h3>Uploaded Photo:</h3>
+              <h3>Загруженное фото:</h3>
               <div className="preview-container">
                 <img
                   src={URL.createObjectURL(selectedFile)}
-                  alt="Uploaded"
+                  alt="Загруженное"
                   className="preview-image"
                 />
               </div>
@@ -70,9 +71,9 @@ export default function PhotoUploader({
           )}
           {selectedFile && (
             <div className="image-size-info">
-              <p>Image Size: {selectedFile?.size} bytes</p>
+              <p>Размер изображения: {selectedFile?.size} байт</p>
               <p>
-                Image Dimensions: {selectedFile?.width} x {selectedFile?.height}
+                Размеры изображения: {selectedFile?.width} x {selectedFile?.height}
               </p>
             </div>
           )}

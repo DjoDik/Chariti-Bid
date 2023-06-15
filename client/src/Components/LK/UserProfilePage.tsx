@@ -40,6 +40,7 @@ export default function UserProfilePage(): JSX.Element {
     setModalType('avatar');
     setModalOpen(true);
     setAvatar(`http://localhost:3001/${user.avatar}`);
+    // if (setAvatar()) setModalOpen(false);
   };
 
   const handleOpenDataModal = () => {
@@ -55,8 +56,8 @@ export default function UserProfilePage(): JSX.Element {
   const handleLocalAvatarChange = (newAvatar: string) => {
     setLocalAvatar(newAvatar);
     dispatch(handleAvatarChange(newAvatar));
+    setModalOpen(false); // Добавленный код для закрытия модального окна
   };
-
   return (
     <Container className="mt-5">
       <Card>
