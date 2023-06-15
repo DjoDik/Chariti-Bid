@@ -2,7 +2,7 @@ import type { ActionPattern } from 'redux-saga/effects';
 import { take, put, call, takeEvery, fork } from 'redux-saga/effects';
 import type { EventChannel } from 'redux-saga';
 import { eventChannel, END } from 'redux-saga';
-import { SOCKET_CLOSE, SOCKET_CONNECT, SOCKET_INIT, UPDATE_PRICE, UPDATE_STATUS } from '../../types/wsTypes';
+import { SEND_MESSAGE, SOCKET_CLOSE, SOCKET_CONNECT, SOCKET_INIT, UPDATE_PRICE, UPDATE_STATUS } from '../../types/wsTypes';
 import type { WsActionTypes } from '../../types/wsTypes';
 
 function createSocketChannel(socket: WebSocket): EventChannel<WsActionTypes> {
@@ -37,13 +37,18 @@ function* updatePrice(socket: WebSocket): Generator {
     socket.send(JSON.stringify(message));
   }
 }
-
+function* updateMessage(socket: WebSocket): Generator {
+  while (true) {
+    const message = yield take(SEND_MESSAGE);
+    socket.send(JSON.stringify(message));
+  }
+}
 function* friendsListWorker(): Generator<unknown, void, WsActionTypes> {
   const socket = new WebSocket(import.meta.env.VITE_WS_URL);
   const socketChannel = yield call(createSocketChannel, socket);
 
   yield fork(updatePrice, socket);
-
+  yield fork(updateMessage, socket);
   while (true) {
     try {
       const backAction = yield take(socketChannel as unknown as ActionPattern<WsActionTypes>);

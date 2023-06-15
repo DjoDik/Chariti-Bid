@@ -9,14 +9,16 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      massage: {
+      body: {
         type: Sequelize.TEXT,
       },
-      byer_id: {
+      user_id: {
         type: Sequelize.INTEGER,
-      },
-      seller_id: {
-        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
+        allowNull: false,
       },
       item_id: {
         type: Sequelize.INTEGER,
@@ -25,8 +27,8 @@ module.exports = {
           key: 'id',
         },
         allowNull: false,
-        onDelete: 'CASCADE',
       },
+     
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

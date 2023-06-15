@@ -8,6 +8,7 @@ import modalReducer from './slice/modalSlice';
 import rootSaga from './sagas/rootSaga';
 import avatarReducer from './slice/avatarSlice';
 import topReducer from './slice/topSlice';
+import chatReducer from './slice/chatSlice';
 import photoReducer from './slice/photoSlice';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -21,6 +22,7 @@ export const store = configureStore({
     modal: modalReducer,
     avatar: avatarReducer,
     top: topReducer,
+    chat: chatReducer,
     photo: photoReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
