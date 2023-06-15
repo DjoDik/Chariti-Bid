@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 import { useAppDispatch } from '..//Components/Redux/hooks';
 import { loginThunk, signUpThunk } from '../Components/Redux/slice/userSlice';
 import type { UserSignUpType } from '../Components/types/UserTypes';
 import PhotoUploader from '../Components/Item/avatarPage';
 
-export default function AuthPage(): JSX.Element {
+export default function AuthPage({ modalOpen, toggleModal }): JSX.Element {
   const { auth } = useParams();
+
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -29,6 +30,7 @@ export default function AuthPage(): JSX.Element {
     if (auth === 'signup') {
       dispatch(signUpThunk(input));
       setRegistrationSuccess(true);
+      toggleModal();
     } else {
       dispatch(loginThunk(input));
       setLoggedIn(true);
@@ -38,7 +40,6 @@ export default function AuthPage(): JSX.Element {
   if (loggedIn) {
     return <Navigate to="/" />;
   }
-  
 
   return (
     <Row>
@@ -46,24 +47,24 @@ export default function AuthPage(): JSX.Element {
         <div className="login-box">
           <form onSubmit={submitHandler} className="user-box">
             {registrationSuccess ? (
-              <PhotoUploader />
+              <PhotoUploader modalOpen={modalOpen} toggleModal={toggleModal} />
             ) : (
               <>
                 {auth === 'signup' && (
                   <>
                     <FormGroup floating className="user-box">
-                    <div  className="user-box">
-                      <input
-                        id="examplePhone"
-                        name="phone"
-                        type="text"
-                        value={input.phone}
-                        onChange={changeHandler}
-                      />
-                      <Label for="examplePhone">Phone</Label>
+                      <div className="user-box">
+                        <input
+                          id="examplePhone"
+                          name="phone"
+                          type="text"
+                          value={input.phone}
+                          onChange={changeHandler}
+                        />
+                        <Label for="examplePhone">Phone</Label>
                       </div>
                     </FormGroup>
-                    <div  className="user-box">
+                    <div className="user-box">
                       <input
                         id="exampleName"
                         name="username"
@@ -75,8 +76,8 @@ export default function AuthPage(): JSX.Element {
                     </div>
                   </>
                 )}
-               
-                <div  className="user-box">
+
+                <div className="user-box">
                   <input
                     id="exampleEmail"
                     name="email"
@@ -85,26 +86,28 @@ export default function AuthPage(): JSX.Element {
                     onChange={changeHandler}
                   />
                   <label>Email</label>
-                  </div>
-               
-                <FormGroup floating>
-                <div  className="user-box">
-                  <input
-                    id="examplePassword"
-                    name="password"
-                    type="password"
-                    value={input.password}
-                    onChange={changeHandler}
-                  />
-                  <Label for="examplePassword">Password</Label>
                 </div>
+
+                <FormGroup floating>
+                  <div className="user-box">
+                    <input
+                      id="examplePassword"
+                      name="password"
+                      type="password"
+                      value={input.password}
+                      onChange={changeHandler}
+                    />
+                    <Label for="examplePassword">Password</Label>
+                  </div>
                 </FormGroup>
                 <a href="#">
                   <span></span>
                   <span></span>
                   <span></span>
                   <span></span>
-                  <button className='clearButton' type="submit">{auth === 'signup' ? 'Signup' : 'Login'}</button>
+                  <button className="clearButton" type="submit">
+                    {auth === 'signup' ? 'Signup' : 'Login'}
+                  </button>
                 </a>
               </>
             )}

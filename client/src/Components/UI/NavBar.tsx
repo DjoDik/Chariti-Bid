@@ -31,7 +31,7 @@ export default function Navbar(): JSX.Element {
   const avatar = useAppSelector((store) => store.avatar);
 
   const location = useLocation();
-  console.log('location', location.pathname !== '/signup');
+  //console.log('location', location.pathname !== '/signup');
 
   useEffect(() => {
     dispatch(checkUserThunk());
@@ -192,15 +192,15 @@ export default function Navbar(): JSX.Element {
         {userContent}
       </Box>
       <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', zIndex: 1 }}>
-        {(location.pathname !== '/signup' && location.pathname !== '/login') && (
-         <Box
+        {location.pathname !== '/signup' && location.pathname !== '/login' && (
+          <Box
             className={`background-container ${isImageLoaded ? 'image-loaded' : ''}`}
             sx={{
               height: '250px',
               backgroundRepeat: 'no-repeat',
               width: '800px',
               opacity: isImageLoaded ? 1 : 0,
-              transition: 'opacity 1s ease'     
+              transition: 'opacity 1s ease',
             }}
           >
             <img
@@ -210,7 +210,6 @@ export default function Navbar(): JSX.Element {
               onLoad={() => setImageLoaded(true)}
             />
           </Box>
-          
         )}
       </div>
     </>

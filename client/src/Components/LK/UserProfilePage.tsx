@@ -6,13 +6,13 @@ import { changePasswordThunk } from '../Redux/slice/userSlice';
 import PhotoUploader from '../../Components/Item/avatarPage';
 import { setAvatar, handleAvatarChange } from '../Redux/slice/avatarSlice';
 
-export default function UserProfilePage(): JSX.Element {
+export default function UserProfilePage({ toggleModal, setModalOpen, modalOpen }): JSX.Element {
   const user = useAppSelector((store) => store.user);
   const avatar = useAppSelector((store) => store.avatar);
   const dispatch = useAppDispatch();
 
   const [userName, setUsername] = useState('');
-  const [modalOpen, setModalOpen] = useState(false);
+
   const [newPassword, setNewPassword] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [newPhone, setNewPhone] = useState('');
@@ -31,10 +31,6 @@ export default function UserProfilePage(): JSX.Element {
       setLocalAvatar(avatar);
     }
   }, [avatar]);
-
-  const toggleModal = () => {
-    setModalOpen(!modalOpen);
-  };
 
   const handleOpenAvatarModal = () => {
     setModalType('avatar');
@@ -89,9 +85,8 @@ export default function UserProfilePage(): JSX.Element {
         <ModalBody>
           {modalType === 'avatar' && (
             <PhotoUploader
-              onAvatarChange={handleLocalAvatarChange}
-              isEditing={true}
-              closeModal={toggleModal} // Close modal using toggleModal
+              modalOpen={modalOpen}
+              toggleModal={toggleModal} // Close modal using toggleModal
             />
           )}
           {modalType === 'data' && (
