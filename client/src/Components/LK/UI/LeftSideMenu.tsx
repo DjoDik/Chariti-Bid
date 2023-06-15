@@ -39,7 +39,7 @@ export default function LeftSideMenu({}: Props) {
         {/* {`${name} `} */}
         <ListItemButton
           component={NavLink}
-          to="/basket"
+          to={`/basket/${id}`}
           sx={{ justifyContent: 'flex-start' }}
         >
           Корзина

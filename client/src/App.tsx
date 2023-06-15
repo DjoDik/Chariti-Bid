@@ -51,7 +51,7 @@ function App(): JSX.Element {
             <Route element={<ProtectedRoute redirect="/" isAllowed={user.status} />}>
               <Route path="/useritem/:id" element={<UserItemsPage />} />
               <Route path="/userprofile" element={<UserProfilePage />} />
-              <Route path="/basket" element={<Basket />} />
+              <Route path="/basket/:id" element={<Basket />} />
             </Route>
           </Routes>
         </Col>

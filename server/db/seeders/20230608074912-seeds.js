@@ -26,6 +26,15 @@ module.exports = {
             avatar:"https://thumbs.dreamstime.com/b/admin-icon-vector-male-user-person-profile-avatar-gear-cogwheel-settings-configuration-flat-color-glyph-pictogram-150138136.jpg",
             onlinestatus:false
           },
+          {
+            username: "Admin@",
+            email: "admin@admin2",
+            phone:'8800',
+            role: true,
+            password,
+            avatar:"https://thumbs.dreamstime.com/b/admin-icon-vector-male-user-person-profile-avatar-gear-cogwheel-settings-configuration-flat-color-glyph-pictogram-150138136.jpg",
+            onlinestatus:false
+          },
         ],
         {},
       );
@@ -69,7 +78,8 @@ module.exports = {
             title:"Ботинки",
             body:"Крутые боты",
             city:'Москва',
-            sellStatus:false,
+            lastUser_id:2,
+            sellStatus:true,
           },
           {
             category_id:3,
@@ -87,7 +97,7 @@ module.exports = {
             title:"Шторы",
             body:"Крутые шторы",
             city:'Санкт-Петербург',
-            sellStatus:false,
+            sellStatus:true,
           },
           {
             category_id:5,
@@ -105,7 +115,7 @@ module.exports = {
             title:"Спальник",
             body:"Крутой спальник",
             city:'Астрахань',
-            sellStatus:false,
+            sellStatus:true,
           },
           {
             category_id:7,

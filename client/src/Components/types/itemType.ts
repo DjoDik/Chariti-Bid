@@ -42,3 +42,12 @@ export type FotoType = {
   city:string
   FotoGaleries:string
 };
+export type ChatType = {
+  id: number;
+  body: string;
+  userId: number;
+  item_id:number;
+}
+export type ChatStateSlice = {
+  chat: ChatType[];
+};
