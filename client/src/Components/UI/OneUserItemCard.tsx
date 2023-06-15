@@ -17,13 +17,15 @@ import { useAppDispatch } from '../Redux/hooks';
 import PhotoUploadForm from '../LK/UI/MultirInput';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/Store';
-import { deletePhoto, getDeletePhotoThunk } from '../Redux/slice/photoSlice'; // Добавлен импорт действия для удаления фотографии
+import { deletePhoto, getDeletePhotoThunk } from '../Redux/slice/photoSlice';
 
 type PropsType = {
   oneCard: ItemType;
 };
 
 export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
+  const [editedPhotos, setEditedPhotos] = useState<FotoType[]>(oneCard.FotoGaleries);
+
   const dispatch = useAppDispatch();
   const [modalOpen, setModalOpen] = useState(false);
   const [editedPost, setEditedPost] = useState<FotoType>({
@@ -34,8 +36,6 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
     FotoGaleries: oneCard.FotoGaleries,
   });
   const userItems = useSelector((state: RootState) => state.userItem.userItems);
-  const editedPosts = userItems.find((item) => item.id === oneCard.id);
-  const [editedPhotos, setEditedPhotos] = useState<FotoType[]>(oneCard.FotoGaleries);
 
   const deleteHandler = (id: string) => {
     dispatch(deleteThunk(id));
@@ -70,7 +70,12 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
     const updatedPhotos = editedPhotos.filter((photo) => photo.id !== photoId);
     setEditedPhotos(updatedPhotos);
   };
-  console.log({ oneCard });
+
+  const handlePhotoUpload = (photos: FotoType[]) => {
+    const updatedPhotos = [...editedPhotos, ...photos];
+    setEditedPhotos(updatedPhotos);
+  };
+
   return (
     <Card
       style={{
@@ -156,7 +161,11 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
               ))}
             </div>
 
-            <PhotoUploadForm itemId={editedPost.id} existingPhotos={editedPhotos} />
+            <PhotoUploadForm
+              itemId={editedPost.id}
+              existingPhotos={editedPhotos}
+              onPhotoUpload={handlePhotoUpload} // Pass the photo upload handler
+            />
             <Button className="w-100 mt-4" color="primary" onClick={saveChanges}>
               Сохранить
             </Button>

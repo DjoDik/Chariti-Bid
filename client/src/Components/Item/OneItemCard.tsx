@@ -20,9 +20,7 @@ import Timer from '../UI/Timer';
 import axios from 'axios';
 import { useAppSelector } from '../Redux/hooks';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import '../../css/shine-button.css';
-import '../../css/OneItemCard.css';
-import '../../css/custom-buttons.css';
+import '../../css/fonts.css/Kanit-Black.ttf'; // Импортируйте стили шрифтов из файла fonts.css
 
 type PropsType = {
   oneCard: ItemType;
@@ -145,7 +143,7 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
               <CardText tag="h5">{oneCard.body}</CardText>
               <CardText tag="h5">Город: {oneCard.city}</CardText>
               <CardTitle tag="h5">
-                Стоимость: {oneCard.price} имя последнего пользователя: {user.username}
+                Стоимость: {oneCard.price} {user.username}
               </CardTitle>
 
               <CardTitle style={{ color: 'red' }}>
@@ -161,13 +159,23 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
                           Ваша ставка: {countBid}
                         </CardTitle>
 
-                        <button className="shine-button" onClick={counterBidHandler}>
+                        <Button
+                          outline
+                          color="success"
+                          onClick={counterBidHandler}
+                          style={{ marginRight: '10px', padding: '10px', width: '250px' }}
+                        >
                           Поднять на 100р
-                        </button>
+                        </Button>
 
-                        <button className="shine-button" onClick={clickHandler}>
+                        <Button
+                          outline
+                          color="danger"
+                          onClick={clickHandler}
+                          style={{ marginRight: '10px', padding: '10px', width: '250px' }}
+                        >
                           Bid
-                        </button>
+                        </Button>
                       </>
                     ) : (
                       'Для участия в торгах - зарегистрируйтесь'

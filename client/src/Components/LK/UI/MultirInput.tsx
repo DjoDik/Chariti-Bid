@@ -3,7 +3,11 @@ import { useAppDispatch } from '../../Redux/hooks';
 import { addPhotoThunk, getDeletePhotoThunk } from '../../Redux/slice/photoSlice';
 import { Button, Input } from 'reactstrap';
 
-export default function PhotoUploadForm({ itemId }: { itemId: number }): JSX.Element {
+export default function PhotoUploadForm({
+  itemId,
+  existingPhotos,
+  onPhotoUpload,
+}: PropsType): JSX.Element {
   const dispatch = useAppDispatch();
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
@@ -22,15 +26,23 @@ export default function PhotoUploadForm({ itemId }: { itemId: number }): JSX.Ele
     }
   };
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (selectedFiles.length > 0) {
       const formData = new FormData();
       selectedFiles.forEach((file) => {
         formData.append('photos', file);
       });
-      dispatch(addPhotoThunk(itemId.toString(), selectedFiles));
-      setSelectedFiles([]);
-      // window.location.reload(); // Refresh the page after successful upload
+
+      try {
+        await dispatch(addPhotoThunk(itemId.toString(), selectedFiles));
+        setSelectedFiles([]);
+
+        // Call the onPhotoUpload function with the updated list of photos
+        const updatedPhotos = [...existingPhotos, ...selectedFiles];
+        onPhotoUpload(updatedPhotos);
+      } catch (error) {
+        // Handle the error
+      }
     }
   };
 

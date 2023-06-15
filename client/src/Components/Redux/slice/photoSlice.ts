@@ -68,7 +68,7 @@ export const addPhotoThunk =
       const newPhotos = response.data;
 
       dispatch(addPhotos(newPhotos)); // Добавляем фотографии в Redux-стейт
-      dispatch(updatePhoto(newPhotos));
+      dispatch(updatePhoto(newPhotos))
     } catch (error) {
       console.error('Failed to upload photos:', error);
     }
