@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk } from '../hooks';
 import axios from 'axios';
 import { FotoType, ItemType } from '../../types/itemType';
-import { addUserItemPosts } from './userItemSlice';
+import { addUserItemPosts, updatePhoto } from './userItemSlice';
 
 export type PhotoState = {
   photos: FotoType[];
@@ -68,6 +68,7 @@ export const addPhotoThunk =
       const newPhotos = response.data;
 
       dispatch(addPhotos(newPhotos)); // Добавляем фотографии в Redux-стейт
+      dispatch(updatePhoto(newPhotos))
     } catch (error) {
       console.error('Failed to upload photos:', error);
     }

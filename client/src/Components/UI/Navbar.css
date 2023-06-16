@@ -1,75 +1,131 @@
-body {
-  overflow: hidden;
-  /* font-family: 'Ubuntu', sans-serif; */
+/* Navbar.css */
+
+.navbar {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+  position: relative;
+  padding: 0 20px;
+  justify-content: space-between;
 }
 
-div {
-  width: 100%;
+.navbar-container {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo-image {
+  height: 50px;
+  border-radius: 10px;
+}
+
+.navbar-title {
+  margin-left: 10px;
+  font-weight: bold;
+  color: #b51718;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+}
+
+.nav-link {
+  color: #b51718;
+  margin-right: 10px;
+  text-decoration: none;
+}
+
+.user-menu-container {
+  position: relative;
+}
+
+.avatar-container {
+  position: relative;
+  margin-top: 150px;
+}
+
+.avatar-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.avatar-image {
+  width: 140px;
+  height: 140px;
+  margin-top: 10px;
+  transition: all 0.3s;
+}
+
+.avatar-image:hover {
+  width: 150px;
+  height: 150px;
+}
+
+.profile-text {
+  color: black;
+}
+
+.user-menu {
+  display: flex;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
+  width: 200px;
+  height: 220px;
+  right: 0;
+  z-index: 1;
+  background-color: white;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  margin-top: 1px;
 }
 
-h1 {
-  font-size: 4.3em;
-  letter-spacing: -4px;
-  font-weight: 700;
-  color: #7e2ea0;
-  text-align: center;
+.menu-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
-.cssanimation,
-.cssanimation span {
-  animation-duration: 1s;
-  animation-fill-mode: both;
+.menu-item {
+  padding: 10px;
 }
 
-.cssanimation span {
-  display: inline-block;
+.menu-link {
+  color: black;
+  text-decoration: none;
 }
 
-.leFadeIn span {
-  animation-name: leFadeIn;
-}
-
-@keyframes leFadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.menu-divider {
+  height: 1px;
+  background-color: #ccc;
+  margin: 10px 0;
 }
 
 .background-container {
-  position: relative;
-  overflow: hidden;
   height: 250px;
+  background-repeat: no-repeat;
   width: 800px;
-  margin: 0 auto;
+  opacity: 0;
+  transition: opacity 1s ease;
+  margin-bottom: 40px;
 }
 
-.carousel {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  transition: transform 0.5s ease;
+.image-loaded {
+  opacity: 1;
 }
 
 .background-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  
-}
-
-.background-image.active {
-  opacity: 1;
-  
 }

@@ -11,6 +11,7 @@ export default function PhotoUploader(): JSX.Element {
   const [modalOpen, setModalOpen] = useState(false);
   const [cropArea, setCropArea] = useState<DOMRect | null>(null);
   const [uploaded, setUploaded] = useState(false);
+  // const { path } = useParam();
 
   const toggleModal = () => {
     setModalOpen(!modalOpen);
@@ -29,14 +30,17 @@ export default function PhotoUploader(): JSX.Element {
       setUploaded(true);
     }
   };
-
+  // if (path === 'signup') {
+  //   navigate('/');
+  // }
   if (uploaded) {
     return <Navigate to="/" />;
   }
 
   return (
-    <div>
-      <Modal isOpen={true}>
+    
+    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+      <Modal isOpen={true} >
         <ModalHeader>Ваш аватар</ModalHeader>
         <div>
           <Input type="file" onChange={handleFileChange} accept="image/*" />

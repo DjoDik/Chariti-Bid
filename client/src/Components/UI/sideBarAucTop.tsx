@@ -39,7 +39,7 @@ console.log("qwe",sellStatus)
             }}
             timeout={1500}
           >
-            <div className="box">
+            <div className="box" style={{marginBottom: "10px"}}>
               <TopCard setSellStatus={setSellStatus} itemTop={itemTop} onBid={handleBid} />
             </div>
           </CSSTransition>

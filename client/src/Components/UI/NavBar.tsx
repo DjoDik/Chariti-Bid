@@ -20,11 +20,14 @@ import bg2 from '/img/bg2.jpg';
 import bg3 from '/img/bg3.jpg';
 import bg4 from '/img/bg4.jpg';
 import '../../css/Avatar.css';
-import LeftSideMenu from '../LK/UI/LeftSideMenu';
 import { setAvatar } from '../Redux/slice/avatarSlice';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { CSSTransition } from 'react-transition-group';
+import { Col, Row } from 'reactstrap';
+import SideBarCategory from './sideBarCategory';
+import LeftSideMenu from '../LK/UI/LeftSideMenu';
+
 export default function Navbar(): JSX.Element {
   const dispatch = useAppDispatch();
   const user = useAppSelector((store) => store.user);
@@ -83,58 +86,71 @@ export default function Navbar(): JSX.Element {
     userContent = (
       <ClickAwayListener onClickAway={handleClickAway}>
         <Box sx={{ position: 'relative' }}>
-          <div style={{ position: 'relative', marginTop: '150px' }}>
-            <Button
-              onClick={handleAvatarClick}
-              sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-            >
-              <Avatar
-                alt="User Avatar"
-                src={avatar}
-                sx={{
-                  width: 140,
-                  height: 140,
-                  transition: 'all 0.3s',
-                  '&:hover': {
-                    width: 150,
-                    height: 150,
-                  },
-                }}
-              />
-              <p className="profile-text">Profile</p>
-            </Button>
-          </div>
+          <Button
+            onClick={handleAvatarClick}
+            sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', ml: 'auto' }}
+          >
+            <Avatar
+              alt="User Avatar"
+              src={avatar}
+              sx={{
+                width: 60,
+                height: 60,
+                transition: 'all 0.3s',
+                '&:hover': {
+                  width: 70,
+                  height: 70,
+                },
+              }}
+            />
+          </Button>
 
           {isUserMenuOpen && (
             <Box
               ref={userMenuRef}
               sx={{
                 display: 'flex',
-                // justifyContent: 'space-around',
                 position: 'absolute',
-                width: '200px',
-                height: '220px',
-                // top: '100%',
                 right: 0,
+                top: '70px',
                 zIndex: 1,
-                backgroundColor: 'white',
+                backgroundColor: 'rgba(255, 255, 255, 0.9)',
                 boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.2)',
                 mt: 1,
-                // overflowY: 'auto',
+                width: '300px',
+                height: '400px',
+                borderRadius: '10px',
               }}
             >
+              {' '}
               <List component="nav">
-                <ListItem disablePadding>
+                <Avatar
+                  alt="User Avatar"
+                  src={avatar}
+                  sx={{
+                    width: 160,
+                    height: 160,
+                    marginLeft: 10,
+                  }}
+                />
+                <ListItem disablePadding style={{ color: 'black', marginLeft: '80px' }}>
                   <LeftSideMenu />
                 </ListItem>
                 <ListItem disablePadding>
-                  <ListItemButton component={Link} to="/userprofile" style={{ color: 'black' }}>
+                  <ListItemButton
+                    component={Link}
+                    to="/userprofile"
+                    sx={{ color: 'black', '&:hover': { color: 'black' }, marginLeft: 10 }}
+                  >
                     Настройки
                   </ListItemButton>
                 </ListItem>
                 <Divider />
                 <ListItem disablePadding>
-                  <ListItemButton onClick={logoutHandler} style={{ color: 'black' }}>
+                  <ListItemButton
+                    onClick={logoutHandler}
+                    sx={{ color: 'black', '&:hover': { color: '#B51718' }, marginLeft: 10 }}
+                  >
                     Выход
                   </ListItemButton>
                 </ListItem>
@@ -147,10 +163,18 @@ export default function Navbar(): JSX.Element {
   } else {
     userContent = (
       <>
-        <Button component={Link} to="/signup" style={{ color: '#B51718' }}>
+        <Button
+          component={Link}
+          to="/signup"
+          style={{ color: '#B51718', '&:hover': { color: '#FFF' } }}
+        >
           Регистрация
         </Button>
-        <Button component={Link} to="/login" style={{ color: '#B51718' }}>
+        <Button
+          component={Link}
+          to="/login"
+          style={{ color: '#B51718', '&:hover': { color: '#FFF' } }}
+        >
           Вход
         </Button>
       </>
@@ -159,57 +183,50 @@ export default function Navbar(): JSX.Element {
 
   return (
     <>
-      <Box
-        sx={{
-          height: '60px',
-          display: 'flex',
-          alignItems: 'center',
-          zIndex: 2,
+      <AppBar
+        position="static"
+        sx={{ backgroundColor: 'rgba(255, 255, 255, 0.7)', boxShadow: 'none' }}
+      >
+        <Toolbar>
+          <Box sx={{ display: 'flex', alignItems: 'center', flex: 1 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }} component={Link} to="/">
+              <Button type="button" style={{ height: '40px' }}>
+                <img style={{ height: '50px', borderRadius: '10px' }} src="/logo.png" alt="#" />
+              </Button>
+              <Typography
+                variant="h6"
+                component="div"
+                sx={{ marginLeft: '10px', fontWeight: 'bold', color: '#B51718' }}
+              ></Typography>
+            </Box>
+          </Box>
+          {userContent}
+        </Toolbar>
+      </AppBar>
+      <div
+        style={{
           position: 'relative',
-          px: 4,
-          justifyContent: 'space-between',
+          display: 'flex',
+          justifyContent: 'center',
+          zIndex: 1,
+          marginLeft: '185px',
+          width: '1000px',
         }}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            flex: 1,
-          }}
-        >
-          <Box sx={{ display: 'flex', alignItems: 'center' }} component={Link} to="/">
-            <Button type="button" style={{ height: '40px' }}>
-              <img style={{ height: '50px', borderRadius: '10px' }} src="/logo.png" alt="#" />
-            </Button>
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ marginLeft: '10px', fontWeight: 'bold', color: '#B51718' }}
-            ></Typography>
-          </Box>
-        </Box>
-        {userContent}
-      </Box>
-      <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', zIndex: 1 }}>
-        {(location.pathname !== '/signup' && location.pathname !== '/login') && (
-         <Box
-            className={`background-container ${isImageLoaded ? 'image-loaded' : ''}`}
+        {location.pathname !== '/signup' && location.pathname !== '/login' && (
+          <Box
             sx={{
-              height: '250px',
-              backgroundRepeat: 'no-repeat',
-              width: '800px',
-              opacity: isImageLoaded ? 1 : 0,
-              transition: 'opacity 1s ease'     
+              display: 'flex',
+              justifyContent: 'center',
+              mt: 2,
+              padding: '20px',
+              borderRadius: '10px',
+              backgroundColor: '#fff',
+              boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.2)',
             }}
           >
-            <img
-              className="background-image"
-              src={currentBgImage}
-              alt="Background"
-              onLoad={() => setImageLoaded(true)}
-            />
+            <SideBarCategory />
           </Box>
-          
         )}
       </div>
     </>

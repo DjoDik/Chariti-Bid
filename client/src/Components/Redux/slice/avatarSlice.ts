@@ -32,6 +32,7 @@ export const addAvatarThunk =
         user: { avatar: newAvatar },
       } = response.data;
       dispatch(setAvatar(`http://localhost:3001/${newAvatar}`)); // Обновляем аватар пользователя в Redux-стейте
+      handleAvatarChange(`http://localhost:3001/${newAvatar}`); // Вызываем функцию для обновления аватара в компоненте UserProfilePage
     } catch (error) {
       console.error('Failed to upload avatar:', error);
     }
@@ -47,5 +48,11 @@ export const getAvatarThunk = (): AppThunk => async (dispatch) => {
     console.error('Failed to fetch avatar:', error);
   }
 };
+
+export const handleAvatarChange =
+  (newAvatar: string): AppThunk =>
+  async (dispatch) => {
+    dispatch(setAvatar(newAvatar));
+  };
 
 export default avatarSlice.reducer;

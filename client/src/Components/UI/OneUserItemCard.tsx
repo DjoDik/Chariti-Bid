@@ -13,17 +13,19 @@ import {
 } from 'reactstrap';
 import { ItemType, FotoType } from '../types/itemType';
 import { deleteThunk, editThunk } from '../Redux/slice/userItemSlice';
-import { useAppDispatch, useAppSelector } from '../Redux/hooks';
+import { useAppDispatch } from '../Redux/hooks';
 import PhotoUploadForm from '../LK/UI/MultirInput';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/Store';
-import { deletePhoto, getDeletePhotoThunk } from '../Redux/slice/photoSlice'; // Добавлен импорт действия для удаления фотографии
+import { deletePhoto, getDeletePhotoThunk } from '../Redux/slice/photoSlice';
 
 type PropsType = {
   oneCard: ItemType;
 };
 
 export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
+  const [editedPhotos, setEditedPhotos] = useState<FotoType[]>(oneCard.FotoGaleries);
+
   const dispatch = useAppDispatch();
   const [modalOpen, setModalOpen] = useState(false);
   const [editedPost, setEditedPost] = useState<FotoType>({
@@ -34,14 +36,11 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
     FotoGaleries: oneCard.FotoGaleries,
   });
   const userItems = useSelector((state: RootState) => state.userItem.userItems);
-  const editedPosts = userItems.find((item) => item.id === oneCard.id);
-  const photos = useAppSelector((state: RootState) => state.photo.photos);
-  const [editedPhotos, setEditedPhotos] = useState<FotoType[]>(oneCard.FotoGaleries);
 
   const deleteHandler = (id: string) => {
     dispatch(deleteThunk(id));
   };
-  console.log({ oneCard, photos });
+
   const toggleModal = () => {
     setModalOpen(!modalOpen);
   };
@@ -72,6 +71,11 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
     setEditedPhotos(updatedPhotos);
   };
 
+  const handlePhotoUpload = (photos: FotoType[]) => {
+    const updatedPhotos = [...editedPhotos, photos];
+    setEditedPhotos(updatedPhotos);
+  };
+
   return (
     <Card
       style={{
@@ -80,8 +84,8 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
         border: '0px solid white',
       }}
     >
-      {photos && photos.length > 0 ? (
-        <img alt="Sample" src={`http://localhost:3001/photo/${photos[0].img}`} />
+      {oneCard.FotoGaleries && oneCard.FotoGaleries.length > 0 ? (
+        <img alt="Sample" src={`http://localhost:3001/photo/${oneCard.FotoGaleries[0].img}`} />
       ) : (
         <div>No Image</div>
       )}
@@ -157,7 +161,11 @@ export default function OneUserItemCard({ oneCard }: PropsType): JSX.Element {
               ))}
             </div>
 
-            <PhotoUploadForm itemId={editedPost.id} existingPhotos={editedPhotos} />
+            <PhotoUploadForm
+              itemId={editedPost.id}
+              existingPhotos={editedPhotos}
+              onPhotoUpload={handlePhotoUpload} // Pass the photo upload handler
+            />
             <Button className="w-100 mt-4" color="primary" onClick={saveChanges}>
               Сохранить
             </Button>

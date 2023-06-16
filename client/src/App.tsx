@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Navbar from './Components/UI/NavBar';
 import MainPage from './Components/MainPage';
@@ -18,11 +18,16 @@ import axios from 'axios';
 function App(): JSX.Element {
   const user = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
+  const [modalOpen, setModalOpen] = useState(false);
 
-  const handleBid = (id: number, countBid: number, userId:number) => {
-    dispatch({ type: UPDATE_PRICE, payload: { id, countBid,userId } });
-    const currentTime = new Date().getTime() / 1000
-    axios.post<TimerStateSlice>('/api/timer', {item_id: id, value: currentTime})
+  const toggleModal = () => {
+    setModalOpen(!modalOpen);
+  };
+
+  const handleBid = (id: number, countBid: number, userId: number) => {
+    dispatch({ type: UPDATE_PRICE, payload: { id, countBid, userId } });
+    const currentTime = new Date().getTime() / 1000;
+    axios.post<TimerStateSlice>('/api/timer', { item_id: id, value: currentTime });
   };
   useEffect(() => {
     dispatch(checkUserThunk());
@@ -36,7 +41,7 @@ function App(): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.id]);
   return (
-    <Container fluid>
+    <Container fluid style={{ backgroundColor: '#FFF5EE	' }}>
       <Row>
         <Col>
           <Navbar />
@@ -45,18 +50,30 @@ function App(): JSX.Element {
       <Row>
         <Col xs="10">
           <Routes>
-            <Route path="/" element={<MainPage handleBid={handleBid}  />} />
-            <Route path="/:auth" element={<AuthPage />} />
-            <Route path="/" element={<PhotoUploader />} />
+            <Route path="/" element={<MainPage handleBid={handleBid} />} />
+            <Route
+              path="/:auth"
+              element={<AuthPage modalOpen={modalOpen} toggleModal={toggleModal} />}
+            />
+            {/* <Route path="/" element={<PhotoUploader />} /> */}
             <Route element={<ProtectedRoute redirect="/" isAllowed={user.status} />}>
               <Route path="/useritem/:id" element={<UserItemsPage />} />
-              <Route path="/userprofile" element={<UserProfilePage />} />
+              <Route
+                path="/userprofile"
+                element={
+                  <UserProfilePage
+                    modalOpen={modalOpen}
+                    toggleModal={toggleModal}
+                    setModalOpen={setModalOpen}
+                  />
+                }
+              />
               <Route path="/basket/:id" element={<Basket />} />
             </Route>
           </Routes>
         </Col>
         <Col xs="2">
-          <SideBarAucTop handleBid={handleBid}/>
+          <SideBarAucTop handleBid={handleBid} />
         </Col>
       </Row>
     </Container>
