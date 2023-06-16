@@ -69,7 +69,7 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
 
   return (
     <>
-      <Card style={{ width: '300px', height: '550px', margin: '10px', marginTop: '50px' }}>
+      <Card style={{ width: '300px', height: '350px', margin: '10px', marginTop: '50px' }}>
         <CardBody style={{ alignItems: 'center' }}>
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             {oneCard?.FotoGaleries[0]?.img ? (
@@ -78,8 +78,8 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
                 src={`http://localhost:3001/photo/${oneCard?.FotoGaleries[0]?.img}`}
                 style={{
                   margin: '10px',
-                  width: '250px',
-                  height: '350px',
+                  width: '200px',
+                  height: '150px',
                   objectFit: 'cover',
                 }}
               />
@@ -87,17 +87,19 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
               <div>Нет изображения</div>
             )}
           </div>
-          <CardText tag="h5">{oneCard.title}</CardText>
-          <CardText tag="h5">Город: {oneCard.city}</CardText>
-          <CardTitle tag="h5">Текущая цена: {oneCard.price}</CardTitle>
+          <div>
+            <CardText tag="h5">{oneCard.title}</CardText>
+            <CardText tag="h5">Город: {oneCard.city}</CardText>
+            <CardTitle tag="h5">Текущая цена: {oneCard.price}</CardTitle>
+          </div>
           <Button onClick={toggleModal}>Смотреть</Button>
         </CardBody>
       </Card>
 
-      <Modal isOpen={isModalOpen} toggle={toggleModal} size="lg">
+      <Modal isOpen={isModalOpen} toggle={toggleModal} size="md">
         <ModalHeader toggle={toggleModal}>{oneCard.title}</ModalHeader>
         <ModalBody>
-          <Card>
+          <Card style={{ width: '450px', height: '860px' }}>
             <Carousel
               activeIndex={activeIndex}
               next={next}
@@ -118,8 +120,8 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
                       src={`http://localhost:3001/photo/${image.img}`}
                       style={{
                         margin: '10px',
-                        width: '550px',
-                        height: '450px',
+                        width: '450px',
+                        height: '550px',
                         objectFit: 'contain',
                       }}
                     />
@@ -139,30 +141,78 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
               />
             </Carousel>
             <CardBody>
-              <CardText tag="h5">{oneCard.body}</CardText>
-              <CardText tag="h5">Город: {oneCard.city}</CardText>
-              <CardTitle tag="h5">
-                Стоимость: {oneCard.price} {user.username}
+              <CardText
+                tag="h5"
+                style={{
+                  color: 'black',
+                  boxShadow: '0px 0px 5px 2px #888888',
+                  borderRadius: '5px',
+                  backgroundColor: 'white',
+                  fontFamily: 'Kanit-Black',
+                }}
+              >
+                {oneCard.body}
+              </CardText>
+              <CardText
+                tag="h5"
+                style={{
+                  color: 'black',
+                  boxShadow: '0px 0px 5px 2px #888888',
+                  borderRadius: '5px',
+                  backgroundColor: 'white',
+
+                  fontFamily: 'Kanit-Black',
+                }}
+              >
+                Город: {oneCard.city}
+              </CardText>
+              <CardTitle
+                tag="h5"
+                style={{
+                  color: 'black',
+                  boxShadow: '0px 0px 5px 2px #888888',
+                  borderRadius: '5px',
+                  backgroundColor: 'white',
+
+                  fontFamily: 'Kanit-Black',
+                }}
+              >
+                Стоимость: {oneCard.price}
               </CardTitle>
 
-              <CardTitle style={{ color: 'red' }}>
+              <CardTitle
+                style={{
+                  color: 'red',
+                  textAlign: 'right',
+                  fontFamily: 'Kanit-Black', // Имя шрифта
+                }}
+              >
                 Таймер: <Timer bidCheck={bidCheck} id={oneCard.id} setBidCheck={setBidCheck} />
               </CardTitle>
-              <CardTitle tag="h5">Последний BID-ID: {oneCard.lastUser_id}</CardTitle>
+              {/* <CardTitle tag="h5">Последний BID-ID: {oneCard.lastUser_id}</CardTitle> */}
               <CardFooter>
                 {user.id !== oneCard.user_id && (
                   <>
                     {user.status ? (
                       <>
-                        <CardTitle tag="h5" style={{ color: 'red' }}>
-                          Ваша ставка: {countBid}
+                        <CardTitle
+                          tag="h5"
+                          style={{
+                            color: 'red',
+                            boxShadow: '0px 0px 5px 2px #888888',
+                            textAlign: 'center',
+                            borderRadius: '5px',
+                            backgroundColor: 'white',
+                          }}
+                        >
+                          Ваша ставка: {countBid} рублей.
                         </CardTitle>
 
                         <Button
                           outline
                           color="success"
                           onClick={counterBidHandler}
-                          style={{ marginRight: '10px', padding: '10px', width: '250px' }}
+                          style={{ marginRight: '10px', padding: '5px', width: '150px' }}
                         >
                           Поднять на 100р
                         </Button>
@@ -171,7 +221,7 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
                           outline
                           color="danger"
                           onClick={clickHandler}
-                          style={{ marginRight: '10px', padding: '10px', width: '250px' }}
+                          style={{ marginRight: '10px', padding: '5px', width: '50px' }}
                         >
                           Bid
                         </Button>

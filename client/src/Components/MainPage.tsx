@@ -28,8 +28,8 @@ export default function MainPage({ handleBid }: PropsType): JSX.Element {
     <Container>
       <Row className="justify-content-center">
         <Col>
-          <CardGroup style={{marginLeft:'200px'}}>
-            <Row className="justify-content-center">
+          <CardGroup style={{ marginLeft: '200px', justifyContent: 'flex-start' }}>
+            <Row>
               {items.map((el) => (
                 <OneItemCard oneCard={el} key={el.id} onBid={handleBid} />
               ))}

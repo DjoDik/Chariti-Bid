@@ -130,7 +130,7 @@ export default function Navbar(): JSX.Element {
                   sx={{
                     width: 160,
                     height: 160,
-                   marginLeft: 10, 
+                    marginLeft: 10,
                   }}
                 />
                 <ListItem disablePadding style={{ color: 'black', marginLeft: '80px' }}>
@@ -140,7 +140,7 @@ export default function Navbar(): JSX.Element {
                   <ListItemButton
                     component={Link}
                     to="/userprofile"
-                    sx={{ color: 'black', '&:hover': { color: 'black' } , marginLeft: 10}}
+                    sx={{ color: 'black', '&:hover': { color: 'black' }, marginLeft: 10 }}
                   >
                     Настройки
                   </ListItemButton>
@@ -149,7 +149,7 @@ export default function Navbar(): JSX.Element {
                 <ListItem disablePadding>
                   <ListItemButton
                     onClick={logoutHandler}
-                    sx={{ color: 'black', '&:hover': { color: '#B51718' }, marginLeft: 10,}}
+                    sx={{ color: 'black', '&:hover': { color: '#B51718' }, marginLeft: 10 }}
                   >
                     Выход
                   </ListItemButton>
@@ -209,7 +209,8 @@ export default function Navbar(): JSX.Element {
           display: 'flex',
           justifyContent: 'center',
           zIndex: 1,
-          width: '1300px',
+          marginLeft: '185px',
+          width: '1000px',
         }}
       >
         {location.pathname !== '/signup' && location.pathname !== '/login' && (
