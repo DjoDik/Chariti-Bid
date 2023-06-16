@@ -28,6 +28,7 @@ export default function TopCard({ itemTop, onBid }: PropType): JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [countBid, setCountBid] = useState(0);
   const user = useAppSelector((state) => state.user);
+  const timerId = useAppSelector((state) => state.timer);
   const [bidCheck, setBidCheck] = useState(false);
   const dispatch = useAppDispatch()
   // const handleSort = () => {
@@ -40,6 +41,12 @@ export default function TopCard({ itemTop, onBid }: PropType): JSX.Element {
     if (!isModalOpen) {
     }
   }, [isModalOpen]);
+
+  useEffect(() => {
+    if(timerId.id === itemTop.id) {
+      setBidCheck(true)
+    }
+  })
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);

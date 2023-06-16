@@ -10,6 +10,7 @@ import avatarReducer from './slice/avatarSlice';
 import topReducer from './slice/topSlice';
 import chatReducer from './slice/chatSlice';
 import photoReducer from './slice/photoSlice';
+import timerReducer from './slice/TimerSlice';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -24,6 +25,7 @@ export const store = configureStore({
     top: topReducer,
     chat: chatReducer,
     photo: photoReducer,
+    timer: timerReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
 });

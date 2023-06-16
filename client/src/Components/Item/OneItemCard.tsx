@@ -18,15 +18,17 @@ import {
 import { ItemType } from '../types/itemType';
 import Timer from '../UI/Timer';
 import axios from 'axios';
-import { useAppSelector } from '../Redux/hooks';
+import { useAppDispatch, useAppSelector } from '../Redux/hooks';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 // Подключите файл стилей CSS
 
 import '../../css/shine-button.css';
 import '../../css/OneItemCard.css';
 import '../../css/custom-buttons.css';
+import { setStoreTimer } from '../Redux/slice/TimerSlice';
 
 type PropsType = {
+  
   oneCard: ItemType;
   onBid: (id: number, countBid: number, userId: number) => void;
 };
@@ -38,9 +40,15 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
   const user = useAppSelector((state) => state.user);
   const [bidCheck, setBidCheck] = useState(false);
 
+  const dispatch = useAppDispatch()
+  const timerId = useAppSelector((state) => state.timer);
+
   const clickHandler = () => {
     onBid(oneCard.id, countBid, user.id);
     setBidCheck(true);
+    dispatch(setStoreTimer({id: oneCard.id}))
+    console.log('это мой объект', {id: oneCard.id});
+    
   };
 
   useEffect(() => {
@@ -163,7 +171,7 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
                         </CardTitle>
 
                         <div className="b1">
-                          <Button class=" shine-button" onClick={counterBidHandler}>
+                          <Button className=" shine-button" onClick={counterBidHandler}>
                             Поднять на 100р
                           </Button>
                         </div>
@@ -188,3 +196,5 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
 }
 
 export default React.memo(OneItemCard);
+
+
