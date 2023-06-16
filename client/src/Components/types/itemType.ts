@@ -51,3 +51,7 @@ export type ChatType = {
 export type ChatStateSlice = {
   chat: ChatType[];
 };
+
+export type timerStateSlice = {
+  id: number;
+};
