@@ -24,10 +24,18 @@ export const topSlice = createSlice({
     sortTopItems: (state) => {
       state.sortedTop = [...state.sortedTop].sort((a, b) => b.price - a.price);
     },
+    updateSellStatus: (state, action: PayloadAction<{ id: number; sellStatus: boolean }>) => {
+      state.top = state.top.map((el) =>
+        el.id !== action.payload.id ? el : { ...el, sellStatus: action.payload.sellStatus }
+      );
+      state.sortedTop = state.sortedTop.map((el) =>
+        el.id !== action.payload.id ? el : { ...el, sellStatus: action.payload.sellStatus }
+      );
+    },
   },
 });
 
-export const { topPosts, updateItemPrice, sortTopItems } = topSlice.actions;
+export const { topPosts, updateItemPrice, sortTopItems,updateSellStatus } = topSlice.actions;
 
 export default topSlice.reducer;
 

@@ -101,7 +101,7 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
           </div>
           <CardTitle tag="h5">{oneCard.title}</CardTitle>
           <CardTitle tag="h5">Город: {oneCard.city}</CardTitle>
-          <CardTitle tag="h5">Текущая цена: {oneCard.price}</CardTitle>
+          <CardTitle tag="h5">Текущая цена: {oneCard.price}р</CardTitle>
           <Button onClick={toggleModal}>Смотреть</Button>
         </CardBody>
       </Card>
@@ -154,20 +154,21 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
               <CardText tag="h5">{oneCard.body}</CardText>
               <CardText tag="h5">Город: {oneCard.city}</CardText>
               <CardTitle tag="h5">
-                Стоимость: {oneCard.price} имя последнего пользователя: {user.username}
+                Стоимость: {oneCard.price}р 
               </CardTitle>
-
+              <CardTitle tag="h5">
+                Имя последнего пользователя сделавшего ставку: {user.username}
+              </CardTitle>
               <CardTitle style={{ color: 'red' }}>
                 Таймер: <Timer bidCheck={bidCheck} id={oneCard.id} setBidCheck={setBidCheck} />
               </CardTitle>
-              <CardTitle tag="h5">Последний BID-ID: {oneCard.lastUser_id}</CardTitle>
               <CardFooter>
                 {user.id !== oneCard.user_id && (
                   <>
                     {user.status ? (
                       <>
                         <CardTitle tag="h5" style={{ color: 'red' }}>
-                          Ваша ставка: {countBid}
+                          Ваша ставка: {countBid}р
                         </CardTitle>
 
                         <div className="b1">

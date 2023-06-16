@@ -10,13 +10,14 @@ import {
   Modal,
   ModalBody,
   ModalHeader,
+  Row,
 } from 'reactstrap';
 import { ItemType } from '../types/itemType';
 import Timer from './Timer';
 import { useAppDispatch, useAppSelector } from '../Redux/hooks';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { sortTopItems } from '../Redux/slice/topSlice';
+import { sortTopItems, updateSellStatus } from '../Redux/slice/topSlice';
 
 
 type PropType = {
@@ -24,7 +25,7 @@ type PropType = {
   onBid: (id: number, countBid: number, userId: number) => void;
 };
 
-export default function TopCard({ itemTop, onBid }: PropType): JSX.Element {
+export default function TopCard({ itemTop, onBid,setSellStatus }: PropType): JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [countBid, setCountBid] = useState(0);
   const user = useAppSelector((state) => state.user);
@@ -37,6 +38,11 @@ export default function TopCard({ itemTop, onBid }: PropType): JSX.Element {
   useEffect(() => {
     dispatch(sortTopItems())
   },[itemTop.price])
+  
+  useEffect(() => {
+    dispatch(updateSellStatus(itemTop.id))
+  },[itemTop.sellStatus])
+
   useEffect(() => {
     if (!isModalOpen) {
     }
@@ -66,6 +72,7 @@ export default function TopCard({ itemTop, onBid }: PropType): JSX.Element {
   return (
     <>
       <Card style={{ width: '10rem' }}>
+      
         {itemTop?.FotoGaleries && itemTop?.FotoGaleries.length > 0 ? (
           <img
             alt="Пример"
@@ -77,7 +84,7 @@ export default function TopCard({ itemTop, onBid }: PropType): JSX.Element {
         )}
         <CardBody>
         <CardTitle style={{ color: 'red',marginTop:"20px" }}>
-               <Timer  bidCheck={bidCheck} id={itemTop.id} setBidCheck={setBidCheck}/>
+               <Timer setSellStatus={setSellStatus} bidCheck={bidCheck} id={itemTop.id} setBidCheck={setBidCheck}/>
               </CardTitle>
           <CardTitle tag="h5"></CardTitle>
           <CardSubtitle className="mb-2 text-muted" tag="h6"></CardSubtitle>
@@ -91,6 +98,7 @@ export default function TopCard({ itemTop, onBid }: PropType): JSX.Element {
          
           
         </CardBody>
+  
       </Card>
 
       <Modal isOpen={isModalOpen} toggle={toggleModal}>
