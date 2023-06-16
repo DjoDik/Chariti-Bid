@@ -30,11 +30,14 @@ export default function AuthPage({ modalOpen, toggleModal }): JSX.Element {
     if (auth === 'signup') {
       dispatch(signUpThunk(input));
       setRegistrationSuccess(true);
-      toggleModal();
     } else {
       dispatch(loginThunk(input));
       setLoggedIn(true);
     }
+  };
+
+  const handlePhotoUploaderClose = () => {
+    toggleModal();
   };
 
   if (loggedIn) {
@@ -44,75 +47,73 @@ export default function AuthPage({ modalOpen, toggleModal }): JSX.Element {
   return (
     <Row>
       <Col>
-        <div className="login-box">
-          <form onSubmit={submitHandler} className="user-box">
-            {registrationSuccess ? (
-              <PhotoUploader modalOpen={modalOpen} toggleModal={toggleModal} />
-            ) : (
-              <>
-                {auth === 'signup' && (
-                  <>
-                    <FormGroup floating className="user-box">
-                      <div className="user-box">
-                        <input
-                          id="examplePhone"
-                          name="phone"
-                          type="text"
-                          value={input.phone}
-                          onChange={changeHandler}
-                        />
-                        <Label for="examplePhone">Phone</Label>
-                      </div>
-                    </FormGroup>
+        {registrationSuccess ? (
+          <PhotoUploader modalOpen={modalOpen} toggleModal={toggleModal} onClose={handlePhotoUploaderClose} />
+        ) : (
+          <div className="login-box">
+            <form onSubmit={submitHandler} className="user-box">
+              {auth === 'signup' && (
+                <>
+                  <FormGroup floating className="user-box">
                     <div className="user-box">
                       <input
-                        id="exampleName"
-                        name="username"
+                        id="examplePhone"
+                        name="phone"
                         type="text"
-                        value={input.username}
+                        value={input.phone}
                         onChange={changeHandler}
                       />
-                      <label>Name</label>
+                      <Label for="examplePhone">Phone</Label>
                     </div>
-                  </>
-                )}
-
-                <div className="user-box">
-                  <input
-                    id="exampleEmail"
-                    name="email"
-                    type="email"
-                    value={input.email}
-                    onChange={changeHandler}
-                  />
-                  <label>Email</label>
-                </div>
-
-                <FormGroup floating>
+                  </FormGroup>
                   <div className="user-box">
                     <input
-                      id="examplePassword"
-                      name="password"
-                      type="password"
-                      value={input.password}
+                      id="exampleName"
+                      name="username"
+                      type="text"
+                      value={input.username}
                       onChange={changeHandler}
                     />
-                    <Label for="examplePassword">Password</Label>
+                    <label>Name</label>
                   </div>
-                </FormGroup>
-                <a href="#">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <button className="clearButton" type="submit">
-                    {auth === 'signup' ? 'Signup' : 'Login'}
-                  </button>
-                </a>
-              </>
-            )}
-          </form>
-        </div>
+                </>
+              )}
+
+              <div className="user-box">
+                <input
+                  id="exampleEmail"
+                  name="email"
+                  type="email"
+                  value={input.email}
+                  onChange={changeHandler}
+                />
+                <label>Email</label>
+              </div>
+
+              <FormGroup floating>
+                <div className="user-box">
+                  <input
+                    id="examplePassword"
+                    name="password"
+                    type="password"
+                    value={input.password}
+                    onChange={changeHandler}
+                  />
+                  <Label for="examplePassword">Password</Label>
+                </div>
+              </FormGroup>
+              <a href="#">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <button className="clearButton" type="submit">
+                  {auth === 'signup' ? 'Signup' : 'Login'}
+                </button>
+              </a>
+            </form>
+          </div>
+        )}
       </Col>
     </Row>
   );

@@ -18,11 +18,13 @@ import {
 import { ItemType } from '../types/itemType';
 import Timer from '../UI/Timer';
 import axios from 'axios';
-import { useAppSelector } from '../Redux/hooks';
+import { useAppDispatch, useAppSelector } from '../Redux/hooks';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import '../../css/fonts.css/Kanit-Black.ttf'; // Импортируйте стили шрифтов из файла fonts.css
+import { setStoreTimer } from '../Redux/slice/TimerSlice';
 
 type PropsType = {
+  
   oneCard: ItemType;
   onBid: (id: number, countBid: number, userId: number) => void;
 };
@@ -34,9 +36,15 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
   const user = useAppSelector((state) => state.user);
   const [bidCheck, setBidCheck] = useState(false);
 
+  const dispatch = useAppDispatch()
+  const timerId = useAppSelector((state) => state.timer);
+
   const clickHandler = () => {
     onBid(oneCard.id, countBid, user.id);
     setBidCheck(true);
+    dispatch(setStoreTimer({id: oneCard.id}))
+    console.log('это мой объект', {id: oneCard.id});
+    
   };
 
   useEffect(() => {
@@ -97,7 +105,7 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
       </Card>
 
       <Modal isOpen={isModalOpen} toggle={toggleModal} size="md">
-        <ModalHeader toggle={toggleModal}>{oneCard.title}</ModalHeader>
+        <ModalHeader toggle={toggleModal} style={{border: '0px solid white'}}>{oneCard.title} </ModalHeader>
         <ModalBody>
           <Card style={{ width: '450px', height: '860px' }}>
             <Carousel
@@ -141,90 +149,34 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
               />
             </Carousel>
             <CardBody>
-              <CardText
-                tag="h5"
-                style={{
-                  color: 'black',
-                  boxShadow: '0px 0px 5px 2px #888888',
-                  borderRadius: '5px',
-                  backgroundColor: 'white',
-                  fontFamily: 'Kanit-Black',
-                }}
-              >
-                {oneCard.body}
-              </CardText>
-              <CardText
-                tag="h5"
-                style={{
-                  color: 'black',
-                  boxShadow: '0px 0px 5px 2px #888888',
-                  borderRadius: '5px',
-                  backgroundColor: 'white',
-
-                  fontFamily: 'Kanit-Black',
-                }}
-              >
-                Город: {oneCard.city}
-              </CardText>
-              <CardTitle
-                tag="h5"
-                style={{
-                  color: 'black',
-                  boxShadow: '0px 0px 5px 2px #888888',
-                  borderRadius: '5px',
-                  backgroundColor: 'white',
-
-                  fontFamily: 'Kanit-Black',
-                }}
-              >
-                Стоимость: {oneCard.price}
+              <CardText tag="h5">{oneCard.body}</CardText>
+              <CardText tag="h5">Город: {oneCard.city}</CardText>
+              <CardTitle tag="h5">
+                Стоимость: {oneCard.price} имя последнего пользователя: {user.username}
               </CardTitle>
 
-              <CardTitle
-                style={{
-                  color: 'red',
-                  textAlign: 'right',
-                  fontFamily: 'Kanit-Black', // Имя шрифта
-                }}
-              >
-                Таймер: <Timer bidCheck={bidCheck} id={oneCard.id} setBidCheck={setBidCheck} />
+              <CardTitle style={{ color: 'red' }}>
+                Время до конца аукциона: <Timer bidCheck={bidCheck} id={oneCard.id} setBidCheck={setBidCheck} />
               </CardTitle>
-              {/* <CardTitle tag="h5">Последний BID-ID: {oneCard.lastUser_id}</CardTitle> */}
               <CardFooter>
                 {user.id !== oneCard.user_id && (
                   <>
                     {user.status ? (
                       <>
-                        <CardTitle
-                          tag="h5"
-                          style={{
-                            color: 'red',
-                            boxShadow: '0px 0px 5px 2px #888888',
-                            textAlign: 'center',
-                            borderRadius: '5px',
-                            backgroundColor: 'white',
-                          }}
-                        >
-                          Ваша ставка: {countBid} рублей.
+                        <CardTitle tag="h5" style={{ color: 'red' }}>
+                          Ваша ставка: {countBid}
                         </CardTitle>
 
-                        <Button
-                          outline
-                          color="success"
-                          onClick={counterBidHandler}
-                          style={{ marginRight: '10px', padding: '5px', width: '150px' }}
-                        >
-                          Поднять на 100р
-                        </Button>
-
-                        <Button
-                          outline
-                          color="danger"
-                          onClick={clickHandler}
-                          style={{ marginRight: '10px', padding: '5px', width: '50px' }}
-                        >
-                          Bid
-                        </Button>
+                        <div className="b1">
+                          <Button class=" shine-button" onClick={counterBidHandler}>
+                            Поднять на 100р
+                          </Button>
+                        </div>
+                        <div className="b2">
+                          <Button className="custom-button sliding-button" onClick={clickHandler}>
+                            Bid
+                          </Button>
+                        </div>
                       </>
                     ) : (
                       'Для участия в торгах - зарегистрируйтесь'
@@ -241,3 +193,5 @@ function OneItemCard({ oneCard, onBid }: PropsType): JSX.Element {
 }
 
 export default React.memo(OneItemCard);
+
+

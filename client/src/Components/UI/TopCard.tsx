@@ -10,23 +10,23 @@ import {
   Modal,
   ModalBody,
   ModalHeader,
+  Row,
 } from 'reactstrap';
 import { ItemType } from '../types/itemType';
 import Timer from './Timer';
 import { useAppDispatch, useAppSelector } from '../Redux/hooks';
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { sortTopItems } from '../Redux/slice/topSlice';
+import { sortTopItems, updateSellStatus } from '../Redux/slice/topSlice';
 
 type PropType = {
   itemTop: ItemType;
   onBid: (id: number, countBid: number, userId: number) => void;
 };
 
-export default function TopCard({ itemTop, onBid }: PropType): JSX.Element {
+export default function TopCard({ itemTop, onBid, setSellStatus }: PropType): JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [countBid, setCountBid] = useState(0);
   const user = useAppSelector((state) => state.user);
+  const timerId = useAppSelector((state) => state.timer);
   const [bidCheck, setBidCheck] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -35,9 +35,19 @@ export default function TopCard({ itemTop, onBid }: PropType): JSX.Element {
   }, [itemTop.price]);
 
   useEffect(() => {
+    dispatch(updateSellStatus(itemTop.id));
+  }, [itemTop.sellStatus]);
+
+  useEffect(() => {
     if (!isModalOpen) {
     }
   }, [isModalOpen]);
+
+  useEffect(() => {
+    if (timerId.id === itemTop.id) {
+      setBidCheck(true);
+    }
+  });
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -99,22 +109,19 @@ export default function TopCard({ itemTop, onBid }: PropType): JSX.Element {
         <ModalBody>
           <Card>
             {itemTop?.FotoGaleries && itemTop?.FotoGaleries.length > 0 ? (
-              <Carousel showArrows={true} showThumbs={true}>
-                {itemTop?.FotoGaleries.map((image) => (
-                  <div key={image.id}>
-                    <img
-                      style={{
-                        margin: '10px',
-                        width: '450px',
-                        height: '550px',
-                        // objectFit: 'contain',
-                      }}
-                      alt="Пример"
-                      src={`http://localhost:3001/photo/${image.img}`}
-                    />
-                  </div>
-                ))}
-              </Carousel>
+              itemTop?.FotoGaleries.map((image) => (
+                <div key={image.id}>
+                  <img
+                    style={{
+                      margin: '10px',
+                      width: '450px',
+                      height: '550px',
+                    }}
+                    alt="Пример"
+                    src={`http://localhost:3001/photo/${image.img}`}
+                  />
+                </div>
+              ))
             ) : (
               <div>Нет изображений</div>
             )}
@@ -124,7 +131,7 @@ export default function TopCard({ itemTop, onBid }: PropType): JSX.Element {
               <CardTitle tag="h5">Стоимость: {itemTop.price}</CardTitle>
               <CardTitle tag="h5">Ваша ставка: {countBid}</CardTitle>
               <CardTitle style={{ color: 'red' }}>
-                Таймер:
+                Время до конца укциона:
                 <Timer bidCheck={bidCheck} id={itemTop.id} />
               </CardTitle>
               <CardFooter>

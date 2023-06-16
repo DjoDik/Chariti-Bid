@@ -165,7 +165,7 @@ body {
 
 .login-box a span {
   position: absolute;
-  display: block;
+  /* display: block; */
 }
 
 .login-box a span:nth-child(1) {

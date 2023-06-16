@@ -11,6 +11,9 @@ sortRouter.get('/:id', async (req, res) => {
     if (category === 'Все') {
       // Если выбрана категория "Все", получаем все элементы
       data = await Item.findAll({
+        where: {
+          sellStatus: false,
+        },
         include: [Category, FotoGalery],
       });
     } else {
@@ -22,7 +25,7 @@ sortRouter.get('/:id', async (req, res) => {
       }
 
       data = await Item.findAll({
-        where: { category_id: categoryRecord.id },
+        where: { category_id: categoryRecord.id, sellStatus: false },
         include: [Category, FotoGalery],
       });
     }

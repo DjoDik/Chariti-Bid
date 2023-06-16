@@ -38,15 +38,14 @@ export default function PhotoUploader(): JSX.Element {
   }
 
   return (
-    <div>
-      <Modal isOpen={true}>
-        <ModalHeader>Photo Uploader</ModalHeader>
+    
+    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+      <Modal isOpen={true} >
+        <ModalHeader>Ваш аватар</ModalHeader>
         <div>
-          <p>Upload a photo:</p>
           <Input type="file" onChange={handleFileChange} accept="image/*" />
           {selectedFile && (
             <div>
-              <h3>Uploaded Photo:</h3>
               <div className="preview-container">
                 <img
                   src={URL.createObjectURL(selectedFile)}
